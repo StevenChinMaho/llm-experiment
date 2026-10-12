@@ -36,6 +36,42 @@ P0 來源：`results/raw/preliminary/2026-09-30_mainpc_win_IQ3_XXS_c4096_load.lo
 - 記憶體在載入時**一次預先配置**，對話變長不會增加 VRAM；P2 的 `nvidia-smi` 實測 15,520 MiB 與 log 各項加總（約 15,340 MiB）相差約 180 MiB，推測為 CUDA runtime 開銷
 - context checkpoint（每個 149.626 MiB，等於 RS buffer 大小）與 prompt cache 存在系統 RAM，不佔 VRAM
 
+### 2.1 Windows 可超配 VRAM、Linux 不行（2026-10-12）
+
+同一個 IQ4_XS 檔（sha256 一致）、同樣 `-c 83536`（實際 n_ctx 83,712），fit 預估需求兩邊都是 **16,144 MiB**（權重 12,726＋context 2,929＋compute 489）：
+
+| | 啟動時可用 VRAM | 結果 | 來源 |
+|---|---|---|---|
+| 主力機 Ubuntu（Docker b11347，驅動 595.91.07） | 15,544 MiB | compute buffer 489.03 MiB `cudaMalloc failed: out of memory`，無法啟動 | 本次 `docker logs`（未另存檔，見 docs/environment.md） |
+| 主力機 Windows（conda build 不明，驅動 617.14） | 15,022 MiB | 正常啟動並推論 | `results/raw/preliminary/2026-10-12_mainpc_win_IQ4_XS_c83536_run.log` |
+
+Windows 執行中以效能計數器查得：該行程 **Dedicated 16,014 MiB＋Shared 470 MiB**（`results/raw/preliminary/2026-10-12_mainpc_win_IQ4_XS_c83536_gpumem.txt`）。→ Windows（WDDM）允許超過可用 VRAM 的配置，部分放在共享的系統記憶體；Linux 直接失敗。Ubuntu 上 IQ4_XS 改 `-c 65536` 可啟動。
+
+**Web UI 使用感受（使用者回報，無 log）：** Ubuntu 約 6 萬 context（當時容器為 `-c 65536`）tg 穩定約 27.5 tok/s；Windows 8 萬 context 一開始約 27，隨對話變長慢慢降到 26 以下。
+
+### 2.2 控制實驗：Windows 上只改 `-c`，量 pp／tg 與 context 深度（2026-10-12）
+
+- 條件：主力機 Windows、conda llama.cpp **b10751**、驅動 617.14、螢幕接內顯、IQ4_XS（sha256 `40fac405…`）、`-ngl 99 -fa on -ctk/-ctv q8_0 -np 1 --no-mmproj --cache-ram 0 --ctx-checkpoints 0`；`/completion` 送剛好 depth 個 token、生成 128 token（ignore_eos），每點 3 次
+- 原始資料：`results/raw/ctxprobe_win_iq4xs_20261012/`；表格：`results/processed/ctxprobe_win_iq4xs_20261012.md`；圖：`results/figures/ctxprobe_win_iq4xs_20261012.png`；腳本：`scripts/ctx_depth_probe.py`、`scripts/analyze_ctxprobe.py`
+
+| -c | 專用／共享 (MiB) | pp @1K | pp @48K | tg @1K | tg @48K | prefill 功耗 @48K |
+|---|---|---|---|---|---|---|
+| 49152 | 14,968 / 148 | 971.0 | 780.6 | 27.04 | 21.47 | 178.3 W |
+| 65536 | 15,592 / 164 | 959.7 | 780.5 | 26.99 | 21.54 | 178.5 W |
+| 83536 | 16,008 / 458 | **374.5** | **97.0** | 27.10 | 21.75 | **57.6 W** |
+
+（83536 另量到 d=80K：pp 60.2、tg 19.04；標準差都很小，見 processed 表）
+
+**結論（實測）：**
+1. **超配只拖慢 prefill，不影響生成。** 同深度下三種 `-c` 的 tg 差距 < 0.3 tok/s；83536 的 pp 在 1K 深度只剩 39%，80K 深度只剩約 8%，越深越嚴重
+2. prefill 期間 GPU 使用率顯示 100%，但功耗只有 52～78 W（正常約 178 W）→ GPU 在等透過 PCIe 存取的系統記憶體
+3. **使用者在 Web UI 看到的 tg 緩降是正常的深度效應**（完全放得進 VRAM 的 49152 也一樣從 27.0 降到 21.5），不是 Sysmem Fallback 造成的。之前沒發現問題，是因為 Web UI 只顯示 tg；10-12 的 log 裡 pp 365 tok/s（P2 在 32K context 時是 945）其實已經顯示了問題
+4. Windows 啟動時回報的 free（約 15,022 MiB）偏保守：65536 預估需要 15,452 MiB 仍完整放進專用 VRAM（實際 15,592）。Windows 上不超配的實用上限介於 65536 與 83536 之間
+
+**推測（未驗證）：** 被放到系統記憶體的是 compute buffer（83536 時 489 MiB；prefill 一次處理 512 token，需要大量使用它，而且其中 attention 相關的暫存會隨深度變大；生成時一次只處理 1 個 token，只用到一小部分）。可驗證的方式：`-c 83536` 加 `-ub 256` 或 `-ub 128` 縮小 compute buffer，看共享記憶體是否回到約 150 MiB、pp 是否恢復。
+
+**Tee-Object 現象（使用者回報）：** Windows 上以 `llama-server ... 2>&1 | Tee-Object` 存 log 時，tg 掉到約 14 tok/s，原因不明（該次啟動時可用 VRAM 15,003 MiB，和正常那次 15,022 差不多，記憶體應不是原因）。之後改用 llama.cpp 內建的 `--log-file`。
+
 ## 3. KV cache 公式（推導，已用 log 驗證）
 
 ```

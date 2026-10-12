@@ -18,7 +18,7 @@
 ### Windows 端（目前的主要使用環境）
 
 - 驅動 617.14，`nvidia-smi` 顯示 CUDA 13.4
-- llama.cpp 由 conda-forge 安裝在 Miniforge 的 `llm` 環境（CUDA＋Vulkan 雙後端），路徑 `C:\Users\MahoKururinpa\miniforge3\envs\llm\Library\bin\llama-server.exe`。`--version` 顯示 `0.3.0-dev (build 0, commit unknown)`、MSVC 19.44 編譯，**build 編號不明**（2026-10-12 查）
+- llama.cpp 由 conda-forge 安裝在 Miniforge 的 `llm` 環境（CUDA＋Vulkan 雙後端），路徑 `C:\Users\MahoKururinpa\miniforge3\envs\llm\Library\bin\llama-server.exe`。`--version` 顯示 `0.3.0-dev (build 0, commit unknown)`、MSVC 19.44 編譯。`--version` 不顯示 build，但 **`conda list -n llm` 顯示 conda-forge 套件 `llama.cpp 10751 cuda130_h0f3e06c_0`，即 build 10751**（cuda-version 13.0、libcublas 13.1.1.3；2026-10-12 查）。比 server／Ubuntu 的 b11347 舊約 600 個 build
 - `--list-devices`：CUDA0（5060 Ti）、Vulkan0（5060 Ti）、Vulkan1（AMD 內顯）
 - 模型存放：`C:\models`（環境變數 `LLAMA_CACHE`），透過 `-hf unsloth/Qwen3.8-27B-GGUF:<tag>` 下載。HF 快取格式，`snapshots/` 下的 .gguf 是指向 blob 的 symlink（直接看大小會顯示 0）。2026-10-12 現有：unsloth 的 UD-IQ3_XXS（10,934,860,704 bytes，與 server 位元組數相同，sha256 未比對）、UD-IQ4_XS、mmproj-BF16；另有 huihui-ai 的 abliterated UD-IQ4_XS 與其 mmproj（不納入主實驗）
 - 使用者從別台機器 SSH 進 PowerShell 7 操作，並用 `ssh -L 8000:127.0.0.1:8000` 開通道使用 Web UI；也會用 Google 遠端桌面
@@ -26,13 +26,22 @@
 - **螢幕接內顯**時 5060 Ti 完全空閒（`nvidia-smi` 顯示 21 MiB 已用、Disp.A Off）；打遊戲時使用者會改用獨顯輸出。跑實驗前確認目前是哪種模式
 - 使用者回報可穩定跑約 83K context 並保留看圖功能（視覺模組放 CPU，`--no-mmproj-offload`）
 
-### Ubuntu 端（雙系統，架設中）
+### Ubuntu 端（雙系統，2026-10-12 架設完成，實驗用）
+
+- 2026-10-12 試跑（測試用，非正式數據）：與 server 相同參數＋`-lv 4` 啟動 IQ3_XXS，log 顯示 `no changes needed`、`offloaded 66/66 layers to GPU`；KV buffer 1,334.50 MiB（實際 n_ctx 被補齊到 40,192 → 40,192 × 34,816 B = 1,334.50 MiB，符合 findings §3 公式）。**預設 verbosity 3 不會印出 buffer 資訊，E2 必須加 `-lv 4`**
+- 2026-10-12 試跑 IQ4_XS（測試用）：Windows 上慣用的 `-c 83536` 在 Ubuntu **啟動失敗**（compute buffer 489 MiB cudaMalloc OOM；fit 預估 16,144 MiB > 可用 15,544 MiB）。`-c 65536` 可以啟動（66/66 層、KV 2,176 MiB、compute 400.28 MiB、nvidia-smi 15,626 MiB）。Windows 為何放得下 83K 尚未確認（推測：Sysmem Fallback 偷用系統 RAM，或舊版 build 的 compute buffer 較小），待查
+- 日常 Web UI（非實驗）：容器名 `llama`，無 restart policy，從操作端 `ssh -N -L 8000:127.0.0.1:8000 main-ubuntu` 後開 `http://localhost:8000`
 
 2026-10-12 實機狀態（hostname `MyWhiteUbuntu`，SSH 別名 `main-ubuntu`，sudo 需密碼）：
 
-- Ubuntu 24.04.5、kernel 7.0.0-34；驅動 `nvidia-driver-580-open` 580.178.04（CUDA 13.0），apt 可升到 595-open（595.99.02）
-- Docker 29.9.0，Docker Root `/nvme477/docker-data`；**尚未安裝 NVIDIA Container Toolkit**
-- 磁碟：`/`（sda1）只剩 8.3G；`/nvme477`（nvme0n1p2，ext4）剩 227G → 模型建議放 `/nvme477/llama/models`；Windows C: 是 `nvme1n1p3`（NTFS，未掛載）
+- Ubuntu 24.04.5、kernel 7.0.0-34；預設 `multi-user.target`，**沒有啟動桌面**（gdm inactive）
+- 驅動：使用者已改裝 `nvidia-driver-595-server-open`，核心模組 **595.91.07**（與 server 完全相同）
+- Docker 29.9.0，Docker Root `/nvme477/docker-data`；NVIDIA Container Toolkit 1.20.1（runtime `nvidia` 已註冊）
+- 兩個 b11347 映像已以 digest 拉下並加上本地 tag；容器內 `--version` 顯示 build 11347 (5fc4f3c8c)，`--list-devices` 看得到 CUDA0（15,841 MiB）
+- 螢幕線接獨顯但無桌面時：VRAM 10 MiB、0%、P8、約 8 W，視為無負載。每次實驗前仍記錄 `nvidia-smi`；若之後改開桌面要重新確認
+- 磁碟：`/`（sda1）只剩 8.3G；`/nvme477`（ext4，label `ubuntu_nvme477`）→ 模型放 **`/nvme477/llama/models`**；Windows C: 是 1.8T 那顆的第 3 分割區（NTFS）
+- **NVMe 編號每次開機可能對調**（10-12 第一次查時 C: 是 `nvme1n1p3`，重開後變 `nvme0n1p3`）。指令不要寫死 `nvmeXnY`，先 `lsblk` 確認，或用 UUID／`/dev/disk/by-label/`
+- 掛載 Windows C:（唯讀）：`sudo mount -t ntfs3 -o ro /dev/<C槽分割區> /mnt/win`，模型在 `/mnt/win/models/`（HF 快取，snapshot `4ca72078…`）
 - 螢幕：NVIDIA 的 DP-5 與內顯的 HDMI-A-2 **都有接**，nvidia-smi 顯示 Disp.A On
 - 映像 tag 可鎖定 build：`server-cuda13-b11347` 的 digest＝server 現用的 `sha256:936e9d2a…`；`full-cuda13-b11347` = `sha256:3f7b5ae419f81c940b6171e004ee780091787a9cdb1c413b192fcb338a2d8590`（含 llama-bench／perplexity）。映像內為 CUDA 13.4.1
 
@@ -86,6 +95,13 @@ docker run -d --name llama --gpus all --restart unless-stopped \
 |---|---|---|---|
 | UD-IQ3_XXS | 10.17 GiB | 3.20 | 兩台都放得下 |
 | UD-IQ4_XS | 13.26 GiB | 4.17 | 只有 5060 Ti 放得下；3060 需部分卸載 |
+
+模型檔 sha256（2026-10-12 以 `sha256sum` 實算；HF revision `4ca720788d1e01f1bff70c033e0d0028fd02e502`）：
+
+| 檔案 | bytes | sha256 | 已比對 |
+|---|---|---|---|
+| Qwen3.8-27B-UD-IQ3_XXS.gguf | 10,934,860,704 | `c0b7c3038681ed2e3040456c1dd45f9858b6c2290bed172c70388a94874f3eee` | 主力機 Ubuntu、server、HF blob 名稱三者一致 |
+| Qwen3.8-27B-UD-IQ4_XS.gguf | 14,252,845,984 | `40fac4050e940397dbf13087afd50f4734a11805bf9d65ef8ddd7483470e6199` | 主力機 Ubuntu 與 HF blob 名稱一致（server 沒有此檔） |
 
 ## 已知陷阱（都實際踩過）
 

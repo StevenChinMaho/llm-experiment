@@ -1,0 +1,25 @@
+# 2026-10-12 約 16:00（UTC+8），主力機 Windows（MyWhiteComputer），由操作端經 SSH 唯讀查詢
+# 狀態：使用者以 start-qwen3.8.ps1 啟動 llama-server（PID 11536，-hf unsloth/Qwen3.8-27B-GGUF:UD-IQ4_XS -c 83536，
+#       conda llm 環境 build 0 (unknown) MSVC 19.44，驅動 617.14，mmproj 在 CPU），已完成一次 937+1280 token 的對話後閒置
+# 螢幕接內顯（display_active = Disabled）
+#
+# 指令：
+#   nvidia-smi --query-gpu=memory.used,memory.total,display_active --format=csv
+#   Get-Counter "\GPU Process Memory(*)\Dedicated Usage","\GPU Process Memory(*)\Shared Usage"   （只列 > 50 MB）
+#   Get-Counter "\GPU Adapter Memory(*)\Shared Usage","\GPU Adapter Memory(*)\Dedicated Usage"
+#
+# 輸出（原樣）：
+memory.used [MiB], memory.total [MiB], display_active
+16034 MiB, 16311 MiB, Disabled
+\\mywhitecomputer\gpu process memory(pid_11536_luid_0x00000000_0x000190c0_phys_0)\dedicated usage  16,014 MiB
+\\mywhitecomputer\gpu process memory(pid_11536_luid_0x00000000_0x000190c0_phys_0)\shared usage  470 MiB
+\\mywhitecomputer\gpu process memory(pid_2008_luid_0x00000000_0x0001a653_phys_0)\shared usage  68 MiB
+\\mywhitecomputer\gpu adapter memory(luid_0x00000000_0x000190c0_phys_0)\shared usage  479 MiB
+\\mywhitecomputer\gpu adapter memory(luid_0x00000000_0x0001a608_phys_0)\shared usage  0 MiB
+\\mywhitecomputer\gpu adapter memory(luid_0x00000000_0x0001a653_phys_0)\shared usage  41 MiB
+\\mywhitecomputer\gpu adapter memory(luid_0x00000000_0x000190c0_phys_0)\dedicated usage  16,040 MiB
+\\mywhitecomputer\gpu adapter memory(luid_0x00000000_0x0001a608_phys_0)\dedicated usage  0 MiB
+\\mywhitecomputer\gpu adapter memory(luid_0x00000000_0x0001a653_phys_0)\dedicated usage  25 MiB
+#
+# 對照：同一模型檔、同一 -c，在主力機 Ubuntu（Docker b11347，驅動 595.91.07）啟動時
+#       compute buffer 489.03 MiB cudaMalloc out of memory 而無法啟動（見 docs/environment.md）。
