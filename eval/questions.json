@@ -1,0 +1,168 @@
+{
+  "version": "2026-10-12",
+  "notes": [
+    "所有標準答案皆已用程式驗證（見 eval/verify_answers.py）。新增或修改題目時必須同步更新驗證程式並重新執行。",
+    "easy 組在最高推理強度下對 Qwen3.8-27B 太簡單（每題約 300~500 思考 token），預定用於『關閉思考』條件；hard 組用於『開啟思考（有上限）』條件。",
+    "非程式題的提示末尾都要附上 answer_instruction；程式題附上 code_instruction。"
+  ],
+  "answer_instruction": "請在最後一行只輸出答案，格式為「答案：___」",
+  "code_instruction": "請只輸出一個 Python 程式碼區塊，不要附加說明。",
+  "sets": {
+    "easy": [
+      {
+        "id": "E1",
+        "category": "多步驟應用題",
+        "prompt": "某書店第一天賣出全部庫存的 1/4，第二天賣出剩下的 1/3，第三天賣出 45 本後還剩 105 本。請問原本庫存多少本？",
+        "grading": "exact_int",
+        "answer": 300,
+        "trap": "「剩下的 1/3」容易被誤解成「全部的 1/3」"
+      },
+      {
+        "id": "E2",
+        "category": "數論計數",
+        "prompt": "1 到 1000（含）之間，有多少個整數既不能被 3 整除、也不能被 5 整除、也不能被 7 整除？",
+        "grading": "exact_int",
+        "answer": 457,
+        "trap": "三層排容原理"
+      },
+      {
+        "id": "E3",
+        "category": "條件機率",
+        "prompt": "擲兩顆公正的六面骰子，已知至少有一顆是 6，兩顆點數和大於或等於 10 的機率是多少？請以最簡分數表示。",
+        "grading": "fraction",
+        "answer": "5/11",
+        "trap": "條件樣本空間是 11 種而不是 36 種"
+      },
+      {
+        "id": "E4",
+        "category": "邏輯推理",
+        "prompt": "甲、乙、丙三人中恰好有一人說謊。甲說：「乙是說謊者。」乙說：「丙沒有說謊。」丙說：「我不是說謊者。」請問誰說謊？（只回答一個人名）",
+        "grading": "exact_text",
+        "answer": "甲",
+        "trap": "需逐一假設並檢查矛盾"
+      },
+      {
+        "id": "E5",
+        "category": "程式撰寫",
+        "prompt": "請寫一個 Python 函式 compress(s)：將連續相同的字元壓縮成「字元＋次數」，次數為 1 時省略次數。若壓縮後的字串沒有比原字串短，則回傳原字串。",
+        "grading": "python_tests",
+        "function": "compress",
+        "tests": [
+          {"input": ["aaabcc"], "expected": "a3bc2"},
+          {"input": ["abc"], "expected": "abc"},
+          {"input": ["aabb"], "expected": "aabb"},
+          {"input": ["zzzzzzzzzzzz"], "expected": "z12"},
+          {"input": [""], "expected": ""},
+          {"input": ["aaab"], "expected": "a3b"}
+        ],
+        "trap": "等長時回傳原字串、兩位數次數、空字串"
+      },
+      {
+        "id": "E6",
+        "category": "程式追蹤",
+        "prompt": "以下 C++ 程式的輸出是什麼？\n\n```cpp\nint x = 0;\nfor (int i = 1; i <= 20; i++)\n    if (i % 3 == 0 || i % 5 == 0) x ^= i;\ncout << x;\n```",
+        "grading": "exact_int",
+        "answer": 6,
+        "trap": "連續 XOR 九個數字，需逐步追蹤"
+      },
+      {
+        "id": "E7",
+        "category": "結構化資訊擷取",
+        "prompt": "從以下文字擷取資訊，只輸出一個 JSON 物件，欄位為 date（MM/DD）、time（24 小時制 HH:MM）、room、attendees（總人數，整數）、rsvp_deadline（MM/DD）：\n\n「10 月 9 日（週五）下午兩點半將於理工大樓 E305 舉行專題討論會，預計有 12 位同學與 2 位教授出席，請於 10 月 7 日前回覆是否參加。」",
+        "grading": "json_fields",
+        "answer": {"date": "10/09", "time": "14:30", "room": "E305", "attendees": 14, "rsvp_deadline": "10/07"},
+        "no_answer_instruction": true,
+        "trap": "兩點半→14:30、人數加總、嚴格格式"
+      },
+      {
+        "id": "E8",
+        "category": "單位換算",
+        "prompt": "某 Wi-Fi 連線的實際吞吐量為 150 Mbps，傳輸一個 10.5 GiB 的檔案需要幾秒？（1 GiB = 2^30 bytes，1 Mbps = 10^6 bits/s，答案四捨五入到整數）",
+        "grading": "exact_int",
+        "answer": 601,
+        "trap": "誤用 10^9 得 560；忘記乘 8 得 75；試跑時模型大數乘法進位錯誤得 600",
+        "pilot_observation": "最高推理強度下模型寫出 89,994,313,216 bits（正確為 90,194,313,216），答 600"
+      }
+    ],
+    "hard": [
+      {
+        "id": "H1",
+        "category": "期望值",
+        "prompt": "連續擲一枚公正硬幣，直到連續出現「正、正、反、正」為止。期望需要擲幾次？",
+        "grading": "exact_int",
+        "answer": 18,
+        "trap": "模式自我重疊（HHTH 的前綴 H 與後綴 H 重疊），直覺答案 16 是錯的"
+      },
+      {
+        "id": "H2",
+        "category": "數論陷阱",
+        "prompt": "n! 的末尾能否恰好有 2028 個 0？若能，求最小的 n；若不能，求使 n! 末尾 0 的個數大於或等於 2028 的最小 n。請依格式回答「能，n=___」或「不能，n=___」。",
+        "grading": "multi_field",
+        "answer": {"possible": false, "n": 8125},
+        "parse_hint": "需同時判斷『能／不能』與 n 的數值",
+        "trap": "8124! 有 2026 個 0，8125 = 5^4 × 13 一次跳到 2030 個，2027~2029 不可能出現"
+      },
+      {
+        "id": "H3",
+        "category": "組合計數",
+        "prompt": "由 0～9 組成的四位數（首位不為 0），四個數字互不相同且數字和為 15，共有幾個？",
+        "grading": "exact_int",
+        "answer": 288,
+        "trap": "含 0 與不含 0 的組合要分開處理首位限制"
+      },
+      {
+        "id": "H4",
+        "category": "演算法追蹤",
+        "prompt": "數列 [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9] 的最長嚴格遞增子序列長度是多少？這樣的子序列共有幾個？（取自不同位置即視為不同的子序列）請依格式回答「長度=___，個數=___」。",
+        "grading": "multi_field",
+        "answer": {"length": 6, "count": 12},
+        "trap": "長度不難，計數需完整做 DP"
+      },
+      {
+        "id": "H5",
+        "category": "邏輯推理",
+        "prompt": "甲、乙、丙、丁四人坐在一排四個座位（從左到右為 1～4 號），每人分別屬於資工、電機、數學、物理系之一，各喝咖啡、茶、牛奶、果汁之一（皆不重複）。已知：\n1. 甲坐在資工系的人旁邊\n2. 喝牛奶的人坐在數學系的人右邊緊鄰的位置\n3. 乙不是物理系，也不喝咖啡\n4. 丙坐在最左邊或最右邊\n5. 最左邊的人不喝茶\n6. 電機系的人坐在丁的左邊（不一定相鄰）\n7. 丙喝果汁\n8. 喝咖啡的人和喝茶的人相鄰\n9. 丁不是資工系\n10. 物理系的人坐在最右邊\n11. 數學系的人不喝果汁\n12. 乙坐在甲的右邊（不一定相鄰）\n\n請問數學系的人是誰？喝什麼？請依格式回答「人=___，飲料=___」。",
+        "grading": "multi_field",
+        "answer": {"person": "乙", "drink": "茶"},
+        "full_solution": "座位1 丙/資工/果汁、座位2 甲/電機/咖啡、座位3 乙/數學/茶、座位4 丁/物理/牛奶",
+        "trap": "解唯一（已暴力驗證），需多條件交叉排除"
+      },
+      {
+        "id": "H6",
+        "category": "最短路徑",
+        "prompt": "無向圖的邊與權重如下：A-B 4、A-C 2、B-C 1、B-D 5、C-D 8、C-E 10、D-E 2、D-F 6、E-F 2、E-G 5、F-G 3、F-H 7、G-H 1、B-E 8。求 A 到 H 的最短距離，以及最短路徑共有幾條。請依格式回答「距離=___，條數=___」。",
+        "grading": "multi_field",
+        "answer": {"distance": 16, "count": 2},
+        "trap": "A 到 B 最短是經 C（3）而非直達（4）；到 G 有兩條等長路徑"
+      },
+      {
+        "id": "H7",
+        "category": "無線網路",
+        "prompt": "某 Wi-Fi 頻道頻寬為 80 MHz，訊雜比為 20 dB。依 Shannon 公式，理論通道容量為多少 Mbps？（四捨五入到整數）",
+        "grading": "exact_int",
+        "answer": 533,
+        "trap": "20 dB 要先換成 100 倍；公式為 B·log2(1+SNR)，80·log2(101) ≈ 532.66"
+      },
+      {
+        "id": "H8",
+        "category": "程式撰寫",
+        "prompt": "請用 Python 寫一個函式 evaluate(s)，計算只含非負整數、+ - * /、括號和空白的四則運算字串。需支援一元負號（例如 -3、-(2+1)），除法為整數除法並向零截斷。不得使用 eval 或 exec。",
+        "grading": "python_tests",
+        "function": "evaluate",
+        "forbidden_tokens": ["eval(", "exec(", "compile("],
+        "tests": [
+          {"input": ["1+2*3"], "expected": 7},
+          {"input": ["(1+2)*3"], "expected": 9},
+          {"input": ["-3*-(2+1)"], "expected": 9},
+          {"input": ["7/-2"], "expected": -3},
+          {"input": ["2*(3+4)*5-10/3"], "expected": 67},
+          {"input": ["-(-(-5))"], "expected": -5},
+          {"input": ["10-2-3"], "expected": 5},
+          {"input": ["100/7/2"], "expected": 7},
+          {"input": [" 8 / 3 * 3 "], "expected": 6}
+        ],
+        "trap": "Python 的 // 是向下取整（7//-2 = -4），需自行向零截斷；減法左結合；巢狀一元負號"
+      }
+    ]
+  }
+}

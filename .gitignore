@@ -1,0 +1,12 @@
+# 模型檔與大型產物
+*.gguf
+*.bin
+wiki.test.raw
+results/raw/**/*.kld
+
+# Python
+__pycache__/
+.venv/
+
+# Word 暫存檔
+~$*.docx

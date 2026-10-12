@@ -1,0 +1,93 @@
+# 目前已知的數據與發現
+
+這些是正式實驗開始前的**初步觀察**，可放進期中的「初步結果」小節，但必須註明是非系統性的單次量測。每筆都標了來源；標「使用者回報」的沒有 log 佐證，報告中引用時要寫明，或在正式實驗中重新量測取代。
+
+## 1. 初步效能數據
+
+| # | 機器 | 執行環境 | 量化 | context | 讀 prompt（pp） | 生成（tg） | 來源 |
+|---|---|---|---|---|---|---|---|
+| P1 | 5060 Ti | Windows / conda（build 不明） | UD-IQ3_XXS | 4096 | — | 約 31 tok/s | 使用者回報 |
+| P2 | 5060 Ti | Windows / conda（build 不明） | UD-IQ4_XS | 32768 | 約 945 tok/s（8,450 token prompt） | 26.07 tok/s（前 100 token） | `results/raw/preliminary/2026-10-01_mainpc_win_IQ4_XS_c32768_run.log` |
+| P3 | 3060 | Ubuntu / Docker server-cuda13（build 11347） | UD-IQ3_XXS | 24576 | 490.50 tok/s（2,646 token prompt） | 20.36 tok/s（3,011 token 平均） | `results/raw/preliminary/2026-10-03_svr_docker_IQ3_XXS_c24576_run.log` |
+
+**比較時的限制（報告中必須說明）：**
+- P2 與 P3 的 llama.cpp 版本、作業系統都不同，量測方式也不同（P2 的 tg 只取前 100 token，P3 是全程平均，且 tg 會隨 context 加深而略降，P3 從 20.72 緩降到 20.36）
+- 這正是正式實驗要統一用 llama-bench＋同一映像的原因
+
+P2 生成期間的 `nvidia-smi`（使用者貼上，非 log 檔）：VRAM 15,520 / 16,311 MiB、GPU-Util 99%、170 W / 180 W、62°C。
+
+## 2. 記憶體組成（實測，來自啟動 log）
+
+單位 MiB。
+
+| 項目 | P0：5060 Ti IQ3_XXS c4096 | P2：5060 Ti IQ4_XS c32768 | P3：3060 IQ3_XXS c24576 |
+|---|---|---|---|
+| 模型權重（CUDA0 model buffer） | 9,685.21 | 12,726.35 | 9,685.21 |
+| 留在 CPU 的權重（CPU_Mapped，token embedding） | 397.85 | 521.00 | 397.85 |
+| KV cache | 136.00 | 1,088.00 | 816.00 |
+| 遞迴狀態（RS buffer） | 149.62 | 149.62 | 149.62 |
+| 運算暫存（CUDA0 compute buffer） | 126.28 | 240.28 | 200.28 |
+| 視覺編碼器 mmproj（權重＋暫存） | 887.99＋248.10 | 887.99＋248.10 | 未載入 |
+
+P0 來源：`results/raw/preliminary/2026-09-30_mainpc_win_IQ3_XXS_c4096_load.log`。
+
+其他觀察：
+- 螢幕接獨顯時，Windows 桌面程式佔用約 989 MiB VRAM（`results/raw/preliminary/2026-09-30_mainpc_win_vulkan_build_devices.log`）；改接內顯後只剩 21 MiB（使用者貼上的 `nvidia-smi`）
+- 記憶體在載入時**一次預先配置**，對話變長不會增加 VRAM；P2 的 `nvidia-smi` 實測 15,520 MiB 與 log 各項加總（約 15,340 MiB）相差約 180 MiB，推測為 CUDA runtime 開銷
+- context checkpoint（每個 149.626 MiB，等於 RS buffer 大小）與 prompt cache 存在系統 RAM，不佔 VRAM
+
+## 3. KV cache 公式（推導，已用 log 驗證）
+
+```
+每 token KV cache = 有 KV cache 的層數 × (n_embd_k_gqa + n_embd_v_gqa) × 每元素位元組數
+```
+
+代入 Qwen3.8-27B 與 q8_0：
+- 有 KV cache 的層數 = 64 / full_attention_interval(4) = **16**（log 也寫 `16 layers`）
+- n_embd_k_gqa = n_head_kv(4) × head_dim(256) = **1024**，V 相同
+- q8_0 每 32 個元素存 32 個 int8＋1 個 fp16 scale = 34 bytes → **1.0625 bytes/元素**
+
+16 × 2048 × 1.0625 = **34,816 bytes = 34 KiB / token**
+
+驗證：
+- 4096 × 34,816 B = 136.00 MiB ✔（P0）
+- 24576 × 34,816 B = 816.00 MiB ✔（P3）
+- 32768 × 34,816 B = 1,088.00 MiB ✔（P2）
+
+對照：若把它當成 64 層全注意力的傳統 Transformer、KV 用 f16，會得到 64 × 2048 × 2 = 256 KiB / token，高估約 7.5 倍。這說明混合架構與 KV 量化對長 context 的影響，是報告可以強調的點。
+
+遞迴狀態 149.62 MiB 與 context 長度無關（三份 log 一致）。運算暫存隨 context 增加而小幅成長（126 → 200 → 240 MiB），沒有簡單公式，需實測。
+
+## 4. 量化檔的混合精度（來自 log 的 tensor 類型統計）
+
+- UD-IQ3_XXS：檔案標示 IQ3_XXS（3.0625 bpw），實際平均 **3.20 BPW**；包含 q8_0 ×98、iq3_xxs ×120、iq3_s ×106、iq4_xs ×45、iq2 系列 ×71、iq1 系列 ×11 等
+- UD-IQ4_XS：標示 IQ4_XS（4.25 bpw），實際平均 **4.17 BPW**；包含 q8_0 ×98、iq4_xs ×211、q4_K ×55、q5_K ×51、iq3_s ×46 等
+- 兩者都使用 Unsloth 的 imatrix（`imatrix_unsloth.gguf`，496 entries、1,251 chunks）
+
+說明 Unsloth Dynamic 量化不是全部壓成同一精度，而是依張量重要性分配位元。
+
+## 5. 推論速度的理論觀察
+
+- 生成（decode）受限於記憶體頻寬：每個 token 要讀過全部權重
+  - 粗估上限 ≈ 頻寬 ÷ 權重大小。5060 Ti：448 GB/s ÷ 13.3 GB（IQ4_XS）≈ 34 tok/s；實測約 26
+  - IQ3_XXS → IQ4_XS 權重增加約 31%，生成速度由約 31 降到約 26（約 −16%）
+  - 3060 頻寬約為 5060 Ti 的 80%，但同檔案的生成速度只有約 66%（20.4 vs 31），推測與 Blackwell 較大的 L2 快取有關（**待查證、待正式量測**）
+- 讀 prompt（prefill）受限於運算力：5060 Ti 約 945 tok/s、3060 約 490 tok/s
+
+以上「推測」都必須在報告中標為推測，正式實驗後再下結論。
+
+## 6. 模型行為觀察（可做為研究動機與應用實驗的素材）
+
+**大數運算錯誤（600 vs 601）**
+- 題目：150 Mbps 傳輸 10.5 GiB 需幾秒（四捨五入）
+- 正確：10.5 × 2³⁰ × 8 = 90,194,313,216 bits → ÷ 1.5×10⁸ ≈ 601.3 → **601**
+- 模型（最高推理強度）寫出 89,994,313,216，億位數錯了剛好 200,000,000，得到 599.96 → 600
+- 推理步驟全對，只錯在長數字算術 → 支持「讓模型呼叫計算工具」的應用實驗（RQ3）
+
+**長時間推理耗盡資源**
+- 一題 CPE 五星題（UVa「玩具士兵＋魔法排列」題），模型思考 64 分鐘、約 82,300 token 後沒有輸出最終回答（推測撞到 context 上限，未確認）
+- 它在思考中寫出的程式通過題目範例與小規模隨機對拍，但上傳 judge 得到 Wrong Answer：程式寫死「答案最多為 2」，而正確答案可能更大（例如上下起伏的走廊地形需要 3 次）
+- 說明：程式看起來完整、能過範例，仍可能建立在未驗證的假設上；也說明思考預算必須設限
+
+**簡單題組試跑**
+- 第一版簡單題組（`eval/questions.json` 的 `easy` 組）在最高推理強度下，每題只思考約 300～500 token 就答出，除了單位換算題（答成 600）外都答對 → 對開啟思考的情況太簡單，改留作「關閉思考」時的題組；另設計 `hard` 組
