@@ -1,0 +1,12 @@
+# 所有文字檔在任何平台都用 LF（覆蓋 Git for Windows 預設的 core.autocrlf=true）
+* text=auto eol=lf
+
+# 只有 Windows 批次檔需要 CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 二進位檔
+*.png binary
+*.pdf binary
+*.docx binary
+*.gguf binary
