@@ -24,12 +24,14 @@
 - 使用者從別台機器 SSH 進 PowerShell 7 操作，並用 `ssh -L 8000:127.0.0.1:8000` 開通道使用 Web UI；也會用 Google 遠端桌面
 - PowerShell profile 位於 OneDrive 的文件資料夾內，已用 `Set-Alias` 或 conda hook 讓 `llama-server` 可直接呼叫
 - **螢幕接內顯**時 5060 Ti 完全空閒（`nvidia-smi` 顯示 21 MiB 已用、Disp.A Off）；打遊戲時使用者會改用獨顯輸出。跑實驗前確認目前是哪種模式
-- 使用者回報可穩定跑約 83K context 並保留看圖功能（視覺模組放 CPU，`--no-mmproj-offload`）
+- 使用者回報可穩定跑約 83K context 並保留看圖功能（視覺模組放 CPU，`--no-mmproj-offload`）。**2026-10-12 查明：83K（`-c 83536`）其實已超出 VRAM**，Windows 把約 300 MiB 放進共享系統記憶體（行程 Dedicated 16,008～16,014 MiB＋Shared 458～478 MiB），生成速度不受影響，但讀 prompt（pp）只剩 39%（1K 深度）～8%（80K 深度）。不超配的設定是 **`-c 65536`**（Dedicated 15,592 MiB、Shared 164 MiB，pp 與 49152 相同）。詳見 docs/findings-so-far.md §2.2
+- Windows 啟動時回報的可用 VRAM（約 15,022 MiB）偏保守：`-c 65536` 預估 15,452 MiB 仍完整放進專用 VRAM。判斷有沒有超配，要看 Windows 效能計數器 `\GPU Process Memory(pid_*)\Shared Usage`（正常約 150 MiB；明顯變大就是溢出），不要只看 fit 的預估
+- 用 PowerShell `2>&1 | Tee-Object` 存 log 時，使用者觀察到 tg 掉到約 14 tok/s（原因不明）；存 log 改用 llama.cpp 內建的 `--log-file`
 
 ### Ubuntu 端（雙系統，2026-10-12 架設完成，實驗用）
 
 - 2026-10-12 試跑（測試用，非正式數據）：與 server 相同參數＋`-lv 4` 啟動 IQ3_XXS，log 顯示 `no changes needed`、`offloaded 66/66 layers to GPU`；KV buffer 1,334.50 MiB（實際 n_ctx 被補齊到 40,192 → 40,192 × 34,816 B = 1,334.50 MiB，符合 findings §3 公式）。**預設 verbosity 3 不會印出 buffer 資訊，E2 必須加 `-lv 4`**
-- 2026-10-12 試跑 IQ4_XS（測試用）：Windows 上慣用的 `-c 83536` 在 Ubuntu **啟動失敗**（compute buffer 489 MiB cudaMalloc OOM；fit 預估 16,144 MiB > 可用 15,544 MiB）。`-c 65536` 可以啟動（66/66 層、KV 2,176 MiB、compute 400.28 MiB、nvidia-smi 15,626 MiB）。Windows 為何放得下 83K 尚未確認（推測：Sysmem Fallback 偷用系統 RAM，或舊版 build 的 compute buffer 較小），待查
+- 2026-10-12 試跑 IQ4_XS（測試用）：Windows 上慣用的 `-c 83536` 在 Ubuntu **啟動失敗**（compute buffer 489 MiB cudaMalloc OOM；fit 預估 16,144 MiB > 可用 15,544 MiB）。`-c 65536` 可以啟動（66/66 層、KV 2,176 MiB、compute 400.28 MiB、nvidia-smi 15,626 MiB）。Windows 為何放得下 83K：已查明是 WDDM 允許超配、部分放進系統記憶體（見上方 Windows 端說明與 findings §2.2），不是 build 差異造成的（兩邊 fit 預估同為 16,144 MiB）
 - 日常 Web UI（非實驗）：容器名 `llama`，無 restart policy，從操作端 `ssh -N -L 8000:127.0.0.1:8000 main-ubuntu` 後開 `http://localhost:8000`
 
 2026-10-12 實機狀態（hostname `MyWhiteUbuntu`，SSH 別名 `main-ubuntu`，sudo 需密碼）：
@@ -110,7 +112,7 @@ docker run -d --name llama --gpus all --restart unless-stopped \
 - **`-np` 預設值大於 1 會讓 KV cache 倍增**，一律加 `-np 1`
 - **新版 build 預設開啟 reasoning preserve**，多輪對話會累積思考內容吃掉 context；需要時加 `--no-reasoning-preserve`
 - **思考預算預設無上限**（log：`budget=2147483647 tokens`）。曾發生一題思考 82,300 token、耗盡 context 而沒有輸出最終答案的情況。評估實驗必須限制思考長度或關閉思考
-- **Windows 的 Sysmem Fallback** 會讓 VRAM 溢出時默默改用系統 RAM，速度掉到個位數。NVIDIA 控制面板應設為 Prefer No Sysmem Fallback
+- **Windows 的 Sysmem Fallback** 會讓 VRAM 溢出時默默改用系統 RAM。溢出量小時（約 300 MiB）只拖慢 prefill、生成速度看起來正常，**單看 Web UI 顯示的 tg 會察覺不到**（2026-10-12 實測，findings §2.2）；溢出量大時連生成都會掉到個位數。NVIDIA 控制面板可設為 Prefer No Sysmem Fallback，讓它像 Linux 一樣直接失敗（此設定的效果尚未實測）
 - **SSH 斷線會殺掉前景的 llama-server**（Windows 上直接在 SSH 裡啟動時）。長時間任務要背景執行
 - **llama.cpp 的 fit 機制**在放不下時會自動調參數；看到 `no changes needed` 與 `offloaded 66/66 layers to GPU` 才代表全放進 GPU。log 中「cannot meet free memory target」只代表沒達到它的安全餘裕目標，記憶體是預先配置的，使用中不會再成長
 - 映像預設環境變數已設 `--host 0.0.0.0`，指令中再寫會出現覆蓋警告，無害

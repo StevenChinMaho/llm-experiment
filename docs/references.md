@@ -28,6 +28,13 @@
 | 13 | 資料集 | Merity et al. (2016), "Pointer Sentinel Mixture Models" | WikiText-2 資料集出處 | 未查證 | |
 | 14 | 模型 | Qwen 團隊在 arXiv 的技術報告（Qwen3 Technical Report，或 Qwen3.8 若有） | 所用模型的官方說明 | 未查證，需確認 Qwen3.8 是否有正式報告 | |
 | 15 | 邊緣運算（選配） | Mao et al. (2017), "A Survey on Mobile Edge Computing: The Communication Perspective" | 與無線網路／邊緣部署的連結 | 未查證 | |
+| 16 | 思考預算（RQ3） | Snell et al. (2024), "Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters" | 「多想」能否替代「更大／更精確的模型」，是 RQ3 的直接理論基礎 | 未查證 | |
+| 17 | MTP（RQ2） | Gloeckle et al. (2024), "Better & Faster Large Language Models via Multi-token Prediction" | 多 token 預測頭的原理，以及拿它做推測解碼加速 | 未查證 | |
+| 18 | MTP（RQ2） | DeepSeek-AI (2024), "DeepSeek-V3 Technical Report" | 大型模型實際採用 MTP 模組的案例 | 未查證 | |
+| 19 | 推測解碼（RQ2） | Chen et al. (2023), "Accelerating Large Language Model Decoding with Speculative Sampling" | 推測取樣在使用 temperature 時仍保持輸出分布不變（說明 MTP 無損）；與 #8 互補 | 未查證 | |
+| 20 | 長 context 評估（延伸 X1） | Hsieh et al. (2024), "RULER: What's the Real Context Size of Your Long-Context Language Models?" | 以程式產生、可控長度的長文件檢索題設計 | 未查證，只有做 X1 才需要 | |
+
+**KL 散度作為量化評估指標：** 這是 llama.cpp 社群常用的做法，但我目前沒有能確定出處的論文可以推薦。先以官方文件（W7）引用；若要找學術文獻，請在 Google Scholar 搜尋「quantization KL divergence LLM evaluation」，找到並讀過後再加入。
 
 ## 官方文件與技術資源
 
@@ -41,6 +48,8 @@ MLA 網頁格式大致為：`作者或組織. "頁面標題." 網站名稱, 網�
 | W4 | Qwen/Qwen3.8-27B（Hugging Face 模型頁） | 原始模型、授權、建議取樣參數 | 未整理 |
 | W5 | Model Context Protocol 規範（modelcontextprotocol.io） | RQ3 的 MCP 架構 | 未整理 |
 | W6 | NVIDIA Container Toolkit 安裝文件 | 部署環境 | 未整理 |
+| W7 | llama.cpp 的 llama-perplexity 說明文件（tools/perplexity 的 README） | KL 散度、Same top p 等指標的定義 | 未整理 |
+| W8 | unsloth/Qwen3.8-27B-GGUF 的 MTP 檔與說明 | MTP 推測解碼的使用方式 | 未整理 |
 
 ## 建議比例
 
