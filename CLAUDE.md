@@ -92,9 +92,10 @@
 - [x] 附帶發現：Windows 超配 VRAM 只拖慢 prefill（docs/findings-so-far.md §2.2）
 - [x] 研究問題定案（2026-10-12）
 - [ ] 向老師確認研究範圍，以及封面／目錄／參考文獻是否算進 25 頁
-- [ ] 撰寫評估腳本 `scripts/run_eval.py`（自動送題、重複、批改、統計、TTFT／TTA）
-- [ ] 下載額外量化檔（UD-IQ2_XXS、UD-Q2_K_XL、UD-Q4_K_XL、Q8_0、MTP 檔）
-- [ ] E1 速度（llama-bench，兩台機器）＋ MTP 可行性測試 —— 期中前
+- [x] 撰寫評估腳本 `scripts/run_eval.py`（2026-10-13；`--self-test` 38 題全過，已對 svr 做端對端測試）
+- [x] 下載額外量化檔（2026-10-13，全部 sha256 吻合）
+- [x] MTP 可行性測試（2026-10-13，可用，findings §2.3）
+- [ ] E1 速度（llama-bench）—— 3060 已完成（findings §2.4），5060 Ti 待做
 - [ ] E2 記憶體（啟動 log 解析＋公式比對、最大 context）—— 期中前
 - [ ] E3 品質（KL 散度＋困惑度，WikiText-2）—— 期中前
 - [ ] E4 難度校準試跑 —— 期中前；正式的量化 × 思考預算實驗 —— 期末
