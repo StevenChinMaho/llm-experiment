@@ -104,6 +104,11 @@ docker run -d --name llama --gpus all --restart unless-stopped \
 |---|---|---|---|
 | Qwen3.8-27B-UD-IQ3_XXS.gguf | 10,934,860,704 | `c0b7c3038681ed2e3040456c1dd45f9858b6c2290bed172c70388a94874f3eee` | 主力機 Ubuntu、server、HF blob 名稱三者一致 |
 | Qwen3.8-27B-UD-IQ4_XS.gguf | 14,252,845,984 | `40fac4050e940397dbf13087afd50f4734a11805bf9d65ef8ddd7483470e6199` | 主力機 Ubuntu 與 HF blob 名稱一致（server 沒有此檔） |
+| MTP/mtp-Qwen3.8-27B-Q4_0.gguf | 1,369,590,656 | `50d9ce5a6da381bbcfb31061cf73df94a90e6faf8efeddee379a9cb8f1501c6e` | 2026-10-13 從 HF 下載，與 HF API 的 lfs oid 一致 |
+
+主力機 Ubuntu 另有 `/nvme477/llama/models/extra/`（**非實驗用，正式實驗不要載入**；2026-10-13 從 Windows C: 複製，sha256 與 HF blob 名稱一致）：`unsloth-Qwen3.8-27B-mmproj-BF16.gguf`（`83ee4f4f…`）、`huihui-Qwen3.8-27B-abliterated-UD-IQ4_XS.gguf`（`d83adbbb…`）、`huihui-Qwen3.8-27B-abliterated-mmproj-bf16.gguf`（`c9a09064…`）。
+
+其他量化檔（UD-IQ2_XXS、UD-Q2_K_XL、UD-Q4_K_XL、Q8_0）2026-10-13 起以 `~/llama-logs/download_quants.sh` 從 HF revision `4ca72078…` 下載中，完成後補進上表。
 
 ## 已知陷阱（都實際踩過）
 
