@@ -15,7 +15,13 @@
 | 儲存 | Gen4 NVMe 2TB（Windows C:）、Gen3 NVMe 1TB、120GB SATA SSD（Ubuntu 雙系統） |
 | 區網 IP | 192.168.0.57 |
 
-### Windows 端（目前的主要使用環境）
+### 開機與切換（2026-10-13 使用者說明）
+
+- **預設開機進 Windows**。要進 Ubuntu：在 Windows 執行 `C:\Users\MahoKururinpa\bin\to-ubuntu.ps1`（只影響下一次開機，之後重開又回到 Windows）
+- **遠端喚醒**：從 kururinpa-svr 執行 `wakeonlan -i 192.168.0.57 10:ff:e0:88:a7:0b`
+- 使用者通常下午或晚上自用 Windows、睡覺時關機；平日白天與週三 07:00～21:00 可用於實驗。每次 Ubuntu 開機後要先執行 `gpu-display off` 關閉獨顯輸出
+
+### Windows 端（使用者日常自用）
 
 - 驅動 617.14，`nvidia-smi` 顯示 CUDA 13.4
 - llama.cpp 由 conda-forge 安裝在 Miniforge 的 `llm` 環境（CUDA＋Vulkan 雙後端），路徑 `C:\Users\MahoKururinpa\miniforge3\envs\llm\Library\bin\llama-server.exe`。`--version` 顯示 `0.3.0-dev (build 0, commit unknown)`、MSVC 19.44 編譯。`--version` 不顯示 build，但 **`conda list -n llm` 顯示 conda-forge 套件 `llama.cpp 10751 cuda130_h0f3e06c_0`，即 build 10751**（cuda-version 13.0、libcublas 13.1.1.3；2026-10-12 查）。比 server／Ubuntu 的 b11347 舊約 600 個 build

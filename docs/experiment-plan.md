@@ -112,7 +112,13 @@ llama-perplexity -m /models/<量化>.gguf -f wiki.test.raw -c 2048 -ngl 99 -fa 1
 
 ## E4 量化 × 思考預算（RQ3）
 
-題目：`eval/questions.json`。`hard` 組 8 題、`easy` 組 8 題，答案都已用程式驗證。題數太少（16 題時 Wilson 信賴區間約 ±20～25 個百分點），正式實驗前要擴充到約 40 題，使用**配對設計**。擴充方式（自己出題，或混入公開 benchmark 子集）待使用者決定；新題目的答案必須用程式驗證後才能加入。
+題目（2026-10-13 定案，使用者決定用公開 benchmark）：
+
+- **`eval/aime_2026.json`：AIME 2026 I＋II 共 30 題**（來源 MathArena/aime_2026，CC BY-NC-SA 4.0；引用 references #21）。答案皆為 0～999 整數，用 `exact_int` 批改。答案與 math-ai/aime26 逐題比對 30/30 一致；題目文字和三份來源逐字比對，I-10、I-13 有抄寫錯誤，已依 AoPS Wiki 官方題目改正並以 `eval/verify_aime_2026.py` 程式重算答案
+- **`eval/questions.json` 的 `hard` 組 8 題**：自己出的題目，不可能出現在訓練資料中，用來對照汙染的影響
+- 合計 **38 題**，使用**配對設計**
+- **汙染風險**：AIME 2026 在 2026 年 2 月舉行，早於 Qwen3.8-27B 發布（第三方報導為 2026-08-14，未經官方確認），模型可能看過這些題目。報告的限制章節要說明，並比較 AIME 與 hard 組的答對率差異
+- `easy` 組 8 題留作「關閉思考」條件的對照
 
 ### 設計
 

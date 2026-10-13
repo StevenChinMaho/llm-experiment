@@ -1,0 +1,12 @@
+2026-10-13T15:59:14+08:00 停止容器 llama
+2026-10-13T15:59:19+08:00 GPU 開始前：1 MiB, 0 %
+2026-10-13T15:59:19+08:00 開始 partial_IQ4_XS_ngl57：llama-bench -m /models/Qwen3.8-27B-UD-IQ4_XS.gguf -ngl 57 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0 -r 3
+2026-10-13T15:59:38+08:00 失敗或逾時 partial_IQ4_XS_ngl57（exit 1），stderr 最後幾行：
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 573.00 MiB on device 0: cudaMalloc failed: out of memory
+ggml_gallocr_reserve_n_impl: failed to allocate CUDA0 buffer of size 600834048
+graph_reserve: failed to allocate compute buffers
+llama_init_from_model: failed to initialize the context: failed to allocate compute pp buffers
+llama_bench: error: failed to create context with model '/models/Qwen3.8-27B-UD-IQ4_XS.gguf'
+2026-10-13T15:59:38+08:00 ALL_DONE
+2026-10-13T15:59:38+08:00 重新啟動容器 llama
+2026-10-13T15:59:38+08:00 END
