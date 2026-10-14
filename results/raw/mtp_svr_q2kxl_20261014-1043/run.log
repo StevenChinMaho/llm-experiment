@@ -1,0 +1,64 @@
+2026-10-14T10:43:26+08:00 啟動 mtp_off：
+2026-10-14T10:43:37+08:00 mtp_off 就緒：nvidia-smi 9631 MiB
+mtp_off code r1: tg=22.17 tok=512 draft=None acc=None rate=None
+mtp_off code r2: tg=22.08 tok=512 draft=None acc=None rate=None
+mtp_off math r1: tg=22.05 tok=512 draft=None acc=None rate=None
+mtp_off math r2: tg=22.03 tok=512 draft=None acc=None rate=None
+mtp_off chat r1: tg=22.02 tok=512 draft=None acc=None rate=None
+mtp_off chat r2: tg=22.03 tok=475 draft=None acc=None rate=None
+mtp_off_greedy code r1: tg=22.00 tok=512 draft=None acc=None rate=None
+mtp_off_greedy math r1: tg=22.00 tok=512 draft=None acc=None rate=None
+mtp_off_greedy chat r1: tg=21.99 tok=498 draft=None acc=None rate=None
+{'log': '/home/maho/mtp/mtp_svr_q2kxl_20261014-1043/server_mtp_off.log', 'n_ctx': 16384, 'offloaded': '66/66', 'cuda_model_mib': 8630.57, 'cpu_mapped_mib': 397.85, 'kv_mib': 544.0, 'rs_mib': 149.62, 'cuda_compute_mib': 160.28, 'host_compute_mib': 36.28, 'fit_projected_mib': 9484, 'fit_free_mib': 11648, 'loaded': True, 'kv_formula_mib': 544.0, 'kv_err_mib': 0.0, 'cuda_sum_mib': 9484.47}
+2026-10-14T10:47:09+08:00 啟動 mtp_n1：--spec-type draft-mtp --spec-draft-model /models/MTP/mtp-Qwen3.8-27B-Q4_0.gguf --spec-draft-n-max 1
+2026-10-14T10:47:15+08:00 mtp_n1 就緒：nvidia-smi 11061 MiB
+mtp_n1 code r1: tg=33.49 tok=512 draft=266 acc=245 rate=0.921
+mtp_n1 code r2: tg=33.53 tok=512 draft=266 acc=245 rate=0.921
+mtp_n1 math r1: tg=33.63 tok=512 draft=264 acc=246 rate=0.932
+mtp_n1 math r2: tg=33.63 tok=512 draft=264 acc=246 rate=0.932
+mtp_n1 chat r1: tg=26.34 tok=423 draft=279 acc=143 rate=0.513
+mtp_n1 chat r2: tg=26.41 tok=442 draft=291 acc=150 rate=0.515
+mtp_n1_greedy code r1: tg=33.86 tok=512 draft=262 acc=248 rate=0.947
+mtp_n1_greedy math r1: tg=33.83 tok=512 draft=263 acc=248 rate=0.943
+mtp_n1_greedy chat r1: tg=27.96 tok=510 draft=317 acc=193 rate=0.609
+{'log': '/home/maho/mtp/mtp_svr_q2kxl_20261014-1043/server_mtp_n1.log', 'n_ctx': 16384, 'offloaded': '66/66', 'cuda_model_mib': 8965.31, 'cpu_mapped_mib': 397.85, 'kv_mib': 544.0, 'rs_mib': 299.25, 'cuda_compute_mib': 160.28, 'host_compute_mib': 36.28, 'fit_projected_mib': 10921, 'fit_free_mib': 11498, 'loaded': True, 'kv_formula_mib': 544.0, 'kv_err_mib': 0.0, 'cuda_sum_mib': 9968.84}
+2026-10-14T10:49:44+08:00 啟動 mtp_n2：--spec-type draft-mtp --spec-draft-model /models/MTP/mtp-Qwen3.8-27B-Q4_0.gguf --spec-draft-n-max 2
+2026-10-14T10:49:48+08:00 mtp_n2 就緒：nvidia-smi 11211 MiB
+mtp_n2 code r1: tg=37.88 tok=512 draft=382 acc=320 rate=0.838
+mtp_n2 code r2: tg=38.08 tok=512 draft=380 acc=321 rate=0.845
+mtp_n2 math r1: tg=39.07 tok=512 draft=369 acc=326 rate=0.883
+mtp_n2 math r2: tg=39.55 tok=512 draft=364 acc=328 rate=0.901
+mtp_n2 chat r1: tg=26.29 tok=459 draft=494 acc=212 rate=0.429
+mtp_n2 chat r2: tg=25.39 tok=501 draft=558 acc=222 rate=0.398
+mtp_n2_greedy code r1: tg=39.74 tok=512 draft=362 acc=329 rate=0.909
+mtp_n2_greedy math r1: tg=40.80 tok=512 draft=353 acc=334 rate=0.946
+mtp_n2_greedy chat r1: tg=27.00 tok=512 draft=536 acc=243 rate=0.453
+{'log': '/home/maho/mtp/mtp_svr_q2kxl_20261014-1043/server_mtp_n2.log', 'n_ctx': 16384, 'offloaded': '66/66', 'cuda_model_mib': 8965.31, 'cpu_mapped_mib': 397.85, 'kv_mib': 544.0, 'rs_mib': 448.88, 'cuda_compute_mib': 160.28, 'host_compute_mib': 36.28, 'fit_projected_mib': 11071, 'fit_free_mib': 11348, 'loaded': True, 'kv_formula_mib': 544.0, 'kv_err_mib': 0.0, 'cuda_sum_mib': 10118.47}
+2026-10-14T10:52:08+08:00 啟動 mtp_n3：--spec-type draft-mtp --spec-draft-model /models/MTP/mtp-Qwen3.8-27B-Q4_0.gguf --spec-draft-n-max 3
+2026-10-14T10:52:12+08:00 mtp_n3 就緒：nvidia-smi 11361 MiB
+mtp_n3 code r1: tg=39.80 tok=512 draft=450 acc=360 rate=0.8
+mtp_n3 code r2: tg=39.44 tok=512 draft=455 acc=359 rate=0.789
+mtp_n3 math r1: tg=41.88 tok=512 draft=429 acc=368 rate=0.858
+mtp_n3 math r2: tg=41.83 tok=512 draft=429 acc=368 rate=0.858
+mtp_n3 chat r1: tg=22.98 tok=459 draft=702 acc=224 rate=0.319
+mtp_n3 chat r2: tg=22.17 tok=458 draft=726 acc=216 rate=0.298
+mtp_n3_greedy code r1: tg=41.60 tok=512 draft=430 acc=367 rate=0.853
+mtp_n3_greedy math r1: tg=43.14 tok=512 draft=414 acc=372 rate=0.899
+mtp_n3_greedy chat r1: tg=23.79 tok=512 draft=756 acc=259 rate=0.343
+{'log': '/home/maho/mtp/mtp_svr_q2kxl_20261014-1043/server_mtp_n3.log', 'n_ctx': 16384, 'offloaded': '66/66', 'cuda_model_mib': 8965.31, 'cpu_mapped_mib': 397.85, 'kv_mib': 544.0, 'rs_mib': 598.5, 'cuda_compute_mib': 160.28, 'host_compute_mib': 36.28, 'fit_projected_mib': 11220, 'fit_free_mib': 11198, 'loaded': True, 'kv_formula_mib': 544.0, 'kv_err_mib': 0.0, 'cuda_sum_mib': 10268.09}
+2026-10-14T10:54:35+08:00 啟動 mtp_n4：--spec-type draft-mtp --spec-draft-model /models/MTP/mtp-Qwen3.8-27B-Q4_0.gguf --spec-draft-n-max 4
+2026-10-14T10:54:39+08:00 mtp_n4 就緒：nvidia-smi 11511 MiB
+mtp_n4 code r1: tg=41.36 tok=512 draft=518 acc=381 rate=0.736
+mtp_n4 code r2: tg=39.29 tok=512 draft=546 acc=374 rate=0.685
+mtp_n4 math r1: tg=43.66 tok=512 draft=491 acc=388 rate=0.79
+mtp_n4 math r2: tg=43.02 tok=512 draft=497 acc=386 rate=0.777
+mtp_n4 chat r1: tg=19.51 tok=508 draft=1096 acc=233 rate=0.213
+mtp_n4 chat r2: tg=21.72 tok=504 draft=976 acc=259 rate=0.265
+mtp_n4_greedy code r1: tg=42.63 tok=512 draft=501 acc=385 rate=0.768
+mtp_n4_greedy math r1: tg=45.07 tok=512 draft=475 acc=392 rate=0.825
+mtp_n4_greedy chat r1: tg=21.03 tok=458 draft=916 acc=228 rate=0.249
+{'log': '/home/maho/mtp/mtp_svr_q2kxl_20261014-1043/server_mtp_n4.log', 'n_ctx': 16384, 'offloaded': '66/66', 'cuda_model_mib': 8965.31, 'cpu_mapped_mib': 397.85, 'kv_mib': 544.0, 'rs_mib': 748.12, 'cuda_compute_mib': 160.28, 'host_compute_mib': 36.28, 'fit_projected_mib': 11370, 'fit_free_mib': 11048, 'loaded': True, 'kv_formula_mib': 544.0, 'kv_err_mib': 0.0, 'cuda_sum_mib': 10417.71}
+2026-10-14T10:57:08+08:00 啟動 mtp_n6：--spec-type draft-mtp --spec-draft-model /models/MTP/mtp-Qwen3.8-27B-Q4_0.gguf --spec-draft-n-max 6
+2026-10-14T10:57:13+08:00 mtp_n6 就緒：nvidia-smi 11809 MiB
+2026-10-14T10:57:13+08:00 已重新啟動 llama
+2026-10-14T10:57:13+08:00 END

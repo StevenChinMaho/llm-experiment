@@ -1,0 +1,97 @@
+2026-10-14T11:09:08+08:00 啟動 mtp_off：
+2026-10-14T11:09:18+08:00 mtp_off 就緒：nvidia-smi 9631 MiB
+mtp_off code r1: tg=22.19 tok=512 draft=None acc=None rate=None
+mtp_off code r2: tg=22.11 tok=512 draft=None acc=None rate=None
+mtp_off math r1: tg=22.06 tok=512 draft=None acc=None rate=None
+mtp_off math r2: tg=22.06 tok=512 draft=None acc=None rate=None
+mtp_off chat r1: tg=22.04 tok=512 draft=None acc=None rate=None
+mtp_off chat r2: tg=22.03 tok=475 draft=None acc=None rate=None
+mtp_off_greedy code r1: tg=22.02 tok=512 draft=None acc=None rate=None
+mtp_off_greedy math r1: tg=22.01 tok=512 draft=None acc=None rate=None
+mtp_off_greedy chat r1: tg=22.00 tok=498 draft=None acc=None rate=None
+{'log': '/home/maho/mtp/mtp_svr_q2kxl_20261014-1112_n6/server_mtp_off.log', 'n_ctx': 16384, 'offloaded': '66/66', 'cuda_model_mib': 8630.57, 'cpu_mapped_mib': 397.85, 'kv_mib': 544.0, 'rs_mib': 149.62, 'cuda_compute_mib': 160.28, 'host_compute_mib': 36.28, 'fit_projected_mib': 9484, 'fit_free_mib': 11648, 'loaded': True, 'kv_formula_mib': 544.0, 'kv_err_mib': 0.0, 'cuda_sum_mib': 9484.47}
+2026-10-14T11:12:50+08:00 啟動 mtp_n6：--spec-type draft-mtp --spec-draft-model /models/MTP/mtp-Qwen3.8-27B-Q4_0.gguf --spec-draft-n-max 6
+2026-10-14T11:12:57+08:00 mtp_n6 就緒：nvidia-smi 11809 MiB
+Traceback (most recent call last):
+  File "/home/maho/mtptools/mtp_probe.py", line 65, in <module>
+    main()
+    ~~~~^^
+  File "/home/maho/mtptools/mtp_probe.py", line 40, in main
+    r = post(f"{a.url}/v1/chat/completions", {
+        "messages": [{"role": "user", "content": text}],
+        "max_tokens": a.max_tokens, "seed": rep, "cache_prompt": False,
+        "chat_template_kwargs": {"enable_thinking": a.thinking == "on"},
+        **({"temperature": a.temperature} if a.temperature is not None else {})})
+  File "/home/maho/mtptools/mtp_probe.py", line 23, in post
+    with urllib.request.urlopen(req, timeout=1800) as r:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/urllib/request.py", line 487, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.14/urllib/request.py", line 504, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "/usr/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.14/urllib/request.py", line 1350, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/urllib/request.py", line 1325, in do_open
+    r = h.getresponse()
+  File "/usr/lib/python3.14/http/client.py", line 1459, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/client.py", line 336, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/client.py", line 305, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+                             " response")
+http.client.RemoteDisconnected: Remote end closed connection without response
+Traceback (most recent call last):
+  File "/home/maho/mtptools/mtp_probe.py", line 65, in <module>
+    main()
+    ~~~~^^
+  File "/home/maho/mtptools/mtp_probe.py", line 40, in main
+    r = post(f"{a.url}/v1/chat/completions", {
+        "messages": [{"role": "user", "content": text}],
+        "max_tokens": a.max_tokens, "seed": rep, "cache_prompt": False,
+        "chat_template_kwargs": {"enable_thinking": a.thinking == "on"},
+        **({"temperature": a.temperature} if a.temperature is not None else {})})
+  File "/home/maho/mtptools/mtp_probe.py", line 23, in post
+    with urllib.request.urlopen(req, timeout=1800) as r:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/urllib/request.py", line 487, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.14/urllib/request.py", line 504, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "/usr/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.14/urllib/request.py", line 1350, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/urllib/request.py", line 1325, in do_open
+    r = h.getresponse()
+  File "/usr/lib/python3.14/http/client.py", line 1459, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/client.py", line 336, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/client.py", line 297, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/socket.py", line 725, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+{'log': '/home/maho/mtp/mtp_svr_q2kxl_20261014-1112_n6/server_mtp_n6.log', 'n_ctx': 16384, 'offloaded': '66/66', 'cuda_model_mib': 8965.31, 'cpu_mapped_mib': 397.85, 'kv_mib': 544.0, 'rs_mib': 1047.38, 'cuda_compute_mib': 160.28, 'host_compute_mib': 36.28, 'fit_projected_mib': 11669, 'fit_free_mib': 10750, 'loaded': True, 'kv_formula_mib': 544.0, 'kv_err_mib': 0.0, 'cuda_sum_mib': 10716.97}
+2026-10-14T11:13:00+08:00 ALL_DONE
+2026-10-14T11:13:01+08:00 已重新啟動 llama
+2026-10-14T11:13:01+08:00 END

@@ -31,6 +31,8 @@ def main():
     p.add_argument("--out", required=True)
     p.add_argument("--reps", type=int, default=2)
     p.add_argument("--max-tokens", type=int, default=512)
+    p.add_argument("--temperature", type=float, default=None, help="不給就用模型內建值；0 = greedy（用來比對 MTP 是否無損）")
+    p.add_argument("--thinking", choices=["on", "off"], default="off")
     a = p.parse_args()
     for kind, text in PROMPTS.items():
         for rep in range(1, a.reps + 1):
@@ -38,7 +40,8 @@ def main():
             r = post(f"{a.url}/v1/chat/completions", {
                 "messages": [{"role": "user", "content": text}],
                 "max_tokens": a.max_tokens, "seed": rep, "cache_prompt": False,
-                "chat_template_kwargs": {"enable_thinking": False}})
+                "chat_template_kwargs": {"enable_thinking": a.thinking == "on"},
+                **({"temperature": a.temperature} if a.temperature is not None else {})})
             tm = r.get("timings", {})
             rec = {"label": a.label, "kind": kind, "rep": rep,
                    "time": datetime.datetime.now().isoformat(timespec="seconds"),
@@ -47,7 +50,9 @@ def main():
                    "tg_tps": tm.get("predicted_per_second"), "pp_tps": tm.get("prompt_per_second"),
                    "draft_n": tm.get("draft_n"), "draft_n_accepted": tm.get("draft_n_accepted"),
                    "timings_raw": tm,
-                   "content_head": (r["choices"][0]["message"].get("content") or "")[:120]}
+                   "temperature": a.temperature, "thinking": a.thinking,
+                   "content": r["choices"][0]["message"].get("content") or "",
+                   "reasoning": r["choices"][0]["message"].get("reasoning_content") or ""}
             if rec["draft_n"]:
                 rec["accept_rate"] = round(rec["draft_n_accepted"] / rec["draft_n"], 3)
             with open(a.out, "a", encoding="utf-8") as f:
