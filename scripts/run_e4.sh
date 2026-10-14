@@ -26,7 +26,7 @@ while [ $# -gt 0 ]; do
   esac
 done
 [ -n "$MODEL" ] && [ -n "$BUDGET" ] && [ -n "$LABEL" ] && [ -n "$OUT" ] || { echo "需要 --model --budget --label --out" >&2; exit 2; }
-MAXTOK=${MAXTOK:-$((BUDGET + 2048))}   # 思考預算＋給答案的空間
+MAXTOK=${MAXTOK:-$((BUDGET + 4096))}   # 思考預算＋給答案的空間（校準時 +2048 不夠，I-15 被截斷）
 mkdir -p "$OUT"
 LOG="$OUT/run.log"
 log() { echo "$(date -Is) $*" | tee -a "$LOG"; }
