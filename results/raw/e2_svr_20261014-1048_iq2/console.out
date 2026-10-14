@@ -1,0 +1,15 @@
+GPU 開始前： 1, 0
+fixed Qwen3.8-27B-UD-IQ2_XXS.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=7079
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=7079
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 262144: FAIL (exited) n_ctx=262144 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 133120: FAIL (exited) n_ctx=133120 kv=4420.0 compute=None smi=None
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 68608: OK (ok) n_ctx=68608 kv=2278.0 compute=415.28 smi=9509
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 100864: OK (ok) n_ctx=100864 kv=3349.0 compute=572.78 smi=10739
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 116992: OK (ok) n_ctx=116992 kv=3884.5 compute=651.53 smi=11353
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 124928: OK (ok) n_ctx=124928 kv=4148.0 compute=690.28 smi=11655
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 129024: OK (ok) n_ctx=129024 kv=4284.0 compute=710.28 smi=11811
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 131072: OK (ok) n_ctx=131072 kv=4352.0 compute=720.28 smi=11889
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 132096: FAIL (exited) n_ctx=132096 kv=4386.0 compute=725.28 smi=None
+RESULT Qwen3.8-27B-UD-IQ2_XXS.gguf max_ctx≈131072（132096 失敗）
+已重新啟動 llama
+ALL_DONE

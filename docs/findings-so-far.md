@@ -159,6 +159,30 @@ Windows 執行中以效能計數器查得：該行程 **Dedicated 16,014 MiB＋S
 3. **與 E1 結合（圖 e3_quality_speed.png (b)）**：16GB 上 IQ4_XS 是「全部放進 GPU」的最高品質選項（27.92 tok/s、KLD 0.027）；再往上到 Q4_K_XL，品質再提升一倍，代價是速度掉 37%（部分卸載）。12GB 上 IQ3_XXS 是全 GPU 的最高品質選項（21.44 tok/s、KLD 0.072），往上的 IQ4_XS 速度掉 59%
 4. 限制：基準是 Q8_0 而不是 BF16；WikiText-2 是英文；只代表「逐 token 分布」的差異，對任務答對率的影響要看 E4
 
+### 2.7 E2 記憶體：RTX 3060（2026-10-14）
+
+- 原始資料：`results/raw/e2_svr_20261014-1027/`、`results/raw/e2_svr_20261014-1048_iq2/`；整理表：`results/processed/e2_svr.md`；腳本：`scripts/run_e2.py`、`scripts/parse_server_log.py`、`scripts/analyze_e2.py`
+- 條件：kururinpa-svr、server 映像 b11347、`-fit off -fa on -ctk/-ctv q8_0 -np 1 --cache-ram 0 -lv 4`、MC 關閉。成功＝能啟動、全部層在 GPU、能完成一次短 completion
+
+**全 GPU 的最大 context（實測，二分搜尋解析度 1024）：**
+
+| 量化 | 最大 -c | 失敗 | 最大時 nvidia-smi |
+|---|---|---|---|
+| UD-IQ2_XXS | **131,072** | 132,096 | 11,889 MiB |
+| UD-Q2_K_XL | **75,520** | 76,544 | 11,883 MiB |
+| UD-IQ3_XXS | **48,384** | 49,408 | 11,905 MiB |
+
+**記憶體模型（21 個點全部吻合）：**
+
+1. KV cache ＝ n_ctx × 34 KiB：21 個點誤差全為 **0.00 MiB**
+2. 運算暫存（n_ctx ≥ 16384）＝ 80.28 MiB ＋ 5 KiB × n_ctx：15 個點殘差 0.00 MiB（擬合值；n_ctx = 4096 時 126.28 MiB，高於直線）
+3. 遞迴狀態固定 149.62 MiB；nvidia-smi 比 log 四項加總固定多約 146 MiB（CUDA 本身的開銷）
+4. → **每多 1 個 token 的 VRAM 成本是 39 KiB**（KV 34＋運算暫存 5，推導值）。對比：若當成 64 層全注意力、KV f16 的傳統 Transformer，是 256 KiB
+
+**對 RQ2 的意義：** 12GB 卡上從 IQ3_XXS 降到 IQ2_XXS，KLD 變成 3.4 倍（§2.6）、tg 只快 14%（§2.4），但最大 context 從 4.8 萬增加到 13.1 萬（2.7 倍）。低量化在 12GB 卡上換到的主要是 context 容量
+
+**待驗證的預測（推導值）：** 用上面的模型預測主力機 5060 Ti（CUDA 可見 15,841 MiB）上 IQ4_XS 的最大 context ≈ (15,841 − 12,726.35 − 149.62 − 80.28 − 146) ÷ 39 KiB ≈ **7.2 萬**。已知 -c 65536 可以、83536 不行（§2.1），與預測一致；E2 主力機實測後確認
+
 ## 3. KV cache 公式（推導，已用 log 驗證）
 
 ```
