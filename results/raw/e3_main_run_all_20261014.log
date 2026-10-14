@@ -1,0 +1,87 @@
+2026-10-14T09:41:14+08:00 開始 base：Qwen3.8-27B-Q8_0.gguf chunks=-1
+2026-10-14T09:48:38+08:00 完成，耗時 444 秒
+2026-10-14T09:48:38+08:00 基準檔大小：73671468940 bytes
+7.21.915.804 I Final estimate: PPL = 6.3541 +/- 0.04055
+2026-10-14T09:48:38+08:00 ALL_DONE
+2026-10-14T09:48:38+08:00 END
+2026-10-14T09:48:38+08:00 開始 kld：Qwen3.8-27B-UD-IQ2_XXS.gguf chunks=-1
+2026-10-14T09:54:32+08:00 完成，耗時 354 秒
+2026-10-14T09:54:32+08:00 基準檔大小：73671468940 bytes
+chunk             PPL               ln(PPL(Q)/PPL(base))          KL Divergence              Δp RMS            Same top p
+Mean PPL(Q)                   :   7.545875 ±   0.049074
+Mean PPL(base)                :   6.350763 ±   0.040468
+Cor(ln(PPL(Q)), ln(PPL(base))):  93.99%
+Mean ln(PPL(Q)/PPL(base))     :   0.172426 ±   0.002236
+Mean PPL(Q)/PPL(base)         :   1.188184 ±   0.002656
+Mean PPL(Q)-PPL(base)         :   1.195111 ±   0.017684
+====== KL divergence statistics ======
+Mean    KLD:   0.244232 ±   0.001635
+Mean    Δp: -4.068 ± 0.035 %
+Same top p: 79.701 ± 0.104 %
+2026-10-14T09:54:32+08:00 ALL_DONE
+2026-10-14T09:54:32+08:00 END
+2026-10-14T09:54:32+08:00 開始 kld：Qwen3.8-27B-UD-Q2_K_XL.gguf chunks=-1
+2026-10-14T10:00:48+08:00 完成，耗時 376 秒
+2026-10-14T10:00:48+08:00 基準檔大小：73671468940 bytes
+chunk             PPL               ln(PPL(Q)/PPL(base))          KL Divergence              Δp RMS            Same top p
+Mean PPL(Q)                   :   6.657259 ±   0.042406
+Mean PPL(base)                :   6.350763 ±   0.040468
+Cor(ln(PPL(Q)), ln(PPL(base))):  97.45%
+Mean ln(PPL(Q)/PPL(base))     :   0.047133 ±   0.001439
+Mean PPL(Q)/PPL(base)         :   1.048261 ±   0.001508
+Mean PPL(Q)-PPL(base)         :   0.306496 ±   0.009555
+====== KL divergence statistics ======
+Mean    KLD:   0.102022 ±   0.001233
+Mean    Δp: -1.327 ± 0.023 %
+Same top p: 87.501 ± 0.086 %
+2026-10-14T10:00:48+08:00 ALL_DONE
+2026-10-14T10:00:48+08:00 END
+2026-10-14T10:00:48+08:00 開始 kld：Qwen3.8-27B-UD-IQ3_XXS.gguf chunks=-1
+2026-10-14T10:06:43+08:00 完成，耗時 355 秒
+2026-10-14T10:06:43+08:00 基準檔大小：73671468940 bytes
+chunk             PPL               ln(PPL(Q)/PPL(base))          KL Divergence              Δp RMS            Same top p
+Mean PPL(Q)                   :   6.567602 ±   0.042042
+Mean PPL(base)                :   6.350763 ±   0.040468
+Cor(ln(PPL(Q)), ln(PPL(base))):  98.15%
+Mean ln(PPL(Q)/PPL(base))     :   0.033574 ±   0.001228
+Mean PPL(Q)/PPL(base)         :   1.034144 ±   0.001270
+Mean PPL(Q)-PPL(base)         :   0.216839 ±   0.008083
+====== KL divergence statistics ======
+Mean    KLD:   0.072488 ±   0.001119
+Mean    Δp: -0.827 ± 0.019 %
+Same top p: 89.504 ± 0.080 %
+2026-10-14T10:06:43+08:00 ALL_DONE
+2026-10-14T10:06:43+08:00 END
+2026-10-14T10:06:43+08:00 開始 kld：Qwen3.8-27B-UD-IQ4_XS.gguf chunks=-1
+2026-10-14T10:12:44+08:00 完成，耗時 361 秒
+2026-10-14T10:12:44+08:00 基準檔大小：73671468940 bytes
+chunk             PPL               ln(PPL(Q)/PPL(base))          KL Divergence              Δp RMS            Same top p
+Mean PPL(Q)                   :   6.350542 ±   0.040265
+Mean PPL(base)                :   6.350763 ±   0.040468
+Cor(ln(PPL(Q)), ln(PPL(base))):  99.28%
+Mean ln(PPL(Q)/PPL(base))     :  -0.000035 ±   0.000765
+Mean PPL(Q)/PPL(base)         :   0.999965 ±   0.000765
+Mean PPL(Q)-PPL(base)         :  -0.000221 ±   0.004859
+====== KL divergence statistics ======
+Mean    KLD:   0.026724 ±   0.000827
+Mean    Δp: -0.168 ± 0.011 %
+Same top p: 94.085 ± 0.061 %
+2026-10-14T10:12:44+08:00 ALL_DONE
+2026-10-14T10:12:44+08:00 END
+2026-10-14T10:12:44+08:00 開始 kld：Qwen3.8-27B-UD-Q4_K_XL.gguf chunks=-1
+2026-10-14T10:19:11+08:00 完成，耗時 387 秒
+2026-10-14T10:19:11+08:00 基準檔大小：73671468940 bytes
+chunk             PPL               ln(PPL(Q)/PPL(base))          KL Divergence              Δp RMS            Same top p
+Mean PPL(Q)                   :   6.343652 ±   0.040386
+Mean PPL(base)                :   6.350763 ±   0.040468
+Cor(ln(PPL(Q)), ln(PPL(base))):  99.67%
+Mean ln(PPL(Q)/PPL(base))     :  -0.001120 ±   0.000516
+Mean PPL(Q)/PPL(base)         :   0.998880 ±   0.000515
+Mean PPL(Q)-PPL(base)         :  -0.007111 ±   0.003273
+====== KL divergence statistics ======
+Mean    KLD:   0.013373 ±   0.000689
+Mean    Δp: -0.039 ± 0.008 %
+Same top p: 96.358 ± 0.049 %
+2026-10-14T10:19:11+08:00 ALL_DONE
+2026-10-14T10:19:11+08:00 END
+ALL_E3_DONE

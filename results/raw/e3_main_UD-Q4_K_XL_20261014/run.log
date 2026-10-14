@@ -1,0 +1,16 @@
+2026-10-14T10:12:44+08:00 開始 kld：Qwen3.8-27B-UD-Q4_K_XL.gguf chunks=-1
+2026-10-14T10:19:11+08:00 完成，耗時 387 秒
+2026-10-14T10:19:11+08:00 基準檔大小：73671468940 bytes
+chunk             PPL               ln(PPL(Q)/PPL(base))          KL Divergence              Δp RMS            Same top p
+Mean PPL(Q)                   :   6.343652 ±   0.040386
+Mean PPL(base)                :   6.350763 ±   0.040468
+Cor(ln(PPL(Q)), ln(PPL(base))):  99.67%
+Mean ln(PPL(Q)/PPL(base))     :  -0.001120 ±   0.000516
+Mean PPL(Q)/PPL(base)         :   0.998880 ±   0.000515
+Mean PPL(Q)-PPL(base)         :  -0.007111 ±   0.003273
+====== KL divergence statistics ======
+Mean    KLD:   0.013373 ±   0.000689
+Mean    Δp: -0.039 ± 0.008 %
+Same top p: 96.358 ± 0.049 %
+2026-10-14T10:19:11+08:00 ALL_DONE
+2026-10-14T10:19:11+08:00 END

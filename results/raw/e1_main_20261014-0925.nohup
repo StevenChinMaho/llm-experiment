@@ -1,0 +1,33 @@
+2026-10-14T09:23:55+08:00 計算 sha256：Qwen3.8-27B-UD-IQ2_XXS.gguf
+2026-10-14T09:23:59+08:00 計算 sha256：Qwen3.8-27B-UD-Q2_K_XL.gguf
+2026-10-14T09:24:04+08:00 計算 sha256：Qwen3.8-27B-UD-IQ3_XXS.gguf
+2026-10-14T09:24:09+08:00 計算 sha256：Qwen3.8-27B-UD-IQ4_XS.gguf
+2026-10-14T09:24:16+08:00 計算 sha256：Qwen3.8-27B-UD-Q4_K_XL.gguf
+2026-10-14T09:24:25+08:00 GPU 開始前：10 MiB, 0 %
+2026-10-14T09:24:25+08:00 開始 full_IQ2_XXS：llama-bench -m /models/Qwen3.8-27B-UD-IQ2_XXS.gguf -ngl 99 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0,4096,16384,32768 -r 5
+2026-10-14T09:26:59+08:00 完成 full_IQ2_XXS
+2026-10-14T09:26:59+08:00 開始 full_Q2_K_XL：llama-bench -m /models/Qwen3.8-27B-UD-Q2_K_XL.gguf -ngl 99 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0,4096,16384,32768 -r 5
+2026-10-14T09:29:45+08:00 完成 full_Q2_K_XL
+2026-10-14T09:29:45+08:00 開始 full_IQ3_XXS：llama-bench -m /models/Qwen3.8-27B-UD-IQ3_XXS.gguf -ngl 99 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0,4096,16384,32768 -r 5
+2026-10-14T09:32:34+08:00 完成 full_IQ3_XXS
+2026-10-14T09:32:34+08:00 開始 full_IQ4_XS：llama-bench -m /models/Qwen3.8-27B-UD-IQ4_XS.gguf -ngl 99 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0,4096,16384,32768 -r 5
+2026-10-14T09:35:33+08:00 完成 full_IQ4_XS
+2026-10-14T09:35:33+08:00 開始 partial_Q4_K_XL_ngl64：llama-bench -m /models/Qwen3.8-27B-UD-Q4_K_XL.gguf -ngl 64 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0 -r 3
+2026-10-14T09:35:35+08:00 失敗或逾時 partial_Q4_K_XL_ngl64（exit 1），stderr 最後幾行：
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 563.00 MiB on device 0: cudaMalloc failed: out of memory
+ggml_gallocr_reserve_n_impl: failed to allocate CUDA0 buffer of size 590348288
+graph_reserve: failed to allocate compute buffers
+llama_init_from_model: failed to initialize the context: failed to allocate compute pp buffers
+llama_bench: error: failed to create context with model '/models/Qwen3.8-27B-UD-Q4_K_XL.gguf'
+2026-10-14T09:35:35+08:00 開始 partial_Q4_K_XL_ngl62：llama-bench -m /models/Qwen3.8-27B-UD-Q4_K_XL.gguf -ngl 62 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0 -r 3
+2026-10-14T09:36:02+08:00 完成 partial_Q4_K_XL_ngl62
+2026-10-14T09:36:02+08:00 開始 partial_Q4_K_XL_ngl60：llama-bench -m /models/Qwen3.8-27B-UD-Q4_K_XL.gguf -ngl 60 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0 -r 3
+2026-10-14T09:36:31+08:00 完成 partial_Q4_K_XL_ngl60
+2026-10-14T09:36:31+08:00 開始 partial_Q4_K_XL_ngl58：llama-bench -m /models/Qwen3.8-27B-UD-Q4_K_XL.gguf -ngl 58 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0 -r 3
+2026-10-14T09:37:03+08:00 完成 partial_Q4_K_XL_ngl58
+2026-10-14T09:37:03+08:00 開始 partial_Q4_K_XL_ngl56：llama-bench -m /models/Qwen3.8-27B-UD-Q4_K_XL.gguf -ngl 56 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0 -r 3
+2026-10-14T09:37:38+08:00 完成 partial_Q4_K_XL_ngl56
+2026-10-14T09:37:38+08:00 開始 partial_Q4_K_XL_ngl52：llama-bench -m /models/Qwen3.8-27B-UD-Q4_K_XL.gguf -ngl 52 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0 -r 3
+2026-10-14T09:38:18+08:00 完成 partial_Q4_K_XL_ngl52
+2026-10-14T09:38:18+08:00 ALL_DONE
+2026-10-14T09:38:18+08:00 END
