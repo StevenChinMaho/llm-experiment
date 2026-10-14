@@ -1,0 +1,89 @@
+[1/38] iq4xs_b16384 A26-I-01 r1: ✓ ext=277 TTA=27.1s total=27.3s think=738 finish=stop 
+[2/38] iq4xs_b16384 A26-I-02 r1: ✓ ext=62 TTA=89.7s total=89.8s think=2466 finish=stop 
+[3/38] iq4xs_b16384 A26-I-03 r1: ✓ ext=79 TTA=375.0s total=375.2s think=10111 finish=stop 
+[4/38] iq4xs_b16384 A26-I-04 r1: ✓ ext=70 TTA=95.9s total=96.0s think=2633 finish=stop 
+[5/38] iq4xs_b16384 A26-I-05 r1: ✓ ext=65 TTA=104.7s total=104.9s think=2869 finish=stop 
+[6/38] iq4xs_b16384 A26-I-06 r1: ✓ ext=441 TTA=78.4s total=78.6s think=2154 finish=stop 
+[7/38] iq4xs_b16384 A26-I-07 r1: ✓ ext=396 TTA=65.8s total=66.0s think=1808 finish=stop 
+[8/38] iq4xs_b16384 A26-I-08 r1: ✓ ext=244 TTA=75.9s total=76.1s think=2067 finish=stop 
+[9/38] iq4xs_b16384 A26-I-09 r1: ✓ ext=29 TTA=618.0s total=618.2s think=16316 finish=stop 
+[10/38] iq4xs_b16384 A26-I-10 r1: ✓ ext=156 TTA=617.8s total=618.0s think=16384 finish=stop 
+[11/38] iq4xs_b16384 A26-I-11 r1: ✓ ext=896 TTA=618.0s total=618.2s think=16375 finish=stop 
+[12/38] iq4xs_b16384 A26-I-12 r1: ✓ ext=161 TTA=276.2s total=276.4s think=7492 finish=stop 
+[13/38] iq4xs_b16384 A26-I-13 r1: ✓ ext=39 TTA=543.9s total=544.1s think=14334 finish=stop 
+[14/38] iq4xs_b16384 A26-I-14 r1: ✓ ext=681 TTA=588.2s total=588.4s think=15625 finish=stop 
+[15/38] iq4xs_b16384 A26-I-15 r1: ✗ ext=None TTA=618.5s total=699.5s think=16379 finish=length 
+[16/38] iq4xs_b16384 A26-II-01 r1: ✓ ext=178 TTA=78.7s total=78.9s think=2162 finish=stop 
+[17/38] iq4xs_b16384 A26-II-02 r1: ✓ ext=243 TTA=345.9s total=346.1s think=9324 finish=stop 
+[18/38] iq4xs_b16384 A26-II-03 r1: ✓ ext=503 TTA=617.9s total=618.1s think=16294 finish=stop 
+[19/38] iq4xs_b16384 A26-II-04 r1: ✓ ext=279 TTA=108.6s total=108.8s think=2965 finish=stop 
+[20/38] iq4xs_b16384 A26-II-05 r1: ✓ ext=190 TTA=49.9s total=50.1s think=1368 finish=stop 
+[21/38] iq4xs_b16384 A26-II-06 r1: ✓ ext=50 TTA=244.0s total=244.2s think=6639 finish=stop 
+[22/38] iq4xs_b16384 A26-II-07 r1: ✓ ext=754 TTA=163.2s total=163.4s think=4447 finish=stop 
+[23/38] iq4xs_b16384 A26-II-08 r1: ✓ ext=245 TTA=425.8s total=426.0s think=11416 finish=stop 
+[24/38] iq4xs_b16384 A26-II-09 r1: ✗ ext=349 TTA=617.7s total=617.9s think=16316 finish=stop 
+[25/38] iq4xs_b16384 A26-II-10 r1: ✓ ext=850 TTA=394.5s total=394.7s think=10589 finish=stop 
+[26/38] iq4xs_b16384 A26-II-11 r1: ✓ ext=132 TTA=617.8s total=618.0s think=16381 finish=stop 
+[27/38] iq4xs_b16384 A26-II-12 r1: ✓ ext=223 TTA=237.9s total=238.1s think=6468 finish=stop 
+[28/38] iq4xs_b16384 A26-II-13 r1: ✓ ext=107 TTA=617.9s total=618.1s think=16362 finish=stop 
+[29/38] iq4xs_b16384 A26-II-14 r1: ✓ ext=157 TTA=618.2s total=618.3s think=16344 finish=stop 
+[30/38] iq4xs_b16384 A26-II-15 r1: ✗ ext=243 TTA=618.1s total=638.8s think=16217 finish=stop 
+[31/38] iq4xs_b16384 H1 r1: ✓ ext=18 TTA=57.3s total=57.5s think=1574 finish=stop 
+[32/38] iq4xs_b16384 H2 r1: ✓ ext={'possible': False, 'n': 8125} TTA=109.5s total=109.8s think=3005 finish=stop 
+[33/38] iq4xs_b16384 H3 r1: ✓ ext=288 TTA=57.7s total=57.9s think=1587 finish=stop 
+[34/38] iq4xs_b16384 H4 r1: ✓ ext={'length': 6, 'count': 12} TTA=182.6s total=183.0s think=4987 finish=stop 
+[35/38] iq4xs_b16384 H5 r1: ✓ ext={'person': '乙', 'drink': '茶'} TTA=125.6s total=125.9s think=3436 finish=stop 
+[36/38] iq4xs_b16384 H6 r1: ✓ ext={'distance': 16, 'count': 2} TTA=111.2s total=111.6s think=3049 finish=stop 
+[37/38] iq4xs_b16384 H7 r1: ✓ ext=533 TTA=12.7s total=12.9s think=343 finish=stop 
+[38/38] iq4xs_b16384 H8 r1: ✓ ext=def evaluate(s):
+    def trunc TTA=617.6s total=638.9s think=16383 finish=stop 
+資料來源：`/home/ubuntukururinpa/e4/e4_calib_main_iq4xs_b16384_20261014/results.jsonl`（38 筆）。答對率附 Wilson 95% 信賴區間。
+
+| 條件 | 題數×次數 | 答對率 | 95% CI | 擷取失敗 | 截斷 | 平均思考 chunk | 平均 TTA (s) | 平均總耗時 (s) |
+|---|---:|---:|---|---:|---:|---:|---:|---:|
+| iq4xs_b16384 | 38 | 92.1% | [79.2%, 97.3%] | 1 | 1 | 8300 | 311.1 | 314.6 |
+
+各題答對次數（條件 × 題號）：
+
+| 題號 | iq4xs_b16384 |
+|---|---:|
+| A26-I-01 | 1/1 |
+| A26-I-02 | 1/1 |
+| A26-I-03 | 1/1 |
+| A26-I-04 | 1/1 |
+| A26-I-05 | 1/1 |
+| A26-I-06 | 1/1 |
+| A26-I-07 | 1/1 |
+| A26-I-08 | 1/1 |
+| A26-I-09 | 1/1 |
+| A26-I-10 | 1/1 |
+| A26-I-11 | 1/1 |
+| A26-I-12 | 1/1 |
+| A26-I-13 | 1/1 |
+| A26-I-14 | 1/1 |
+| A26-I-15 | 0/1 |
+| A26-II-01 | 1/1 |
+| A26-II-02 | 1/1 |
+| A26-II-03 | 1/1 |
+| A26-II-04 | 1/1 |
+| A26-II-05 | 1/1 |
+| A26-II-06 | 1/1 |
+| A26-II-07 | 1/1 |
+| A26-II-08 | 1/1 |
+| A26-II-09 | 0/1 |
+| A26-II-10 | 1/1 |
+| A26-II-11 | 1/1 |
+| A26-II-12 | 1/1 |
+| A26-II-13 | 1/1 |
+| A26-II-14 | 1/1 |
+| A26-II-15 | 0/1 |
+| H1 | 1/1 |
+| H2 | 1/1 |
+| H3 | 1/1 |
+| H4 | 1/1 |
+| H5 | 1/1 |
+| H6 | 1/1 |
+| H7 | 1/1 |
+| H8 | 1/1 |
+
+wrote /home/ubuntukururinpa/e4/e4_calib_main_iq4xs_b16384_20261014/results_summary.md

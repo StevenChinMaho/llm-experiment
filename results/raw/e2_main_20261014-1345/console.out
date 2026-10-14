@@ -1,0 +1,62 @@
+GPU 開始前： 10, 0
+fixed Qwen3.8-27B-UD-IQ2_XXS.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=7106
+fixed Qwen3.8-27B-UD-IQ2_XXS.gguf -c 16384: OK (ok) n_ctx=16384 kv=544.0 compute=160.28 smi=7548
+fixed Qwen3.8-27B-UD-IQ2_XXS.gguf -c 32768: OK (ok) n_ctx=32768 kv=1088.0 compute=240.28 smi=8172
+fixed Qwen3.8-27B-UD-IQ2_XXS.gguf -c 65536: OK (ok) n_ctx=65536 kv=2176.0 compute=400.28 smi=9420
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=7106
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 262144: FAIL (exited) n_ctx=262144 kv=8704.0 compute=None smi=None
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 133120: OK (ok) n_ctx=133120 kv=4420.0 compute=730.28 smi=11994
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 197632: OK (ok) n_ctx=197632 kv=6562.0 compute=1045.28 smi=14450
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 229888: OK (ok) n_ctx=229888 kv=7633.0 compute=1202.78 smi=15680
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 246016: FAIL (exited) n_ctx=246016 kv=8168.5 compute=None smi=None
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 237824: FAIL (exited) n_ctx=237824 kv=7896.5 compute=None smi=None
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 233728: OK (ok) n_ctx=233728 kv=7760.5 compute=1221.53 smi=15826
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 235776: FAIL (exited) n_ctx=235776 kv=7828.5 compute=None smi=None
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 234752: FAIL (exited) n_ctx=234752 kv=7794.5 compute=None smi=None
+RESULT Qwen3.8-27B-UD-IQ2_XXS.gguf max_ctx≈233728（234752 失敗）
+fixed Qwen3.8-27B-UD-Q2_K_XL.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=9216
+fixed Qwen3.8-27B-UD-Q2_K_XL.gguf -c 16384: OK (ok) n_ctx=16384 kv=544.0 compute=160.28 smi=9658
+fixed Qwen3.8-27B-UD-Q2_K_XL.gguf -c 32768: OK (ok) n_ctx=32768 kv=1088.0 compute=240.28 smi=10282
+fixed Qwen3.8-27B-UD-Q2_K_XL.gguf -c 65536: OK (ok) n_ctx=65536 kv=2176.0 compute=400.28 smi=11530
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=9216
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 262144: FAIL (exited) n_ctx=262144 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 133120: OK (ok) n_ctx=133120 kv=4420.0 compute=730.28 smi=14104
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 197632: FAIL (exited) n_ctx=197632 kv=6562.0 compute=None smi=None
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 165376: OK (ok) n_ctx=165376 kv=5491.0 compute=887.78 smi=15332
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 181504: FAIL (exited) n_ctx=181504 kv=6026.5 compute=None smi=None
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 173312: OK (ok) n_ctx=173312 kv=5754.5 compute=926.53 smi=15636
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 177408: OK (ok) n_ctx=177408 kv=5890.5 compute=946.53 smi=15792
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 179456: FAIL (exited) n_ctx=179456 kv=5958.5 compute=None smi=None
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 178432: OK (ok) n_ctx=178432 kv=5924.5 compute=951.53 smi=15830
+RESULT Qwen3.8-27B-UD-Q2_K_XL.gguf max_ctx≈178432（179456 失敗）
+fixed Qwen3.8-27B-UD-IQ3_XXS.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=10270
+fixed Qwen3.8-27B-UD-IQ3_XXS.gguf -c 16384: OK (ok) n_ctx=16384 kv=544.0 compute=160.28 smi=10712
+fixed Qwen3.8-27B-UD-IQ3_XXS.gguf -c 32768: OK (ok) n_ctx=32768 kv=1088.0 compute=240.28 smi=11336
+fixed Qwen3.8-27B-UD-IQ3_XXS.gguf -c 65536: OK (ok) n_ctx=65536 kv=2176.0 compute=400.28 smi=12584
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=10270
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 262144: FAIL (exited) n_ctx=262144 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 133120: OK (ok) n_ctx=133120 kv=4420.0 compute=730.28 smi=15158
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 197632: FAIL (exited) n_ctx=197632 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 165376: FAIL (exited) n_ctx=165376 kv=5491.0 compute=None smi=None
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 149248: OK (ok) n_ctx=149248 kv=4955.5 compute=809.03 smi=15772
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 157184: FAIL (exited) n_ctx=157184 kv=5219.0 compute=None smi=None
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 153088: FAIL (exited) n_ctx=153088 kv=5083.0 compute=None smi=None
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 151040: OK (ok) n_ctx=151040 kv=5015.0 compute=817.78 smi=15840
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 152064: FAIL (exited) n_ctx=152064 kv=5049.0 compute=None smi=None
+RESULT Qwen3.8-27B-UD-IQ3_XXS.gguf max_ctx≈151040（152064 失敗）
+fixed Qwen3.8-27B-UD-IQ4_XS.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=13312
+fixed Qwen3.8-27B-UD-IQ4_XS.gguf -c 16384: OK (ok) n_ctx=16384 kv=544.0 compute=160.28 smi=13754
+fixed Qwen3.8-27B-UD-IQ4_XS.gguf -c 32768: OK (ok) n_ctx=32768 kv=1088.0 compute=240.28 smi=14378
+fixed Qwen3.8-27B-UD-IQ4_XS.gguf -c 65536: OK (ok) n_ctx=65536 kv=2176.0 compute=400.28 smi=15626
+search Qwen3.8-27B-UD-IQ4_XS.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=13312
+search Qwen3.8-27B-UD-IQ4_XS.gguf -c 262144: FAIL (exited) n_ctx=262144 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-IQ4_XS.gguf -c 133120: FAIL (exited) n_ctx=133120 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-IQ4_XS.gguf -c 68608: OK (ok) n_ctx=68608 kv=2278.0 compute=415.28 smi=15742
+search Qwen3.8-27B-UD-IQ4_XS.gguf -c 100864: FAIL (exited) n_ctx=100864 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-IQ4_XS.gguf -c 84736: FAIL (exited) n_ctx=84736 kv=2813.5 compute=None smi=None
+search Qwen3.8-27B-UD-IQ4_XS.gguf -c 76544: FAIL (exited) n_ctx=76544 kv=2541.5 compute=None smi=None
+search Qwen3.8-27B-UD-IQ4_XS.gguf -c 72448: FAIL (exited) n_ctx=72448 kv=2405.5 compute=None smi=None
+search Qwen3.8-27B-UD-IQ4_XS.gguf -c 70400: OK (ok) n_ctx=70400 kv=2337.5 compute=424.03 smi=15812
+search Qwen3.8-27B-UD-IQ4_XS.gguf -c 71424: FAIL (exited) n_ctx=71424 kv=2371.5 compute=429.03 smi=None
+RESULT Qwen3.8-27B-UD-IQ4_XS.gguf max_ctx≈70400（71424 失敗）
+ALL_DONE
