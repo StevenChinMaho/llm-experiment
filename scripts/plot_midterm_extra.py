@@ -67,7 +67,41 @@ def calib_figure():
     fig.savefig("results/figures/e4_calib_think.png", dpi=300, facecolor="white")
 
 
+def vram_figure():
+    """E2：nvidia-smi 實測用量（點）與記憶體模型（線，推導值）對 context。"""
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.0), dpi=300)
+    # 總容量取自 env.json 的 nvidia-smi memory.total；CUDA 開銷取 findings §2.7 的實測差值
+    for ax, (path, title, total, overhead) in zip(axes, (
+            ("results/processed/e2_svr.csv", "(a) RTX 3060 12GB", 12288, 146),
+            ("results/processed/e2_main.csv", "(b) RTX 5060 Ti 16GB", 16311, 174))):
+        rows = list(csv.DictReader(open(path, encoding="utf-8")))
+        for q, color in QCOLOR.items():
+            pts = sorted((int(r["n_ctx"]), float(r["smi_used_mib"]), float(r["cuda_model_mib"]))
+                         for r in rows if q in r["model"])
+            if not pts:
+                continue
+            w = pts[0][2]
+            xs = [x / 1024 for x in range(16384, 262145, 1024)]
+            ys = [(w + 149.62 + 80.28 + overhead + 39 / 1024 * x * 1024) / 1024 for x in xs]
+            ax.plot(xs, ys, color=color, lw=1.2, ls="--", alpha=0.8)
+            ax.plot([p[0] / 1024 for p in pts], [p[1] / 1024 for p in pts], color=color, lw=0, marker="o", ms=5,
+                    mec="white", mew=1.0, label=f"{q.removeprefix('UD-')}（最大 {pts[-1][0]:,}）")
+        ax.axhline(total / 1024, color=TEXT, lw=1.2)
+        ax.text(2, total / 1024 + 0.15, f"顯示卡容量 {total:,} MiB", fontsize=8.5, color=TEXT)
+        ax.set_title(title, loc="left", fontsize=11, color=TEXT)
+        ax.set_xlabel("context 長度（K token）"); ax.set_xlim(0, 245)
+        ax.set_ylim(6, 17.5)
+        ax.legend(frameon=False, fontsize=8, loc="lower right")
+        ax.grid(color=GRID, lw=0.8); ax.set_axisbelow(True)
+    axes[0].set_ylabel("GPU 記憶體用量（GiB）")
+    fig.text(0.5, -0.01, "點：nvidia-smi 實測（成功啟動的設定）；虛線：記憶體模型 權重＋149.62＋80.28 MiB＋CUDA 開銷＋39 KiB × context（推導值）",
+             ha="center", fontsize=8, color=MUTED)
+    fig.tight_layout()
+    fig.savefig("results/figures/e2_vram_vs_ctx.png", dpi=300, facecolor="white", bbox_inches="tight")
+
+
 if __name__ == "__main__":
     depth_figure()
     calib_figure()
-    print("wrote results/figures/e1_tg_vs_depth.png, e4_calib_think.png")
+    vram_figure()
+    print("wrote results/figures/e1_tg_vs_depth.png, e4_calib_think.png, e2_vram_vs_ctx.png")

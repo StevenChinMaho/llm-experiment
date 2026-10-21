@@ -16,3 +16,4 @@ docs/references-pdf/
 
 # Word／PDF 輸出（可由 scripts/build_midterm_docx.py 重新產生，之後會含姓名學號）
 report/*/build/
+report/cover.json

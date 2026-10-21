@@ -10,6 +10,8 @@
        [--name 姓名] [--sid 學號] [--course 課程] [--teacher 老師]
 """
 import argparse
+import datetime
+import json
 import os
 import re
 
@@ -92,13 +94,14 @@ def add_field(par, instr, size):
     par.add_run()._r.append(end)
 
 
-def heading(doc, text, level, a):
+def heading(doc, text, level, a, new_page=False):
     sizes = {1: a.size + 4, 2: a.size + 2, 3: a.size + 0.5}
     par = doc.add_paragraph(style=f"Heading {level}")
     add_inline(par, text, sizes[level], bold=True)
     pf = par.paragraph_format
     pf.space_before = Pt(8 if level < 3 else 6); pf.space_after = Pt(4); pf.line_spacing = a.spacing
     pf.keep_with_next = True
+    pf.page_break_before = new_page   # 用段落屬性換頁，前一頁剛好滿時不會多出空白頁
 
 
 def table(doc, rows, a):
@@ -152,9 +155,8 @@ def convert(doc, md, a):
         m = re.match(r"^(#{1,3}) (.*)", line)
         if m:
             level, text = len(m.group(1)), m.group(2)
-            if (level == 1 and text.startswith("二、")) or (level == 2 and text.startswith("2. 預計")):
-                page_break(doc)
-            heading(doc, text, level, a); i += 1; continue
+            new_page = (level == 1 and text.startswith("二、")) or (level == 2 and text.startswith("2. 預計"))
+            heading(doc, text, level, a, new_page); i += 1; continue
         m = re.match(r"^!\[(.*)\]\((.*)\)$", line)
         if m:
             image(doc, m.group(1), m.group(2), a); i += 1; continue
@@ -177,7 +179,7 @@ def convert(doc, md, a):
             p.paragraph_format.first_line_indent = Cm(-0.6)
             i += 1; continue
         if re.match(r"^\[\d+\] ", line):                          # 參考文獻條目：懸掛縮排
-            p = doc.add_paragraph(); add_inline(p, line, a.size - 1)
+            p = doc.add_paragraph(); add_inline(p, line, a.size - 2)
             para_format(p, a, indent_first=False, space_after=1)
             p.paragraph_format.line_spacing = 1.0
             p.paragraph_format.left_indent = Cm(0.9); p.paragraph_format.first_line_indent = Cm(-0.9)
@@ -193,12 +195,16 @@ def main():
     ap.add_argument("--size", type=float, default=12)
     ap.add_argument("--spacing", type=float, default=1.5)
     ap.add_argument("--title", default="消費級 GPU 上本地大型語言模型之推論速度、記憶體與品質權衡分析")
-    ap.add_argument("--name", default="姓名")
-    ap.add_argument("--sid", default="學號")
+    ap.add_argument("--member", action="append", help="組員「學號 姓名」，可重複；未指定時讀 report/cover.json")
     ap.add_argument("--course", default="人工智慧")
-    ap.add_argument("--teacher", default="（授課教師）")
+    ap.add_argument("--teacher")
     ap.add_argument("--date", default="2026 年 11 月")
     a = ap.parse_args()
+    # 組員姓名與學號放在不進 git 的 report/cover.json：{"teacher": "...", "members": ["學號 姓名", ...]}
+    cover = os.path.join(MD_DIR, "..", "cover.json")
+    cfg = json.load(open(cover, encoding="utf-8")) if os.path.exists(cover) else {}
+    a.member = a.member or cfg.get("members") or ["學號 姓名"]
+    a.teacher = a.teacher or cfg.get("teacher") or "（授課教師）"
 
     doc = Document()
     sec = doc.sections[0]
@@ -224,12 +230,19 @@ def main():
     p = doc.add_paragraph(); add_inline(p, "人工智慧　期中研究計畫書（Project Proposal）", a.size + 4, bold=True)
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     doc.add_paragraph()
-    p = doc.add_paragraph(); add_inline(p, a.title, a.size + 8, bold=True); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    for k, part in enumerate(a.title.split("之", 1)):   # 在「之」後換行，避免標題斷在詞中間
+        if k:
+            p.runs[-1].add_break()
+        add_inline(p, part + ("之" if k == 0 and "之" in a.title else ""), a.size + 8, bold=True)
     p.paragraph_format.line_spacing = 1.3
     for _ in range(6):
         doc.add_paragraph()
-    for label, val in (("課程", a.course), ("授課教師", a.teacher), ("學生", f"{a.name}　{a.sid}"), ("日期", a.date)):
-        p = doc.add_paragraph(); add_inline(p, f"{label}：{val}", a.size + 2); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    lines = [f"課程：{a.course}", f"授課教師：{a.teacher}"]
+    lines += [("組員：" if i == 0 else "　　　") + m for i, m in enumerate(a.member)]
+    lines.append(f"日期：{a.date}")
+    for text in lines:
+        p = doc.add_paragraph(); add_inline(p, text, a.size + 2); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     page_break(doc)
 
     # 目錄
@@ -245,6 +258,11 @@ def main():
     add_field(fp, "PAGE", a.size - 2)
 
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
+    # 文件中繼資料：作者取自 report/cover.json 的 "author"（不進 git）
+    cp = doc.core_properties
+    cp.author = cp.last_modified_by = cfg.get("author", "")
+    cp.title = a.title; cp.subject = "人工智慧 期中研究計畫書"; cp.comments = ""; cp.keywords = ""
+    cp.created = cp.modified = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0); cp.revision = 1   # 預設範本的建立日期是 2013 年
     doc.save(a.out)
     print("wrote", a.out)
 

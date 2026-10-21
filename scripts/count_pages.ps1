@@ -6,6 +6,13 @@ $full = (Resolve-Path $Path).Path
 $word = New-Object -ComObject Word.Application
 $word.Visible = $false
 $word.DisplayAlerts = 0
+# Word 存檔時會把「上次修改者」改成 Word 的使用者名稱，因此暫時改成 cover.json 的作者，結束時還原
+$origName, $origInitials = $word.UserName, $word.UserInitials
+$cover = Join-Path $PSScriptRoot "../report/cover.json"
+if (Test-Path $cover) {
+    $author = (Get-Content $cover -Raw -Encoding utf8 | ConvertFrom-Json).author
+    if ($author) { $word.UserName = $author; $word.UserInitials = ($author -split ' ' | ForEach-Object { $_[0] }) -join '' }
+}
 try {
     $doc = $word.Documents.Open($full)
     foreach ($toc in $doc.TablesOfContents) {
@@ -58,6 +65,7 @@ try {
     } | ConvertTo-Json
 }
 finally {
+    $word.UserName = $origName; $word.UserInitials = $origInitials
     $word.Quit()
     [System.Runtime.InteropServices.Marshal]::ReleaseComObject($word) | Out-Null
 }
