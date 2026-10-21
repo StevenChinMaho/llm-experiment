@@ -1,5 +1,3 @@
-# 一、研究計畫之背景及目的（續）
-
 ## 2. 國內外相關研究情況與重要參考文獻之評述
 
 **模型架構與 KV cache。** Transformer [1] 以自注意力取代遞迴結構，成為現今 LLM 的基礎，但每個 token 都要保存各層的 Key 與 Value（KV cache），使記憶體隨 context 線性成長。GQA [2] 讓多個 query head 共用一組 key／value head，在品質接近的前提下縮小 KV cache；本研究的模型即採用 24 個 query head 共用 4 個 KV head 的配置。FlashAttention [3] 從 GPU 記憶體階層的角度重新安排注意力計算，減少高頻寬記憶體的讀寫，是本研究推論引擎預設開啟的選項。Gated DeltaNet [4] 結合閘控與 delta rule，以固定大小的遞迴狀態取代 KV cache，並提出與注意力層交錯的混合架構。本研究的模型同樣是混合架構：64 層中有 48 層是以固定大小遞迴狀態運作的線性層（模型檔以 SSM 參數描述，其確切設計以官方文件為準），只有 16 層需要 KV cache，這是其 KV cache 極小的原因。

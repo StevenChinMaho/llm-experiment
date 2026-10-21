@@ -126,7 +126,7 @@ llama-perplexity -m /models/<量化>.gguf -f wiki.test.raw -c 2048 -ngl 99 -fa 1
 
 - 量化：3 種（UD-Q2_K_XL、UD-IQ3_XXS、UD-IQ4_XS）
 - 思考預算：1024、4096、16384 token（`--reasoning-budget`）
-- 每題每條件重複 2 次（原計畫 3 次）。粗估總時數約 31 小時
+- 每題每條件重複 2 次（原計畫 3 次）。粗估總時數約 30 小時（依校準數據推算）
 - context 固定 **32768**
 - 每個條件都答同一批題目 → 用 McNemar 檢定或配對 bootstrap 比較
 - **答對率與 token 數和硬體無關**，只在 5060 Ti 上跑。各硬體的耗時，用 E1 量到的 pp／tg（隨深度變化）推算，標示為**推導值**，再到 3060 上抽測 2～3 個設定驗證推算準確度
