@@ -10,3 +10,6 @@ __pycache__/
 
 # Word 暫存檔
 ~$*.docx
+
+# 參考文獻 PDF（有版權、檔案大，不進 git）
+docs/references-pdf/

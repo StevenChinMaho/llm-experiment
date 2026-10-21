@@ -2,8 +2,6 @@
 
 ## 2. 國內外相關研究情況與重要參考文獻之評述
 
-<!-- 草稿註記：本節引用的文獻在 docs/references.md 皆為「已查到（待確認）」。轉 Word 前必須由使用者在 Google Scholar 確認並以 Scholar 的 MLA 格式為準。 -->
-
 **模型架構與 KV cache。** Transformer [1] 以自注意力取代遞迴結構，成為現今 LLM 的基礎，但每個 token 都要保存各層的 Key 與 Value（KV cache），使記憶體隨 context 線性成長。GQA [2] 讓多個 query head 共用一組 key／value head，在品質接近的前提下縮小 KV cache；本研究的模型即採用 24 個 query head 共用 4 個 KV head 的配置。FlashAttention [3] 從 GPU 記憶體階層的角度重新安排注意力計算，減少高頻寬記憶體的讀寫，是本研究推論引擎預設開啟的選項。Gated DeltaNet [4] 結合閘控與 delta rule，以固定大小的遞迴狀態取代 KV cache，並提出與注意力層交錯的混合架構。本研究的模型同樣是混合架構：64 層中有 48 層是以固定大小遞迴狀態運作的線性層（模型檔以 SSM 參數描述，其確切設計以官方文件為準），只有 16 層需要 KV cache，這是其 KV cache 極小的原因。
 
 **權重量化。** GPTQ [5] 利用近似二階資訊做一次性的後訓練量化，能把 1750 億參數的模型壓到 3～4 位元，並以困惑度評估品質損失。AWQ [6] 觀察到只有少數「重要」權重主宰誤差，依啟動值的統計決定保護哪些通道。本研究使用的 GGUF 量化檔同樣利用重要性資訊（imatrix），並對不同張量分配不同精度。困惑度評估常用的 WikiText-2 資料集出自 [7]。上述研究多以困惑度作為品質指標，本研究的初步結果則顯示困惑度在 4 位元附近已無法分辨差異，因此改以 KL 散度為主要指標（見 2.1.7）。
@@ -20,7 +18,7 @@
 
 ## 參考文獻
 
-<!-- 草稿：MLA 格式依老師範例。全部待使用者確認（docs/references.md）。網頁資源的存取日期以實際查閱日為準。 -->
+<!-- MLA 格式依老師範例。論文 [1]–[18] 已由使用者確認（2026-10-21，docs/references.md）。網頁資源的存取日期以實際查閱日為準。 -->
 
 [1] Vaswani, Ashish, et al. "Attention is all you need." *Advances in Neural Information Processing Systems* 30 (2017).
 
@@ -38,7 +36,7 @@
 
 [8] Kwon, Woosuk, et al. "Efficient memory management for large language model serving with PagedAttention." *Proceedings of the 29th Symposium on Operating Systems Principles*. 2023.
 
-[9] Williams, Samuel, Andrew Waterman, and David Patterson. "Roofline: An insightful visual performance model for multicore architectures." *Communications of the ACM* 52.4 (2009): 65-77.
+[9] Williams, Samuel, Andrew Waterman, and David Patterson. "Roofline: An insightful visual performance model for multicore architectures." *Communications of the ACM* 52.4 (2009): 65-76.
 
 [10] Leviathan, Yaniv, Matan Kalman, and Yossi Matias. "Fast inference from transformers via speculative decoding." *International Conference on Machine Learning*. PMLR, 2023.
 
