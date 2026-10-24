@@ -30,7 +30,7 @@
 - 使用者從別台機器 SSH 進 PowerShell 7 操作，並用 `ssh -L 8000:127.0.0.1:8000` 開通道使用 Web UI；也會用 Google 遠端桌面
 - PowerShell profile 位於 OneDrive 的文件資料夾內，已用 `Set-Alias` 或 conda hook 讓 `llama-server` 可直接呼叫
 - **螢幕接內顯**時 5060 Ti 完全空閒（`nvidia-smi` 顯示 21 MiB 已用、Disp.A Off）；打遊戲時使用者會改用獨顯輸出。跑實驗前確認目前是哪種模式
-- 使用者回報可穩定跑約 83K context 並保留看圖功能（視覺模組放 CPU，`--no-mmproj-offload`）。**2026-10-12 查明：83K（`-c 83536`）其實已超出 VRAM**，Windows 把約 300 MiB 放進共享系統記憶體（行程 Dedicated 16,008～16,014 MiB＋Shared 458～478 MiB），生成速度不受影響，但讀 prompt（pp）只剩 39%（1K 深度）～8%（80K 深度）。不超配的設定是 **`-c 65536`**（Dedicated 15,592 MiB、Shared 164 MiB，pp 與 49152 相同）。詳見 docs/findings-so-far.md §2.2
+- 使用者回報可穩定跑約 83K context 並保留看圖功能（視覺模組放 CPU，`--no-mmproj-offload`）。**2026-10-12 查明：83K（`-c 83536`）其實已超出 VRAM**，Windows 把約 300 MiB 放進共享系統記憶體（行程 Dedicated 16,008～16,014 MiB＋Shared 458～478 MiB），生成速度不受影響，但讀 prompt（pp）只剩 39%（1K 深度）～約 10%（64K 深度，與 `-c 65536` 對照）。不超配的設定是 **`-c 65536`**（Dedicated 15,592 MiB、Shared 164 MiB，pp 與 49152 相同）。詳見 docs/findings-so-far.md §2.2
 - Windows 啟動時回報的可用 VRAM（約 15,022 MiB）偏保守：`-c 65536` 預估 15,452 MiB 仍完整放進專用 VRAM。判斷有沒有超配，要看 Windows 效能計數器 `\GPU Process Memory(pid_*)\Shared Usage`（正常約 150 MiB；明顯變大就是溢出），不要只看 fit 的預估
 - 用 PowerShell `2>&1 | Tee-Object` 存 log 時，使用者觀察到 tg 掉到約 14 tok/s（原因不明）；存 log 改用 llama.cpp 內建的 `--log-file`
 
@@ -53,9 +53,7 @@
 - 螢幕：NVIDIA 的 DP-5 與內顯的 HDMI-A-2 **都有接**，nvidia-smi 顯示 Disp.A On
 - 映像 tag 可鎖定 build：`server-cuda13-b11347` 的 digest＝server 現用的 `sha256:936e9d2a…`；`full-cuda13-b11347` = `sha256:3f7b5ae419f81c940b6171e004ee780091787a9cdb1c413b192fcb338a2d8590`（含 llama-bench／perplexity）。映像內為 CUDA 13.4.1
 
-- 位於 120GB SATA SSD，空間很小。模型檔要放哪裡（另切 ext4 分割區、掛載 NTFS 讀取 Windows 的 `C:\models`），**先問使用者**
-- 實驗計畫建議在這裡安裝 NVIDIA 驅動＋Docker＋NVIDIA Container Toolkit，使用與 server **完全相同的映像 digest**，讓兩台機器只差在硬體（見 experiment-plan 的控制變數）
-- 50 系列需要 open kernel module 版的驅動
+- 系統裝在 120GB SATA SSD，空間很小；模型檔已放在 `/nvme477/llama/models`（見上）。50 系列需要 open kernel module 版的驅動（已安裝）
 
 ## 機器 B：kururinpa-svr（RTX 3060 12GB）
 
@@ -73,7 +71,7 @@
 - Docker＋NVIDIA Container Toolkit 已安裝，`docker run --rm --gpus all ubuntu nvidia-smi` 可看到 GPU
 - llama.cpp 映像：`ghcr.io/ggml-org/llama.cpp:server-cuda13`，`--version` 顯示 `0.5.0-dev` **build 11347 (5fc4f3c8c)**，GNU 14.2.0 編譯
 - 映像 digest（2026-10-12 查，映像建立於 2026-10-02）：`ghcr.io/ggml-org/llama.cpp@sha256:936e9d2afab78662a05fd300c4a829ba931777bcd8372334da629b468511f90e`
-- 模型存放：`/llama/models/`，目前有 `Qwen3.8-27B-UD-IQ3_XXS.gguf`
+- 模型存放：`/llama/models/`，有 UD-IQ2_XXS、UD-Q2_K_XL、UD-IQ3_XXS、UD-IQ4_XS 與 `MTP/mtp-Qwen3.8-27B-Q4_0.gguf`（2026-10-24 查；磁碟剩約 20 GB）
 - **同一台機器上跑著大型模組 Minecraft 伺服器**（原生 Java/Forge，`java -Xmx8G -Xms6G -jar server.jar nogui`；通知服務是 template unit **`mc-notify@maho.service`**，不是 `mc-notify.service`），會佔用 CPU 與 RAM。不得擅自停止（見 CLAUDE.md 絕對規則 3）
 - 同機還有網站相關的 Docker 服務（nginx、MariaDB 等），RAM 只有 16GB，llama-server 的 `--cache-ram` 與 `--ctx-checkpoints` 必須壓低
 
@@ -109,20 +107,30 @@ docker run -d --name llama --gpus all --restart unless-stopped \
 
 | 量化檔 | 檔案大小 | 實際 BPW | 說明 |
 |---|---|---|---|
-| UD-IQ3_XXS | 10.17 GiB | 3.20 | 兩台都放得下 |
-| UD-IQ4_XS | 13.26 GiB | 4.17 | 只有 5060 Ti 放得下；3060 需部分卸載 |
+| UD-IQ2_XXS | 6.77 GiB | 2.13 | 兩台都放得下；不含 MTP 層（65 層） |
+| UD-Q2_K_XL | 9.15 GiB | 2.88 | 兩台都放得下 |
+| UD-IQ3_XXS | 10.18 GiB | 3.20 | 兩台都放得下 |
+| UD-IQ4_XS | 13.27 GiB | 4.17 | 只有 5060 Ti 放得下；3060 需部分卸載 |
+| UD-Q4_K_XL | 16.35 GiB | 5.14 | 5060 Ti 也需部分卸載；只在主力機 |
+| Q8_0 | 27.05 GiB | 8.51 | E3 基準；只在主力機 |
+
+（實際 BPW 以檔案大小 × 8 ÷ 27,320,697,856 參數計算，與期中報告表 4 相同）
 
 模型檔 sha256（2026-10-12 以 `sha256sum` 實算；HF revision `4ca720788d1e01f1bff70c033e0d0028fd02e502`）：
 
 | 檔案 | bytes | sha256 | 已比對 |
 |---|---|---|---|
 | Qwen3.8-27B-UD-IQ3_XXS.gguf | 10,934,860,704 | `c0b7c3038681ed2e3040456c1dd45f9858b6c2290bed172c70388a94874f3eee` | 主力機 Ubuntu、server、HF blob 名稱三者一致 |
-| Qwen3.8-27B-UD-IQ4_XS.gguf | 14,252,845,984 | `40fac4050e940397dbf13087afd50f4734a11805bf9d65ef8ddd7483470e6199` | 主力機 Ubuntu 與 HF blob 名稱一致（server 沒有此檔） |
+| Qwen3.8-27B-UD-IQ4_XS.gguf | 14,252,845,984 | `40fac4050e940397dbf13087afd50f4734a11805bf9d65ef8ddd7483470e6199` | 主力機 Ubuntu 與 HF blob 名稱一致；server 於 2026-10-13 下載，雜湊相同 |
+| Qwen3.8-27B-UD-IQ2_XXS.gguf | 7,266,070,528 | `e792d8fb3142fe6d9171876d6da0f71f05a71028718debc72dbec93ff645e67d` | 主力機（E1 紀錄）與 server 一致 |
+| Qwen3.8-27B-UD-Q2_K_XL.gguf | 9,828,981,664 | `fd4730dd8aad070517978752b63d530aeb1740d2283cab9fa24f1e404032ddb0` | 主力機（E1 紀錄）與 server 一致 |
+| Qwen3.8-27B-UD-Q4_K_XL.gguf | — | `3f227079003add2511437e5b1e94812e363385225bf6a9b47b0054a72bc8b01e` | 只在主力機（E1 紀錄） |
+| Qwen3.8-27B-Q8_0.gguf | — | `a680f44a06920e5d689774823782006aa3acc8db95750323373b24139b67e348` | 只在主力機（E1 紀錄） |
 | MTP/mtp-Qwen3.8-27B-Q4_0.gguf | 1,369,590,656 | `50d9ce5a6da381bbcfb31061cf73df94a90e6faf8efeddee379a9cb8f1501c6e` | 2026-10-13 從 HF 下載，與 HF API 的 lfs oid 一致 |
 
 主力機 Ubuntu 另有 `/nvme477/llama/models/extra/`（**非實驗用，正式實驗不要載入**；2026-10-13 從 Windows C: 複製，sha256 與 HF blob 名稱一致）：`unsloth-Qwen3.8-27B-mmproj-BF16.gguf`（`83ee4f4f…`）、`huihui-Qwen3.8-27B-abliterated-UD-IQ4_XS.gguf`（`d83adbbb…`）、`huihui-Qwen3.8-27B-abliterated-mmproj-bf16.gguf`（`c9a09064…`）。
 
-其他量化檔（UD-IQ2_XXS、UD-Q2_K_XL、UD-Q4_K_XL、Q8_0）2026-10-13 起以 `~/llama-logs/download_quants.sh` 從 HF revision `4ca72078…` 下載中，完成後補進上表。
+其他量化檔（UD-IQ2_XXS、UD-Q2_K_XL、UD-Q4_K_XL、Q8_0）2026-10-13 以 `~/llama-logs/download_quants.sh` 從 HF revision `4ca72078…` 下載完成，雜湊已補進上表（來源：`results/raw/e1_main_20261014-0925/models.sha256`、svr 的 `/llama/models/*.sha256`）。主力機另有 E3 的 KL 散度基準檔（約 74 GB），保留供延伸實驗 X2 使用。
 
 ## 已知陷阱（都實際踩過）
 

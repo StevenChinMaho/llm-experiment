@@ -1,5 +1,7 @@
 # 實驗計畫（2026-10-12 定案版）
 
+> **與期中報告不一致時，一律以期中報告（`report/midterm/`）的敘述為準**（使用者 2026-10-24 決定）。
+
 主軸：**VRAM 固定時，資源該花在權重精度、context 長度，還是讓模型多想幾個 token？**
 
 **範圍原則：** 核心實驗只承諾做得完的；任何一項不如預期，報告仍能完整交出。延伸實驗時間允許才做。新點子一律先放進「延伸」，不改核心。
@@ -8,10 +10,11 @@
 
 | 實驗 | 回答 | 產出 | 時程 |
 |---|---|---|---|
-| E1 速度 | RQ1、RQ2 | pp／tg 對照表、context 深度曲線、部分卸載曲線、頻寬使用率、J/token、MTP 開／關 | 期中前 |
-| E2 記憶體 | RQ2 | 實測 vs 公式比對表、各設定最大可用 context | 期中前 |
-| E3 品質 | RQ1 | 各量化的 KL 散度（主要）與困惑度 | 期中前 |
-| E4 量化 × 思考預算 | RQ3 | 同樣耗時下的答對率、答對率 vs 耗時曲線 | 期中前做難度校準，期末做正式實驗 |
+| E1 速度 | RQ1、RQ2 | pp／tg 對照表、context 深度曲線、部分卸載曲線、頻寬使用率、J/token | 期中前（完成） |
+| E2 記憶體 | RQ2 | 實測 vs 公式比對表、各設定最大可用 context | 期中前（完成） |
+| E3 品質 | RQ1 | 各量化的 KL 散度（主要）與困惑度 | 期中前（完成） |
+| MTP 量測 | RQ2 | VRAM 代價、遞迴狀態、n_max 掃描、接受率、greedy 比對 | 3060 完成；5060 Ti 掃描與開啟思考時的接受率為期末 |
+| E4 量化 × 思考預算 | RQ3 | 同樣耗時下的答對率、答對率 vs 耗時曲線；另加 MTP 條件 | 難度校準完成，期末做正式實驗 |
 | E5 計算工具 | RQ4 | 有／無計算工具的答對率 | 期末 |
 | X1～X4 延伸 | 補強 RQ2 | 見「延伸實驗」 | 時間允許 |
 
@@ -23,7 +26,7 @@
 | 權重量化 | UD-IQ2_XXS（6.77 GiB）、UD-Q2_K_XL（9.15）、UD-IQ3_XXS（10.18，已有）、UD-IQ4_XS（13.27，已有）、UD-Q4_K_XL（16.35）；基準 Q8_0（27.05） | E1、E2、E3；E4 取其中 2～3 種 |
 | context 深度 | 0、4096、16384、32768（E1）；E2 另外掃描最大值 | E1、E2 |
 | 思考預算 | `--reasoning-budget` 1024、4096、16384 token | E4 |
-| MTP 推測解碼 | 關、開（`--spec-type draft-mtp`＋`MTP/mtp-Qwen3.8-27B-Q4_0.gguf`，1.28 GiB） | E1；E4 只當一個候選設定 |
+| MTP 推測解碼 | 關、開（`--spec-type draft-mtp`＋`MTP/mtp-Qwen3.8-27B-Q4_0.gguf`，1.28 GiB） | MTP 量測（llama-server，不在 llama-bench 內）；E4 另加一個 MTP 條件 |
 
 檔案大小取自 HF API（2026-10-12）。下載前再確認一次，並記錄 sha256（HF 快取的 blob 檔名就是 sha256）。
 
@@ -42,13 +45,13 @@
 
 1. **llama.cpp 版本與執行環境一致**（已完成）：兩台都用 Docker、驅動 595.91.07、鎖定 digest
    - server 映像：`ghcr.io/ggml-org/llama.cpp@sha256:936e9d2afab78662a05fd300c4a829ba931777bcd8372334da629b468511f90e`（`server-cuda13-b11347`）
-   - full 映像（含 llama-bench、llama-perplexity）：`ghcr.io/ggml-org/llama.cpp@sha256:3f7b5ae419f81c940b6171e004ee780091787a9cdb1c413b192fcb338a2d8590`（`full-cuda13-b11347`）。server 上還沒拉這個映像
+   - full 映像（含 llama-bench、llama-perplexity）：`ghcr.io/ggml-org/llama.cpp@sha256:3f7b5ae419f81c940b6171e004ee780091787a9cdb1c413b192fcb338a2d8590`（`full-cuda13-b11347`）。兩台都已拉取（svr 於 E1 時使用）
 2. 相同的模型檔（比對 sha256）
 3. 固定參數：`-fa on`、KV cache `q8_0`、`-np 1`，執行緒數記錄下來；不載入 mmproj
 4. 量測時 GPU 上沒有其他負載：主力機 Ubuntu 預設 `multi-user.target`、沒有桌面（實驗前仍記錄 `nvidia-smi`）；server 上停掉常駐 llama 容器
-5. **Minecraft 伺服器**：每次實驗前和使用者確認二選一並記錄：（a）使用者同意暫停 MC，或（b）不暫停，但每次量測同時記錄 `uptime` 的 load average 與 `free -m`。部分卸載條件（會用到 CPU 和 RAM）受影響最大
+5. **Minecraft 伺服器**：使用者決定實驗期間 MC 一律關閉（由使用者處理），每次實驗紀錄 MC 狀態；長實驗排平日白天，晚上不跑
 6. 正式量測前先跑一次暖機
-7. 每個條件重複 5 次（llama-bench `-r 5`），報告平均 ± 標準差
+7. 每個條件重複 5 次（llama-bench `-r 5`；部分卸載掃描為 3 次），報告平均 ± 標準差
 8. 背景記錄 GPU 溫度、功耗、時脈（`nvidia-smi --query-gpu=timestamp,temperature.gpu,power.draw,clocks.sm,memory.used,utilization.gpu --format=csv -l 1`），排除過熱降頻，也用來計算 J/token
 9. 跑基準測試時加 `-fit off`，或確認 log 沒有自動調整參數
 10. E2 啟動時一律加 `-lv 4`（預設 verbosity 3 不會印出 buffer 大小）
@@ -88,8 +91,8 @@ llama-bench -m /models/<模型>.gguf -ngl 99 -fa 1 -ctk q8_0 -ctv q8_0 \
 - 每個條件啟動 llama-server（`-lv 4 -fit off`），從 log 解析：`CUDA0 model buffer size`、`CPU_Mapped model buffer size`、`KV buffer size`、`RS buffer size`、`compute buffer size`，以及 fit 的 memory breakdown
 - 同時記錄 `nvidia-smi --query-gpu=memory.used --format=csv`
 - 與公式預測值（findings §3：每 token 34 KiB）比對，計算誤差
-- 找出每個（硬體 × 量化）全 GPU 時的最大 context：以 `-fit off` 逐步加大 `-c`，以「能啟動、log 顯示 66/66 layers、能完成一次 prefill」為準（Linux 放不下會直接 OOM，界線明確）
-- MTP 開啟時的最大 context 也量一次
+- 找出每個（硬體 × 量化）全 GPU 時的最大 context：以 `-fit off` 逐步加大 `-c`，以「能啟動、log 顯示全部層在 GPU（66/66；IQ2_XXS 不含 MTP 層，為 65/65）、能完成一次 prefill」為準（Linux 放不下會直接 OOM，界線明確）
+- MTP 開啟時的最大 context 也量一次（**尚未執行**，期末視時間補做）
 - 寫 `scripts/parse_server_log.py`，從 log 抽出上述欄位，輸出 CSV
 
 ## E3 品質：KL 散度與困惑度（期中前）
@@ -106,7 +109,7 @@ llama-perplexity -m /models/<量化>.gguf -f wiki.test.raw -c 2048 -ngl 99 -fa 1
 - 資料集：WikiText-2 raw 測試集（取得方式參考 llama.cpp repo 的 `scripts/get-wikitext-2-raw.sh`）
 - **基準 logits 檔可能很大**（詞彙量 248,320）：正式跑之前先用小 `--chunks` 估算檔案大小，再決定 N，並確認 `/nvme477` 剩餘空間。基準檔不放進 git
 - 主要指標：平均 KL 散度、99% 分位 KL 散度、Same top p（top-1 token 與基準一致的比例）；輔助：困惑度 ± 誤差
-- **品質與硬體無關**：每種量化只在主力機跑一次；在 3060 上用 IQ3_XXS 抽測一次困惑度，確認結果一致（本身就是一個驗證點）
+- **品質與硬體無關**：每種量化只在主力機跑一次（已完成）。原計畫在 3060 上用 IQ3_XXS 抽測一次困惑度確認一致，**尚未執行**，期末視時間補做
 - 注意：以 Q8_0 當基準是近似（不是 BF16），要在報告的限制章節說明
 - 分析時檢驗「KL 散度能不能預測 E4 答對率的下降」
 
@@ -129,7 +132,9 @@ llama-perplexity -m /models/<量化>.gguf -f wiki.test.raw -c 2048 -ngl 99 -fa 1
 - 每題每條件重複 2 次（原計畫 3 次）。粗估總時數約 30 小時（依校準數據推算）
 - context 固定 **32768**
 - 每個條件都答同一批題目 → 用 McNemar 檢定或配對 bootstrap 比較
-- **答對率與 token 數和硬體無關**，只在 5060 Ti 上跑。各硬體的耗時，用 E1 量到的 pp／tg（隨深度變化）推算，標示為**推導值**，再到 3060 上抽測 2～3 個設定驗證推算準確度
+- **答對率與 token 數和硬體無關**，因此兩台機器分工執行不同條件；IQ4_XS 只放得進 16GB，在主力機執行。各硬體的耗時以 E1 量到的 pp／tg（隨深度變化）推算，標示為**推導值**，並以 3060 上實際執行的條件驗證推算準確度
+- **MTP 條件**（依期中報告 2.1.9）：Q2_K_XL 開啟 MTP，檢驗 MTP 對答對率的影響，並與「IQ3_XXS 不開 MTP」比較；n_max 與預算依 5060 Ti 的 MTP 掃描決定，不計入 684 次。注意 3060 上 Q2_K_XL＋MTP 是在 context 16,384 量到的，context 32,768 時是否放得下要先確認
+- svr 上跑 E4 前要先 `docker stop llama`（`run_e4.sh` 不會自動停常駐容器）
 - 主要比較：在同樣的 TTA 之下，哪個（量化 × 預算）組合答對率最高
 
 ### 時間指標
@@ -162,14 +167,13 @@ TTA 需要用串流（`"stream": true`）在客戶端記錄每段內容的到達
 
 ### 流程
 
-1. **難度校準試跑（期中前）**：hard 組每題用 IQ4_XS、預算 16384 跑 2～3 次。理想答對率 30%～70%。全對或全錯的題目沒有鑑別力，回報使用者討論是否替換（**不要自行改題**）
-2. 擴充題目（使用者決定方式）
-3. 正式實驗（期末）：建議晚上背景跑。粗估：40 題 × 3 次 × 3 預算 × 3 量化，平均每題 2～3 分鐘 → 約 36～54 小時，需分多晚執行；必要時減少量化或預算水準
+1. **難度校準（完成，2026-10-14）**：38 題以 IQ4_XS、預算 16384 各跑 1 次，AIME 27/30、hard 8/8（findings §2.9）。使用者決定題目不換
+2. 正式實驗（期末）：3 量化 × 3 預算 × 38 題 × 2 次＝684 次作答，依校準推算約 30 小時（期中報告表 17）；另加 MTP 條件。長實驗排平日白天，晚上不跑
 
 ## E5 計算工具（RQ4，期末）
 
 - 讓模型能呼叫計算函式（function calling，或在 prompt 中允許輸出 Python 再由腳本執行）
-- 用含大數運算的題目（easy 組 E8、hard 組 H7，再出幾題同類型）比較有／無工具的答對率。動機：「600 vs 601」案例
+- 用含大數運算的題目（easy 組 E8、hard 組 H7，再設計 10～15 題同類題目，答案以程式驗證）比較有／無工具的答對率；兩條件使用相同的量化與思考預算。動機：「600 vs 601」案例
 - 批改一樣用程式比對標準答案
 
 ## 延伸實驗（時間允許才做）
@@ -193,8 +197,5 @@ run_id, datetime, experiment, machine, gpu, driver, llamacpp_build, image_digest
 
 ## 時間估算
 
-- 下載額外量化檔：約 60 GB（Q8_0、Q4_K_XL、Q2_K_XL、IQ2_XXS、MTP），取決於網速
-- E1：每台約 1～2 小時（含部分卸載掃描）；MTP 可行性約 1 小時
-- E2：每台約 1 小時
-- E3：Q8_0 基準數小時（部分卸載），其他每種量化約 30～60 分鐘
-- E4 校準：約 1～2 小時；正式實驗見上
+- 期中前的項目（下載、E1、E2、E3、MTP 3060、E4 校準）已於 2026-10-14 前完成；實際耗時見 findings 與期中報告（例：E3 基準約 7.4 分鐘、每種量化約 6 分鐘；E4 校準 3.32 小時）
+- 期末：E4 正式實驗約 30 小時（＋MTP 條件）、5060 Ti 的 MTP 掃描約 1 小時、E5 待題目定案後估算

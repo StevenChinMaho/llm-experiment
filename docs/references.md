@@ -45,10 +45,10 @@ MLA 網頁格式大致為：`作者或組織. "頁面標題." 網站名稱, 網�
 
 | # | 資源 | 用途 | 狀態 |
 |---|---|---|---|
-| W1 | llama.cpp GitHub repository（ggml-org/llama.cpp） | 推論引擎、llama-bench、llama-perplexity | 未整理 |
+| W1 | llama.cpp GitHub repository（ggml-org/llama.cpp） | 推論引擎、llama-bench、llama-perplexity | 期中報告引用為 [19]（官方頁面，2026-10-24 使用者已確認） |
 | W2 | llama.cpp Docker 文件（docs/docker.md） | 部署方式 | 未整理 |
-| W3 | unsloth/Qwen3.8-27B-GGUF（Hugging Face 模型頁） | 量化檔來源、Dynamic 量化說明 | 未整理 |
-| W4 | Qwen/Qwen3.8-27B（Hugging Face 模型頁） | 原始模型、授權、建議取樣參數（Qwen3.8 沒有技術報告，模型本身以此引用） | 未整理 |
+| W3 | unsloth/Qwen3.8-27B-GGUF（Hugging Face 模型頁） | 量化檔來源、Dynamic 量化說明、獨立 MTP 檔 | 期中報告引用為 [20]（官方頁面，2026-10-24 使用者已確認） |
+| W4 | Qwen/Qwen3.8-27B（Hugging Face 模型頁） | 原始模型、授權、建議取樣參數（Qwen3.8 沒有技術報告，模型本身以此引用） | 期中報告引用為 [21]（官方頁面，2026-10-24 使用者已確認） | 未整理 |
 | W5 | Model Context Protocol 規範（modelcontextprotocol.io） | 延伸 X4 的 MCP 架構 | 未整理 |
 | W6 | NVIDIA Container Toolkit 安裝文件 | 部署環境 | 未整理 |
 | W7 | llama.cpp 的 llama-perplexity 說明文件（tools/perplexity 的 README） | KL 散度、Same top p 等指標的定義 | 未整理 |
