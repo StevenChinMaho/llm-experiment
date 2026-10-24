@@ -81,8 +81,8 @@
 
 ```bash
 docker run -d --name llama --gpus all --restart unless-stopped \
-  -v /llama/models:/models -p 127.0.0.1:8000:8080 \
-  ghcr.io/ggml-org/llama.cpp:server-cuda13 \
+  -v /llama/models:/models -p 192.168.0.66:8000:8080 --env-file /home/maho/llama.env \
+  ghcr.io/ggml-org/llama.cpp@sha256:936e9d2afab78662a05fd300c4a829ba931777bcd8372334da629b468511f90e \
   -m /models/Qwen3.8-27B-UD-IQ3_XXS.gguf \
   -ngl 99 -c 40000 -fa on -np 1 \
   --cache-type-k q8_0 --cache-type-v q8_0 \
@@ -90,7 +90,15 @@ docker run -d --name llama --gpus all --restart unless-stopped \
   --no-reasoning-preserve --jinja --port 8080
 ```
 
-（2026-10-12 以 `docker inspect llama` 確認：已背景常駐、`restart=unless-stopped`，參數與上方完全一致，含 `--no-reasoning-preserve`。常駐時佔 VRAM 約 11,796 MiB。）
+（2026-10-12 以 `docker inspect llama` 確認：已背景常駐、`restart=unless-stopped`，含 `--no-reasoning-preserve`。常駐時佔 VRAM 約 11,600～11,800 MiB。）
+
+**2026-10-24 改為區網可呼叫的 API**（使用者指定只改 svr，主力機不動）：
+
+- port 改綁區網 IP `192.168.0.66:8000`（原為 `127.0.0.1:8000`），**本機的 `127.0.0.1:8000` 已不再服務**，在 svr 上要用 `http://192.168.0.66:8000`。不用 ufw 擋，因為 Docker 對外開的 port 會繞過 ufw；路由器沒有轉發 8000（使用者確認）
+- API key 放在 svr 的 `~/llama.env`（權限 600，變數名 **`LLAMA_API_KEY`**；`LLAMA_ARG_API_KEY` 無效），**不得寫進 repo**。查看：`ssh svr cat ~/llama.env`。呼叫時帶 `Authorization: Bearer <key>`；Web UI 會要求輸入 key。`/health` 不需要 key
+- 映像改用 digest 指定（與原 tag 指向同一個映像 `936e9d2a…`）
+- 實驗不受影響：實驗容器都綁 `127.0.0.1`，區網連不到；E1／MTP 腳本以 `--stop llama` 停止常駐容器、結束後 `docker start llama`，名稱未變。**`run_e4.sh` 不會自動停常駐容器**，在 svr 跑 E4 前要先 `docker stop llama`
+- 驗證（2026-10-24，從操作端筆電）：無 key／錯 key 回 401、正確 key 回 200、對話正常；`127.0.0.1:8000` 連線被拒
 
 ## 模型
 
