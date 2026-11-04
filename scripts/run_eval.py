@@ -154,8 +154,11 @@ print(json.dumps(res))
 '''
 
 
+SANDBOX_IMAGE = None   # --sandbox-image：在無網路、唯讀、非 root 的容器裡執行模型寫的程式
+
+
 def run_python_tests(code, q, timeout=10):
-    """在暫存目錄的獨立子行程執行（python -I、清空環境變數、限時）。注意：沒有隔離網路。"""
+    """在暫存目錄的獨立子行程執行（python -I、清空環境變數、限時）；指定 SANDBOX_IMAGE 時改在隔離容器內執行。"""
     for tok in q.get("forbidden_tokens", []):
         if tok in code:
             return False, f"使用了禁止的 {tok}"
@@ -163,10 +166,23 @@ def run_python_tests(code, q, timeout=10):
         open(os.path.join(d, "solution.py"), "w", encoding="utf-8").write(code)
         open(os.path.join(d, "tests.json"), "w", encoding="utf-8").write(json.dumps(q["tests"], ensure_ascii=False))
         open(os.path.join(d, "harness.py"), "w", encoding="utf-8").write(HARNESS)
+        if SANDBOX_IMAGE:
+            os.chmod(d, 0o755)
+            for name in os.listdir(d):
+                os.chmod(os.path.join(d, name), 0o644)
+            cmd = ["docker", "run", "--rm", "--network", "none", "--read-only", "--cap-drop", "ALL",
+                   "--security-opt", "no-new-privileges", "--memory", "512m", "--pids-limit", "64",
+                   "--user", "65534:65534", "-v", f"{d}:/w:ro", "-w", "/w", SANDBOX_IMAGE,
+                   "timeout", str(timeout), "python", "-I", "harness.py", q["function"]]
+            outer = timeout + 60   # 含容器啟動時間；模型程式的時限由容器內的 timeout 負責
+        else:
+            cmd, outer = [sys.executable, "-I", "harness.py", q["function"]], timeout
         try:
-            p = subprocess.run([sys.executable, "-I", "harness.py", q["function"]], cwd=d, capture_output=True,
-                               text=True, timeout=timeout, env={"PATH": os.environ.get("PATH", "")})
+            p = subprocess.run(cmd, cwd=d, capture_output=True, text=True, timeout=outer,
+                               env={"PATH": os.environ.get("PATH", "")})
         except subprocess.TimeoutExpired:
+            return False, f"逾時 {timeout}s"
+        if p.returncode in (124, 143):   # 容器內 timeout 終止
             return False, f"逾時 {timeout}s"
         if p.returncode != 0:
             return False, "執行錯誤：" + p.stderr.strip().splitlines()[-1][:200] if p.stderr.strip() else "執行錯誤"
@@ -279,7 +295,14 @@ def wilson(k, n, z=1.96):
 
 def summarize(path):
     recs = [json.loads(l) for l in open(path, encoding="utf-8") if l.strip()]
-    recs = [r for r in recs if r.get("event") == "answer"]
+    latest = {}   # 同一題重跑時以最後一筆為準；仍然是連線或伺服器錯誤的不列入答對率
+    for r in recs:
+        if r.get("event") == "answer":
+            latest[(r["label"], r["qid"], r["rep"])] = r
+    errors = [r for r in latest.values() if r.get("error")]
+    recs = [r for r in latest.values() if not r.get("error")]
+    if errors:
+        print(f"注意：{len(errors)} 筆因伺服器錯誤未完成，未列入統計：", [(r["qid"], r["rep"]) for r in errors][:10])
     by_label = {}
     for r in recs:
         by_label.setdefault(r["label"], []).append(r)
@@ -380,10 +403,13 @@ def main():
     p.add_argument("--note", default="", help="記錄伺服器啟動參數、思考預算等")
     p.add_argument("--summarize", metavar="JSONL")
     p.add_argument("--self-test", action="store_true")
+    p.add_argument("--sandbox-image", help="在此 Docker 映像的隔離容器內執行 python_tests（無網路、唯讀、非 root）")
     a = p.parse_args()
 
     if a.summarize:
         return summarize(a.summarize)
+    global SANDBOX_IMAGE
+    SANDBOX_IMAGE = a.sandbox_image
     questions = load_questions(a.questions)
     if a.self_test:
         sys.exit(0 if self_test(questions) else 1)
@@ -397,13 +423,14 @@ def main():
     if os.path.exists(a.out):
         for l in open(a.out, encoding="utf-8"):
             r = json.loads(l)
-            if r.get("event") == "answer":
+            if r.get("event") == "answer" and not r.get("error"):   # 連線或伺服器錯誤不算完成，重跑時會補做
                 done.add((r["label"], r["qid"], r["rep"]))
     with open(a.out, "a", encoding="utf-8") as f:
         f.write(json.dumps({"event": "start", "time": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
                             "label": a.label, "args": vars(a), "server": server_info(a.url)}, ensure_ascii=False) + "\n")
     total = len(questions) * a.reps
     i = 0
+    consecutive_errors = 0
     for rep in range(1, a.reps + 1):          # 外層是重複次數：每輪把所有題目答一遍，降低溫度漂移對單題的影響
         for q, prompt in questions:
             i += 1
@@ -425,6 +452,10 @@ def main():
             print(f"[{i}/{total}] {a.label} {q['id']} r{rep}: {'✓' if ok else '✗'} "
                   f"ext={str(ext)[:30]} TTA={'-' if tta is None else f'{tta:.1f}s'} total={resp.get('total_s', 0):.1f}s "
                   f"think={resp.get('n_reasoning_chunks')} finish={resp.get('finish_reason')} {err or ''}", flush=True)
+            consecutive_errors = consecutive_errors + 1 if err else 0
+            if consecutive_errors >= 3:
+                summarize(a.out)
+                sys.exit("連續 3 題出錯，伺服器可能已中止；修好後用同樣指令重跑會補做")
     summarize(a.out)
 
 

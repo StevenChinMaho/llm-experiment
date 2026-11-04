@@ -1,0 +1,39 @@
+GPU 開始前： 1, 0
+fixed Qwen3.8-27B-UD-IQ2_XXS.gguf -c 4096: FAIL (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=7079
+fixed Qwen3.8-27B-UD-IQ2_XXS.gguf -c 16384: FAIL (ok) n_ctx=16384 kv=544.0 compute=160.28 smi=7521
+fixed Qwen3.8-27B-UD-IQ2_XXS.gguf -c 32768: FAIL (ok) n_ctx=32768 kv=1088.0 compute=240.28 smi=8145
+fixed Qwen3.8-27B-UD-IQ2_XXS.gguf -c 65536: FAIL (ok) n_ctx=65536 kv=2176.0 compute=400.28 smi=9393
+search Qwen3.8-27B-UD-IQ2_XXS.gguf -c 4096: FAIL (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=7079
+Qwen3.8-27B-UD-IQ2_XXS.gguf：連 -c 4096 都放不下
+fixed Qwen3.8-27B-UD-Q2_K_XL.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=9189
+fixed Qwen3.8-27B-UD-Q2_K_XL.gguf -c 16384: OK (ok) n_ctx=16384 kv=544.0 compute=160.28 smi=9631
+fixed Qwen3.8-27B-UD-Q2_K_XL.gguf -c 32768: OK (ok) n_ctx=32768 kv=1088.0 compute=240.28 smi=10255
+fixed Qwen3.8-27B-UD-Q2_K_XL.gguf -c 65536: OK (ok) n_ctx=65536 kv=2176.0 compute=400.28 smi=11503
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=9189
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 262144: FAIL (exited) n_ctx=262144 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 133120: FAIL (exited) n_ctx=133120 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 68608: OK (ok) n_ctx=68608 kv=2278.0 compute=415.28 smi=11619
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 100864: FAIL (exited) n_ctx=100864 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 84736: FAIL (exited) n_ctx=84736 kv=2813.5 compute=None smi=None
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 76544: FAIL (exited) n_ctx=76544 kv=2541.5 compute=454.03 smi=None
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 72448: OK (ok) n_ctx=72448 kv=2405.5 compute=434.03 smi=11767
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 74496: OK (ok) n_ctx=74496 kv=2473.5 compute=444.03 smi=11845
+search Qwen3.8-27B-UD-Q2_K_XL.gguf -c 75520: OK (ok) n_ctx=75520 kv=2507.5 compute=449.03 smi=11883
+RESULT Qwen3.8-27B-UD-Q2_K_XL.gguf max_ctx≈75520（76544 失敗）
+fixed Qwen3.8-27B-UD-IQ3_XXS.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=10243
+fixed Qwen3.8-27B-UD-IQ3_XXS.gguf -c 16384: OK (ok) n_ctx=16384 kv=544.0 compute=160.28 smi=10685
+fixed Qwen3.8-27B-UD-IQ3_XXS.gguf -c 32768: OK (ok) n_ctx=32768 kv=1088.0 compute=240.28 smi=11309
+fixed Qwen3.8-27B-UD-IQ3_XXS.gguf -c 65536: FAIL (exited) n_ctx=65536 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 4096: OK (ok) n_ctx=4096 kv=136.0 compute=126.28 smi=10243
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 262144: FAIL (exited) n_ctx=262144 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 133120: FAIL (exited) n_ctx=133120 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 68608: FAIL (exited) n_ctx=68608 kv=None compute=None smi=None
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 36352: OK (ok) n_ctx=36352 kv=1207.0 compute=257.78 smi=11445
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 52480: FAIL (exited) n_ctx=52480 kv=1742.5 compute=None smi=None
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 44288: OK (ok) n_ctx=44288 kv=1470.5 compute=296.53 smi=11749
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 48384: OK (ok) n_ctx=48384 kv=1606.5 compute=316.53 smi=11905
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 50432: FAIL (exited) n_ctx=50432 kv=1674.5 compute=None smi=None
+search Qwen3.8-27B-UD-IQ3_XXS.gguf -c 49408: FAIL (exited) n_ctx=49408 kv=1640.5 compute=None smi=None
+RESULT Qwen3.8-27B-UD-IQ3_XXS.gguf max_ctx≈48384（49408 失敗）
+已重新啟動 llama
+ALL_DONE

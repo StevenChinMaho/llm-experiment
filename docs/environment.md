@@ -71,7 +71,7 @@
 - Docker＋NVIDIA Container Toolkit 已安裝，`docker run --rm --gpus all ubuntu nvidia-smi` 可看到 GPU
 - llama.cpp 映像：`ghcr.io/ggml-org/llama.cpp:server-cuda13`，`--version` 顯示 `0.5.0-dev` **build 11347 (5fc4f3c8c)**，GNU 14.2.0 編譯
 - 映像 digest（2026-10-12 查，映像建立於 2026-10-02）：`ghcr.io/ggml-org/llama.cpp@sha256:936e9d2afab78662a05fd300c4a829ba931777bcd8372334da629b468511f90e`
-- 模型存放：`/llama/models/`，有 UD-IQ2_XXS、UD-Q2_K_XL、UD-IQ3_XXS、UD-IQ4_XS 與 `MTP/mtp-Qwen3.8-27B-Q4_0.gguf`（2026-10-24 查；磁碟剩約 20 GB）
+- 模型存放：`/llama/models/`，只留 UD-Q2_K_XL、UD-IQ3_XXS（E4 用）。2026-11-04 依使用者要求刪除 UD-IQ2_XXS、UD-IQ4_XS、MTP 檔以釋放磁碟（91% → 71%）；E1／E2／MTP 量測已完成，之後這些檔案的實驗都在主力機做。要再用時從 HF revision `4ca72078…` 下載，雜湊見下表。同日也刪除 full 映像（`full-cuda13-b11347`）與已同步回 repo 的 `~/e1`、`~/e2`、`~/mtp`；要在 svr 跑 llama-bench 或困惑度時，以 digest 重新下載 full 映像
 - **同一台機器上跑著大型模組 Minecraft 伺服器**（原生 Java/Forge，`java -Xmx8G -Xms6G -jar server.jar nogui`；通知服務是 template unit **`mc-notify@maho.service`**，不是 `mc-notify.service`），會佔用 CPU 與 RAM。不得擅自停止（見 CLAUDE.md 絕對規則 3）
 - 同機還有網站相關的 Docker 服務（nginx、MariaDB 等），RAM 只有 16GB，llama-server 的 `--cache-ram` 與 `--ctx-checkpoints` 必須壓低
 
@@ -95,6 +95,7 @@ docker run -d --name llama --gpus all --restart unless-stopped \
 - port 改綁區網 IP `192.168.0.66:8000`（原為 `127.0.0.1:8000`），**本機的 `127.0.0.1:8000` 已不再服務**，在 svr 上要用 `http://192.168.0.66:8000`。不用 ufw 擋，因為 Docker 對外開的 port 會繞過 ufw；路由器沒有轉發 8000（使用者確認）
 - API key 放在 svr 的 `~/llama.env`（權限 600，變數名 **`LLAMA_API_KEY`**；`LLAMA_ARG_API_KEY` 無效），**不得寫進 repo**。查看：`ssh svr cat ~/llama.env`。呼叫時帶 `Authorization: Bearer <key>`；Web UI 會要求輸入 key。`/health` 不需要 key
 - 映像改用 digest 指定（與原 tag 指向同一個映像 `936e9d2a…`）
+- **依賴這個 API 的服務：** `discord-musicbot` 的聊天功能（`LLAMA_API_URL`）。實驗停掉 `llama` 時聊天會失敗；astrbot 走 DeepSeek，不受影響
 - 實驗不受影響：實驗容器都綁 `127.0.0.1`，區網連不到；E1／MTP 腳本以 `--stop llama` 停止常駐容器、結束後 `docker start llama`，名稱未變。**`run_e4.sh` 不會自動停常駐容器**，在 svr 跑 E4 前要先 `docker stop llama`
 - 驗證（2026-10-24，從操作端筆電）：無 key／錯 key 回 401、正確 key 回 200、對話正常；`127.0.0.1:8000` 連線被拒
 

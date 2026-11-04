@@ -1,0 +1,19 @@
+2026-10-13T15:37:09+08:00 停止容器 llama
+2026-10-13T15:37:15+08:00 GPU 開始前：1 MiB, 0 %
+2026-10-13T15:37:15+08:00 開始 full_IQ2_XXS：llama-bench -m /models/Qwen3.8-27B-UD-IQ2_XXS.gguf -ngl 99 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0,4096,16384,32768 -r 5
+2026-10-13T15:41:42+08:00 完成 full_IQ2_XXS
+2026-10-13T15:41:42+08:00 開始 full_Q2_K_XL：llama-bench -m /models/Qwen3.8-27B-UD-Q2_K_XL.gguf -ngl 99 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0,4096,16384,32768 -r 5
+2026-10-13T15:46:22+08:00 完成 full_Q2_K_XL
+2026-10-13T15:46:22+08:00 開始 full_IQ3_XXS：llama-bench -m /models/Qwen3.8-27B-UD-IQ3_XXS.gguf -ngl 99 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0,4096,16384,32768 -r 5
+2026-10-13T15:51:08+08:00 完成 full_IQ3_XXS
+2026-10-13T15:51:08+08:00 開始 partial_IQ4_XS_ngl56：llama-bench -m /models/Qwen3.8-27B-UD-IQ4_XS.gguf -ngl 56 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0 -r 3
+2026-10-13T15:52:18+08:00 完成 partial_IQ4_XS_ngl56
+2026-10-13T15:52:18+08:00 開始 partial_IQ4_XS_ngl52：llama-bench -m /models/Qwen3.8-27B-UD-IQ4_XS.gguf -ngl 52 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0 -r 3
+2026-10-13T15:53:30+08:00 完成 partial_IQ4_XS_ngl52
+2026-10-13T15:53:30+08:00 開始 partial_IQ4_XS_ngl48：llama-bench -m /models/Qwen3.8-27B-UD-IQ4_XS.gguf -ngl 48 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0 -r 3
+2026-10-13T15:54:53+08:00 完成 partial_IQ4_XS_ngl48
+2026-10-13T15:54:53+08:00 開始 partial_IQ4_XS_ngl44：llama-bench -m /models/Qwen3.8-27B-UD-IQ4_XS.gguf -ngl 44 -fa on -ctk q8_0 -ctv q8_0 -p 512 -n 128 -d 0 -r 3
+2026-10-13T15:56:29+08:00 完成 partial_IQ4_XS_ngl44
+2026-10-13T15:56:29+08:00 ALL_DONE
+2026-10-13T15:56:29+08:00 重新啟動容器 llama
+2026-10-13T15:56:29+08:00 END

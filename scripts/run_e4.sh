@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# E4：啟動 llama-server（指定量化與思考預算）→ run_eval.py 送題 → 關閉伺服器。在主力機 Ubuntu 執行。
+# E4：啟動 llama-server（指定量化與思考預算）→ run_eval.py 送題 → 關閉伺服器。svr 上要設 MODELS=/llama/models。
 #
 # 用法：
 #   run_e4.sh --model Qwen3.8-27B-UD-IQ4_XS.gguf --budget 16384 --label iq4xs_b16384 --reps 1 \
@@ -8,7 +8,8 @@
 set -euo pipefail
 
 IMAGE=ghcr.io/ggml-org/llama.cpp@sha256:936e9d2afab78662a05fd300c4a829ba931777bcd8372334da629b468511f90e  # server-cuda13-b11347
-MODELS=/nvme477/llama/models
+MODELS=${MODELS:-/nvme477/llama/models}
+SANDBOX_IMAGE=${SANDBOX_IMAGE:-python:3.12-alpine}   # 批改 python_tests 的隔離容器
 EVAL=$HOME/qwen-eval
 MODEL="" BUDGET="" LABEL="" REPS=1 OUT="" CTX=32768 MAXTOK="" EXTRA="" PORT=8000 QUESTIONS="eval/aime_2026.json eval/questions.json:hard"
 while [ $# -gt 0 ]; do
@@ -53,8 +54,11 @@ cp "$side" "$OUT/model.sha256"
 nvidia-smi --query-gpu=timestamp,temperature.gpu,power.draw,clocks.sm,memory.used,utilization.gpu \
   --format=csv -l 1 > "$OUT/gpu_log.csv" &
 SMI_PID=$!
+# 每分鐘記錄系統負載與 Minecraft（java）是否在跑，TTA 分析時可排除受干擾的時段
+while true; do echo "$(date -Is) load=$(cut -d' ' -f1-3 /proc/loadavg) java=$(pgrep -c java || true) mem_avail_mib=$(awk '/MemAvailable/{print int($2/1024)}' /proc/meminfo)"; sleep 60; done > "$OUT/load_log.txt" &
+LOAD_PID=$!
 cleanup() {
-  kill "$SMI_PID" 2>/dev/null || true
+  kill "$SMI_PID" "$LOAD_PID" 2>/dev/null || true
   docker logs "$NAME" > "$OUT/server.log" 2>&1 || true
   docker rm -f "$NAME" >/dev/null 2>&1 || true
   log END
@@ -74,6 +78,6 @@ log "伺服器就緒：$(nvidia-smi --query-gpu=memory.used --format=csv,noheade
 cd "$EVAL"
 # shellcheck disable=SC2086
 python3 scripts/run_eval.py --url "http://127.0.0.1:$PORT" --label "$LABEL" --questions $QUESTIONS --reps "$REPS" \
-  --max-tokens "$MAXTOK" --thinking on --out "$OUT/results.jsonl" \
+  --max-tokens "$MAXTOK" --thinking on --out "$OUT/results.jsonl" --sandbox-image "$SANDBOX_IMAGE" \
   --note "model=$MODEL budget=$BUDGET ctx=$CTX image=$IMAGE" 2>&1 | tee -a "$OUT/eval.log"
 log "ALL_DONE"

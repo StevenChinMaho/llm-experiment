@@ -1,0 +1,25 @@
+2026-10-14T10:37:32+08:00 啟動 mtp_off：
+2026-10-14T10:37:37+08:00 mtp_off 就緒：nvidia-smi 10685 MiB
+mtp_off code r1: tg=21.20 tok=512 draft=None acc=None rate=None
+mtp_off code r2: tg=21.14 tok=512 draft=None acc=None rate=None
+mtp_off math r1: tg=21.12 tok=512 draft=None acc=None rate=None
+mtp_off math r2: tg=21.10 tok=512 draft=None acc=None rate=None
+mtp_off chat r1: tg=21.10 tok=405 draft=None acc=None rate=None
+mtp_off chat r2: tg=21.09 tok=512 draft=None acc=None rate=None
+mtp_off_greedy code r1: tg=21.07 tok=512 draft=None acc=None rate=None
+mtp_off_greedy math r1: tg=21.04 tok=512 draft=None acc=None rate=None
+mtp_off_greedy chat r1: tg=21.04 tok=425 draft=None acc=None rate=None
+{'log': '/home/maho/mtp/mtp_svr_iq3xxs_20261014-1105/server_mtp_off.log', 'n_ctx': 16384, 'offloaded': '66/66', 'cuda_model_mib': 9685.21, 'cpu_mapped_mib': 397.85, 'kv_mib': 544.0, 'rs_mib': 149.62, 'cuda_compute_mib': 160.28, 'host_compute_mib': 36.28, 'fit_projected_mib': 10539, 'fit_free_mib': 11648, 'loaded': True, 'kv_formula_mib': 544.0, 'kv_err_mib': 0.0, 'cuda_sum_mib': 10539.11}
+2026-10-14T10:41:11+08:00 啟動 mtp_n1：--spec-type draft-mtp --spec-draft-model /models/MTP/mtp-Qwen3.8-27B-Q4_0.gguf --spec-draft-n-max 1
+2026-10-14T10:41:18+08:00 mtp_n1 啟動失敗：0.04.976.867 E ggml_backend_cuda_buffer_type_alloc_buffer: allocating 774.71 MiB on device 0: cudaMalloc failed: out of memory
+2026-10-14T10:41:18+08:00 啟動 mtp_n2：--spec-type draft-mtp --spec-draft-model /models/MTP/mtp-Qwen3.8-27B-Q4_0.gguf --spec-draft-n-max 2
+2026-10-14T10:41:24+08:00 mtp_n2 啟動失敗：0.03.735.735 E ggml_backend_cuda_buffer_type_alloc_buffer: allocating 774.71 MiB on device 0: cudaMalloc failed: out of memory
+2026-10-14T10:41:24+08:00 啟動 mtp_n3：--spec-type draft-mtp --spec-draft-model /models/MTP/mtp-Qwen3.8-27B-Q4_0.gguf --spec-draft-n-max 3
+2026-10-14T10:41:28+08:00 mtp_n3 啟動失敗：0.03.605.033 E ggml_backend_cuda_buffer_type_alloc_buffer: allocating 774.71 MiB on device 0: cudaMalloc failed: out of memory
+2026-10-14T10:41:28+08:00 啟動 mtp_n4：--spec-type draft-mtp --spec-draft-model /models/MTP/mtp-Qwen3.8-27B-Q4_0.gguf --spec-draft-n-max 4
+2026-10-14T10:41:33+08:00 mtp_n4 啟動失敗：0.03.582.768 E ggml_backend_cuda_buffer_type_alloc_buffer: allocating 774.71 MiB on device 0: cudaMalloc failed: out of memory
+2026-10-14T10:41:33+08:00 啟動 mtp_n6：--spec-type draft-mtp --spec-draft-model /models/MTP/mtp-Qwen3.8-27B-Q4_0.gguf --spec-draft-n-max 6
+2026-10-14T10:41:37+08:00 mtp_n6 啟動失敗：0.03.577.916 E ggml_backend_cuda_buffer_type_alloc_buffer: allocating 774.71 MiB on device 0: cudaMalloc failed: out of memory
+2026-10-14T10:41:37+08:00 ALL_DONE
+2026-10-14T10:41:37+08:00 已重新啟動 llama
+2026-10-14T10:41:37+08:00 END
