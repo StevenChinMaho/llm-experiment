@@ -64,6 +64,7 @@ cleanup() {
   log END
 }
 trap cleanup EXIT
+trap 'log "收到中止訊號"; exit 143' TERM INT HUP   # 時段截止時由批次腳本送出；未完成的那題下次重跑
 
 docker rm -f "$NAME" >/dev/null 2>&1 || true
 log "啟動伺服器：${SERVER_ARGS[*]}"

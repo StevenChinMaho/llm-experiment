@@ -61,6 +61,9 @@ run_cond() {  # run_cond <標籤> [MTP 參數...]
   python3 "$HERE/mtp_probe.py" --url "http://127.0.0.1:$PORT" --label "$label" --out "$OUT/results.jsonl" --reps 2 | tee -a "$LOG"
   python3 "$HERE/mtp_probe.py" --url "http://127.0.0.1:$PORT" --label "${label}_greedy" --out "$OUT/results.jsonl" \
     --reps 1 --temperature 0 | tee -a "$LOG"
+  # 開啟思考時的接受率：思考內容的可預測性可能和答案不同
+  python3 "$HERE/mtp_probe.py" --url "http://127.0.0.1:$PORT" --label "${label}_think" --out "$OUT/results.jsonl" \
+    --reps 1 --thinking on --max-tokens 2048 | tee -a "$LOG"
   echo "{\"label\": \"$label\", \"vram_mib\": $(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits)}" >> "$OUT/vram.jsonl"
   docker logs "$NAME" > "$OUT/server_$label.log" 2>&1
   python3 "$HERE/parse_server_log.py" "$OUT/server_$label.log" | tee -a "$LOG"

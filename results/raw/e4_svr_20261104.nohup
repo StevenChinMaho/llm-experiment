@@ -1,0 +1,812 @@
+2026-11-04T18:18:09+08:00 停止常駐容器 llama
+2026-11-04T18:18:15+08:00 開始 q2kxl_b1024
+2026-11-04T18:18:15+08:00 啟動伺服器：-m /models/Qwen3.8-27B-UD-Q2_K_XL.gguf -ngl 99 -c 32768 -fa on -np 1 -ctk q8_0 -ctv q8_0 --cache-ram 0 --jinja --no-reasoning-preserve --reasoning-budget 1024 -lv 4 --port 8080 -fit off
+2026-11-04T18:18:57+08:00 伺服器就緒：10255 MiB
+[1/76] q2kxl_b1024 A26-I-01 r1: ✓ ext=277 TTA=38.0s total=55.9s think=814 finish=stop 
+[2/76] q2kxl_b1024 A26-I-02 r1: ✗ ext=52 TTA=47.2s total=47.4s think=1024 finish=stop 
+[3/76] q2kxl_b1024 A26-I-03 r1: ✓ ext=79 TTA=47.4s total=47.6s think=1024 finish=stop 
+[4/76] q2kxl_b1024 A26-I-04 r1: ✗ ext=83 TTA=47.3s total=47.5s think=1024 finish=stop 
+[5/76] q2kxl_b1024 A26-I-05 r1: ✓ ext=65 TTA=47.6s total=47.8s think=1024 finish=stop 
+[6/76] q2kxl_b1024 A26-I-06 r1: ✓ ext=441 TTA=47.3s total=47.6s think=1024 finish=stop 
+[7/76] q2kxl_b1024 A26-I-07 r1: ✗ ext=406 TTA=47.5s total=47.7s think=1024 finish=stop 
+[8/76] q2kxl_b1024 A26-I-08 r1: ✗ ext=122 TTA=47.4s total=47.6s think=1009 finish=stop 
+[9/76] q2kxl_b1024 A26-I-09 r1: ✗ ext=11 TTA=47.8s total=47.9s think=1022 finish=stop 
+[10/76] q2kxl_b1024 A26-I-10 r1: ✗ ext=169 TTA=47.6s total=47.8s think=1024 finish=stop 
+[11/76] q2kxl_b1024 A26-I-11 r1: ✗ ext=448 TTA=47.7s total=47.9s think=1023 finish=stop 
+[12/76] q2kxl_b1024 A26-I-12 r1: ✗ ext=13 TTA=47.7s total=47.9s think=1021 finish=stop 
+[13/76] q2kxl_b1024 A26-I-13 r1: ✗ ext=0 TTA=47.7s total=47.9s think=1014 finish=stop 
+[14/76] q2kxl_b1024 A26-I-14 r1: ✗ ext=None TTA=47.5s total=238.9s think=1024 finish=length 
+[15/76] q2kxl_b1024 A26-I-15 r1: ✗ ext=0 TTA=47.9s total=48.1s think=1024 finish=stop 
+[16/76] q2kxl_b1024 A26-II-01 r1: ✓ ext=178 TTA=47.4s total=47.6s think=1024 finish=stop 
+[17/76] q2kxl_b1024 A26-II-02 r1: ✗ ext=69984 TTA=48.2s total=69.6s think=1024 finish=stop 
+[18/76] q2kxl_b1024 A26-II-03 r1: ✗ ext=14 TTA=47.6s total=74.9s think=1024 finish=stop 
+[19/76] q2kxl_b1024 A26-II-04 r1: ✗ ext=196 TTA=47.6s total=47.8s think=1022 finish=stop 
+[20/76] q2kxl_b1024 A26-II-05 r1: ✓ ext=190 TTA=47.5s total=47.7s think=1012 finish=stop 
+[21/76] q2kxl_b1024 A26-II-06 r1: ✓ ext=50 TTA=47.4s total=183.0s think=1024 finish=stop 
+[22/76] q2kxl_b1024 A26-II-07 r1: ✗ ext=83 TTA=47.6s total=47.8s think=1020 finish=stop 
+[23/76] q2kxl_b1024 A26-II-08 r1: ✗ ext=125 TTA=47.4s total=47.7s think=1023 finish=stop 
+[24/76] q2kxl_b1024 A26-II-09 r1: ✗ ext=0 TTA=47.4s total=47.6s think=1006 finish=stop 
+[25/76] q2kxl_b1024 A26-II-10 r1: ✗ ext=17 TTA=47.6s total=47.8s think=1017 finish=stop 
+[26/76] q2kxl_b1024 A26-II-11 r1: ✗ ext=1 TTA=47.6s total=47.7s think=1024 finish=stop 
+[27/76] q2kxl_b1024 A26-II-12 r1: ✗ ext=10 TTA=47.6s total=47.8s think=1023 finish=stop 
+[28/76] q2kxl_b1024 A26-II-13 r1: ✗ ext=10 TTA=47.6s total=47.8s think=1022 finish=stop 
+[29/76] q2kxl_b1024 A26-II-14 r1: ✗ ext=1 TTA=47.7s total=47.8s think=1021 finish=stop 
+[30/76] q2kxl_b1024 A26-II-15 r1: ✗ ext=44 TTA=47.6s total=47.8s think=1019 finish=stop 
+[31/76] q2kxl_b1024 H1 r1: ✓ ext=18 TTA=47.4s total=47.5s think=1022 finish=stop 
+[32/76] q2kxl_b1024 H2 r1: ✓ ext={'possible': False, 'n': 8125} TTA=47.4s total=47.9s think=1024 finish=stop 
+[33/76] q2kxl_b1024 H3 r1: ✓ ext=288 TTA=47.3s total=47.5s think=1024 finish=stop 
+[34/76] q2kxl_b1024 H4 r1: ✗ ext={'length': 4, 'count': 12} TTA=47.4s total=47.9s think=1024 finish=stop 
+[35/76] q2kxl_b1024 H5 r1: ✗ ext={'person': None, 'drink': None TTA=47.8s total=48.0s think=1024 finish=stop 
+[36/76] q2kxl_b1024 H6 r1: ✓ ext={'distance': 16, 'count': 2} TTA=47.5s total=48.1s think=1024 finish=stop 
+[37/76] q2kxl_b1024 H7 r1: ✓ ext=533 TTA=21.7s total=21.9s think=463 finish=stop 
+[38/76] q2kxl_b1024 H8 r1: ✓ ext=def evaluate(s):
+    text = s
+ TTA=47.5s total=74.0s think=1022 finish=stop 
+[39/76] q2kxl_b1024 A26-I-01 r2: ✓ ext=277 TTA=39.1s total=39.3s think=839 finish=stop 
+[40/76] q2kxl_b1024 A26-I-02 r2: ✓ ext=62 TTA=47.4s total=47.6s think=1024 finish=stop 
+[41/76] q2kxl_b1024 A26-I-03 r2: ✗ ext=229 TTA=47.5s total=47.7s think=1024 finish=stop 
+[42/76] q2kxl_b1024 A26-I-04 r2: ✗ ext=67 TTA=47.3s total=47.5s think=1024 finish=stop 
+[43/76] q2kxl_b1024 A26-I-05 r2: ✓ ext=65 TTA=47.6s total=47.8s think=1024 finish=stop 
+[44/76] q2kxl_b1024 A26-I-06 r2: ✓ ext=441 TTA=47.4s total=47.6s think=1024 finish=stop 
+[45/76] q2kxl_b1024 A26-I-07 r2: ✗ ext=561 TTA=47.4s total=47.6s think=1023 finish=stop 
+[46/76] q2kxl_b1024 A26-I-08 r2: ✓ ext=244 TTA=47.4s total=47.6s think=1016 finish=stop 
+[47/76] q2kxl_b1024 A26-I-09 r2: ✗ ext=None TTA=47.7s total=48.4s think=1024 finish=stop 
+[48/76] q2kxl_b1024 A26-I-10 r2: ✗ ext=251 TTA=47.5s total=47.8s think=1023 finish=stop 
+[49/76] q2kxl_b1024 A26-I-11 r2: ✗ ext=648 TTA=47.6s total=48.7s think=1020 finish=stop 
+[50/76] q2kxl_b1024 A26-I-12 r2: ✗ ext=5 TTA=47.7s total=47.8s think=1024 finish=stop 
+[51/76] q2kxl_b1024 A26-I-13 r2: ✗ ext=251 TTA=47.7s total=47.9s think=1017 finish=stop 
+[52/76] q2kxl_b1024 A26-I-14 r2: ✓ ext=681 TTA=47.4s total=131.8s think=1018 finish=stop 
+[53/76] q2kxl_b1024 A26-I-15 r2: ✗ ext=2 TTA=47.9s total=48.0s think=1024 finish=stop 
+[54/76] q2kxl_b1024 A26-II-01 r2: ✓ ext=178 TTA=47.3s total=54.1s think=1024 finish=stop 
+[55/76] q2kxl_b1024 A26-II-02 r2: ✗ ext=None TTA=48.1s total=239.8s think=1024 finish=length 
+[56/76] q2kxl_b1024 A26-II-03 r2: ✗ ext=None TTA=47.6s total=238.9s think=1022 finish=length 
+[57/76] q2kxl_b1024 A26-II-04 r2: ✗ ext=999 TTA=47.5s total=47.8s think=1013 finish=stop 
+[58/76] q2kxl_b1024 A26-II-05 r2: ✗ ext=200 TTA=47.4s total=55.4s think=1019 finish=stop 
+[59/76] q2kxl_b1024 A26-II-06 r2: ✗ ext=123 TTA=47.4s total=47.6s think=1024 finish=stop 
+[60/76] q2kxl_b1024 A26-II-07 r2: ✗ ext=403 TTA=47.5s total=47.7s think=1020 finish=stop 
+[61/76] q2kxl_b1024 A26-II-08 r2: ✗ ext=None TTA=47.4s total=47.6s think=1021 finish=stop 
+[62/76] q2kxl_b1024 A26-II-09 r2: ✗ ext=692 TTA=47.5s total=47.7s think=999 finish=stop 
+[63/76] q2kxl_b1024 A26-II-10 r2: ✗ ext=None TTA=47.6s total=238.9s think=1024 finish=length 
+[64/76] q2kxl_b1024 A26-II-11 r2: ✗ ext=None TTA=47.5s total=238.8s think=1012 finish=length 
+[65/76] q2kxl_b1024 A26-II-12 r2: ✓ ext=223 TTA=47.6s total=230.2s think=1024 finish=stop 
+[66/76] q2kxl_b1024 A26-II-13 r2: ✗ ext=None TTA=47.6s total=239.0s think=1019 finish=length 
+[67/76] q2kxl_b1024 A26-II-14 r2: ✗ ext=None TTA=47.6s total=239.0s think=1018 finish=length 
+[68/76] q2kxl_b1024 A26-II-15 r2: ✗ ext=None TTA=47.6s total=239.0s think=1013 finish=length 
+[69/76] q2kxl_b1024 H1 r2: ✓ ext=18 TTA=47.3s total=47.5s think=1022 finish=stop 
+[70/76] q2kxl_b1024 H2 r2: ✗ ext={'possible': False, 'n': 8150} TTA=47.3s total=47.8s think=1024 finish=stop 
+[71/76] q2kxl_b1024 H3 r2: ✗ ext=216 TTA=47.3s total=53.4s think=1013 finish=stop 
+[72/76] q2kxl_b1024 H4 r2: ✗ ext={'length': 4, 'count': 13} TTA=47.4s total=48.4s think=1024 finish=stop 
+[73/76] q2kxl_b1024 H5 r2: ✗ ext=None TTA=47.7s total=47.9s think=1024 finish=stop 
+[74/76] q2kxl_b1024 H6 r2: ✓ ext={'distance': 16, 'count': 2} TTA=47.5s total=48.0s think=1024 finish=stop 
+[75/76] q2kxl_b1024 H7 r2: ✓ ext=533 TTA=44.7s total=45.0s think=968 finish=stop 
+[76/76] q2kxl_b1024 H8 r2: ✗ ext=def evaluate(s):
+    n = len(s TTA=47.3s total=67.4s think=1020 finish=stop 
+資料來源：`/home/maho/e4/e4_svr_20261104/q2kxl_b1024/results.jsonl`（76 筆）。答對率附 Wilson 95% 信賴區間。
+
+| 條件 | 題數×次數 | 答對率 | 95% CI | 擷取失敗 | 截斷 | 平均思考 chunk | 平均 TTA (s) | 平均總耗時 (s) |
+|---|---:|---:|---|---:|---:|---:|---:|---:|
+| q2kxl_b1024 | 76 | 31.6% | [22.2%, 42.7%] | 11 | 8 | 1008 | 46.9 | 74.3 |
+
+各題答對次數（條件 × 題號）：
+
+| 題號 | q2kxl_b1024 |
+|---|---:|
+| A26-I-01 | 2/2 |
+| A26-I-02 | 1/2 |
+| A26-I-03 | 1/2 |
+| A26-I-04 | 0/2 |
+| A26-I-05 | 2/2 |
+| A26-I-06 | 2/2 |
+| A26-I-07 | 0/2 |
+| A26-I-08 | 1/2 |
+| A26-I-09 | 0/2 |
+| A26-I-10 | 0/2 |
+| A26-I-11 | 0/2 |
+| A26-I-12 | 0/2 |
+| A26-I-13 | 0/2 |
+| A26-I-14 | 1/2 |
+| A26-I-15 | 0/2 |
+| A26-II-01 | 2/2 |
+| A26-II-02 | 0/2 |
+| A26-II-03 | 0/2 |
+| A26-II-04 | 0/2 |
+| A26-II-05 | 1/2 |
+| A26-II-06 | 1/2 |
+| A26-II-07 | 0/2 |
+| A26-II-08 | 0/2 |
+| A26-II-09 | 0/2 |
+| A26-II-10 | 0/2 |
+| A26-II-11 | 0/2 |
+| A26-II-12 | 1/2 |
+| A26-II-13 | 0/2 |
+| A26-II-14 | 0/2 |
+| A26-II-15 | 0/2 |
+| H1 | 2/2 |
+| H2 | 1/2 |
+| H3 | 1/2 |
+| H4 | 0/2 |
+| H5 | 0/2 |
+| H6 | 2/2 |
+| H7 | 2/2 |
+| H8 | 1/2 |
+
+wrote /home/maho/e4/e4_svr_20261104/q2kxl_b1024/results_summary.md
+2026-11-04T19:53:07+08:00 ALL_DONE
+2026-11-04T19:53:07+08:00 END
+2026-11-04T19:53:07+08:00 完成 q2kxl_b1024
+2026-11-04T19:53:07+08:00 開始 iq3xxs_b1024
+2026-11-04T19:53:07+08:00 啟動伺服器：-m /models/Qwen3.8-27B-UD-IQ3_XXS.gguf -ngl 99 -c 32768 -fa on -np 1 -ctk q8_0 -ctv q8_0 --cache-ram 0 --jinja --no-reasoning-preserve --reasoning-budget 1024 -lv 4 --port 8080 -fit off
+2026-11-04T19:53:29+08:00 伺服器就緒：11309 MiB
+[1/76] iq3xxs_b1024 A26-I-01 r1: ✗ ext=151 TTA=49.8s total=50.0s think=1024 finish=stop 
+[2/76] iq3xxs_b1024 A26-I-02 r1: ✗ ext=105 TTA=49.5s total=49.8s think=1024 finish=stop 
+[3/76] iq3xxs_b1024 A26-I-03 r1: ✓ ext=79 TTA=49.7s total=49.9s think=1023 finish=stop 
+[4/76] iq3xxs_b1024 A26-I-04 r1: ✓ ext=70 TTA=49.5s total=49.7s think=1024 finish=stop 
+[5/76] iq3xxs_b1024 A26-I-05 r1: ✓ ext=65 TTA=49.8s total=50.0s think=1024 finish=stop 
+[6/76] iq3xxs_b1024 A26-I-06 r1: ✗ ext=1 TTA=49.5s total=49.7s think=1024 finish=stop 
+[7/76] iq3xxs_b1024 A26-I-07 r1: ✗ ext=441 TTA=49.6s total=49.8s think=1024 finish=stop 
+[8/76] iq3xxs_b1024 A26-I-08 r1: ✗ ext=864 TTA=49.5s total=49.8s think=1007 finish=stop 
+[9/76] iq3xxs_b1024 A26-I-09 r1: ✗ ext=11 TTA=49.9s total=50.1s think=1024 finish=stop 
+[10/76] iq3xxs_b1024 A26-I-10 r1: ✗ ext=16 TTA=49.7s total=49.9s think=1024 finish=stop 
+[11/76] iq3xxs_b1024 A26-I-11 r1: ✓ ext=896 TTA=49.8s total=50.0s think=1024 finish=stop 
+[12/76] iq3xxs_b1024 A26-I-12 r1: ✗ ext=10 TTA=49.8s total=50.0s think=1024 finish=stop 
+[13/76] iq3xxs_b1024 A26-I-13 r1: ✗ ext=502 TTA=49.8s total=50.0s think=1005 finish=stop 
+[14/76] iq3xxs_b1024 A26-I-14 r1: ✗ ext=104 TTA=49.6s total=49.8s think=1024 finish=stop 
+[15/76] iq3xxs_b1024 A26-I-15 r1: ✗ ext=1 TTA=50.0s total=50.1s think=1024 finish=stop 
+[16/76] iq3xxs_b1024 A26-II-01 r1: ✓ ext=178 TTA=49.5s total=49.7s think=1024 finish=stop 
+[17/76] iq3xxs_b1024 A26-II-02 r1: ✗ ext=10 TTA=50.2s total=50.4s think=1024 finish=stop 
+[18/76] iq3xxs_b1024 A26-II-03 r1: ✗ ext=1 TTA=49.7s total=49.9s think=1011 finish=stop 
+[19/76] iq3xxs_b1024 A26-II-04 r1: ✗ ext=44 TTA=49.6s total=49.8s think=1023 finish=stop 
+[20/76] iq3xxs_b1024 A26-II-05 r1: ✓ ext=190 TTA=49.5s total=49.8s think=1013 finish=stop 
+[21/76] iq3xxs_b1024 A26-II-06 r1: ✗ ext=129 TTA=49.5s total=49.7s think=1024 finish=stop 
+[22/76] iq3xxs_b1024 A26-II-07 r1: ✗ ext=103 TTA=49.6s total=49.9s think=1021 finish=stop 
+[23/76] iq3xxs_b1024 A26-II-08 r1: ✗ ext=125 TTA=49.5s total=49.7s think=1024 finish=stop 
+[24/76] iq3xxs_b1024 A26-II-09 r1: ✗ ext=880 TTA=49.5s total=49.8s think=1023 finish=stop 
+[25/76] iq3xxs_b1024 A26-II-10 r1: ✗ ext=170 TTA=49.7s total=49.9s think=1024 finish=stop 
+[26/76] iq3xxs_b1024 A26-II-11 r1: ✗ ext=999 TTA=49.7s total=49.9s think=1024 finish=stop 
+[27/76] iq3xxs_b1024 A26-II-12 r1: ✗ ext=10 TTA=49.7s total=49.9s think=1024 finish=stop 
+[28/76] iq3xxs_b1024 A26-II-13 r1: ✗ ext=11 TTA=49.7s total=49.9s think=1019 finish=stop 
+[29/76] iq3xxs_b1024 A26-II-14 r1: ✗ ext=12 TTA=49.8s total=49.9s think=1020 finish=stop 
+[30/76] iq3xxs_b1024 A26-II-15 r1: ✗ ext=121 TTA=49.7s total=50.0s think=1017 finish=stop 
+[31/76] iq3xxs_b1024 H1 r1: ✓ ext=18 TTA=49.4s total=49.6s think=1024 finish=stop 
+[32/76] iq3xxs_b1024 H2 r1: ✓ ext={'possible': False, 'n': 8125} TTA=49.5s total=50.0s think=1024 finish=stop 
+[33/76] iq3xxs_b1024 H3 r1: ✗ ext=198 TTA=49.4s total=49.7s think=1018 finish=stop 
+[34/76] iq3xxs_b1024 H4 r1: ✗ ext={'length': 6, 'count': 3} TTA=49.5s total=50.0s think=1024 finish=stop 
+[35/76] iq3xxs_b1024 H5 r1: ✗ ext={'person': None, 'drink': None TTA=49.9s total=50.1s think=1024 finish=stop 
+[36/76] iq3xxs_b1024 H6 r1: ✗ ext={'distance': 16, 'count': 3} TTA=49.6s total=50.2s think=1024 finish=stop 
+[37/76] iq3xxs_b1024 H7 r1: ✓ ext=533 TTA=28.8s total=29.0s think=591 finish=stop 
+[38/76] iq3xxs_b1024 H8 r1: ✓ ext=def evaluate(s: str) -> int:
+  TTA=49.6s total=75.7s think=1020 finish=stop 
+[39/76] iq3xxs_b1024 A26-I-01 r2: ✓ ext=277 TTA=40.4s total=40.6s think=830 finish=stop 
+[40/76] iq3xxs_b1024 A26-I-02 r2: ✓ ext=62 TTA=49.5s total=49.7s think=1024 finish=stop 
+[41/76] iq3xxs_b1024 A26-I-03 r2: ✗ ext=491 TTA=49.6s total=49.9s think=1024 finish=stop 
+[42/76] iq3xxs_b1024 A26-I-04 r2: ✗ ext=71 TTA=49.4s total=49.6s think=1024 finish=stop 
+[43/76] iq3xxs_b1024 A26-I-05 r2: ✓ ext=65 TTA=49.6s total=49.8s think=1024 finish=stop 
+[44/76] iq3xxs_b1024 A26-I-06 r2: ✗ ext=21 TTA=49.4s total=49.6s think=1023 finish=stop 
+[45/76] iq3xxs_b1024 A26-I-07 r2: ✗ ext=600 TTA=49.5s total=49.8s think=1024 finish=stop 
+[46/76] iq3xxs_b1024 A26-I-08 r2: ✓ ext=244 TTA=49.4s total=80.4s think=1008 finish=stop 
+[47/76] iq3xxs_b1024 A26-I-09 r2: ✗ ext=33 TTA=49.8s total=50.0s think=1022 finish=stop 
+[48/76] iq3xxs_b1024 A26-I-10 r2: ✗ ext=315 TTA=49.6s total=49.8s think=1022 finish=stop 
+[49/76] iq3xxs_b1024 A26-I-11 r2: ✗ ext=576 TTA=49.7s total=49.9s think=1024 finish=stop 
+[50/76] iq3xxs_b1024 A26-I-12 r2: ✗ ext=54 TTA=49.7s total=84.7s think=1022 finish=stop 
+[51/76] iq3xxs_b1024 A26-I-13 r2: ✗ ext=2 TTA=49.7s total=49.9s think=1022 finish=stop 
+[52/76] iq3xxs_b1024 A26-I-14 r2: ✗ ext=409 TTA=49.5s total=49.8s think=1024 finish=stop 
+[53/76] iq3xxs_b1024 A26-I-15 r2: ✗ ext=6 TTA=49.9s total=57.1s think=1024 finish=stop 
+[54/76] iq3xxs_b1024 A26-II-01 r2: ✓ ext=178 TTA=49.4s total=49.7s think=1024 finish=stop 
+[55/76] iq3xxs_b1024 A26-II-02 r2: ✗ ext=3 TTA=50.2s total=50.3s think=1024 finish=stop 
+[56/76] iq3xxs_b1024 A26-II-03 r2: ✗ ext=None TTA=49.6s total=249.3s think=1023 finish=length 
+[57/76] iq3xxs_b1024 A26-II-04 r2: ✗ ext=198 TTA=49.6s total=49.9s think=1018 finish=stop 
+[58/76] iq3xxs_b1024 A26-II-05 r2: ✗ ext=14 TTA=49.5s total=49.7s think=1024 finish=stop 
+[59/76] iq3xxs_b1024 A26-II-06 r2: ✓ ext=50 TTA=49.5s total=49.6s think=1024 finish=stop 
+[60/76] iq3xxs_b1024 A26-II-07 r2: ✗ ext=62249 TTA=49.6s total=74.9s think=1024 finish=stop 
+[61/76] iq3xxs_b1024 A26-II-08 r2: ✗ ext=None TTA=49.5s total=249.1s think=1024 finish=length 
+[62/76] iq3xxs_b1024 A26-II-09 r2: ✗ ext=1 TTA=49.5s total=49.7s think=1012 finish=stop 
+[63/76] iq3xxs_b1024 A26-II-10 r2: ✗ ext=218 TTA=49.6s total=49.9s think=1018 finish=stop 
+[64/76] iq3xxs_b1024 A26-II-11 r2: ✗ ext=48 TTA=49.6s total=49.8s think=1023 finish=stop 
+[65/76] iq3xxs_b1024 A26-II-12 r2: ✗ ext=31 TTA=49.7s total=49.9s think=1024 finish=stop 
+[66/76] iq3xxs_b1024 A26-II-13 r2: ✗ ext=None TTA=49.6s total=249.3s think=1021 finish=length 
+[67/76] iq3xxs_b1024 A26-II-14 r2: ✗ ext=4 TTA=49.7s total=49.9s think=1020 finish=stop 
+[68/76] iq3xxs_b1024 A26-II-15 r2: ✗ ext=443 TTA=49.7s total=49.9s think=1016 finish=stop 
+[69/76] iq3xxs_b1024 H1 r2: ✓ ext=18 TTA=49.4s total=49.6s think=1024 finish=stop 
+[70/76] iq3xxs_b1024 H2 r2: ✗ ext={'possible': False, 'n': 8140} TTA=49.5s total=49.9s think=1024 finish=stop 
+[71/76] iq3xxs_b1024 H3 r2: ✗ ext=192 TTA=49.4s total=49.6s think=1021 finish=stop 
+[72/76] iq3xxs_b1024 H4 r2: ✗ ext={'length': 4, 'count': 4} TTA=49.5s total=50.0s think=1023 finish=stop 
+[73/76] iq3xxs_b1024 H5 r2: ✗ ext={'person': None, 'drink': '茶'} TTA=49.8s total=50.2s think=1023 finish=stop 
+[74/76] iq3xxs_b1024 H6 r2: ✓ ext={'distance': 16, 'count': 2} TTA=49.6s total=50.1s think=1024 finish=stop 
+[75/76] iq3xxs_b1024 H7 r2: ✓ ext=533 TTA=17.7s total=17.9s think=360 finish=stop 
+[76/76] iq3xxs_b1024 H8 r2: ✓ ext=def evaluate(s):
+    n = len(s TTA=49.5s total=74.7s think=1020 finish=stop 
+資料來源：`/home/maho/e4/e4_svr_20261104/iq3xxs_b1024/results.jsonl`（76 筆）。答對率附 Wilson 95% 信賴區間。
+
+| 條件 | 題數×次數 | 答對率 | 95% CI | 擷取失敗 | 截斷 | 平均思考 chunk | 平均 TTA (s) | 平均總耗時 (s) |
+|---|---:|---:|---|---:|---:|---:|---:|---:|
+| iq3xxs_b1024 | 76 | 26.3% | [17.7%, 37.2%] | 3 | 3 | 1005 | 48.8 | 58.9 |
+
+各題答對次數（條件 × 題號）：
+
+| 題號 | iq3xxs_b1024 |
+|---|---:|
+| A26-I-01 | 1/2 |
+| A26-I-02 | 1/2 |
+| A26-I-03 | 1/2 |
+| A26-I-04 | 1/2 |
+| A26-I-05 | 2/2 |
+| A26-I-06 | 0/2 |
+| A26-I-07 | 0/2 |
+| A26-I-08 | 1/2 |
+| A26-I-09 | 0/2 |
+| A26-I-10 | 0/2 |
+| A26-I-11 | 1/2 |
+| A26-I-12 | 0/2 |
+| A26-I-13 | 0/2 |
+| A26-I-14 | 0/2 |
+| A26-I-15 | 0/2 |
+| A26-II-01 | 2/2 |
+| A26-II-02 | 0/2 |
+| A26-II-03 | 0/2 |
+| A26-II-04 | 0/2 |
+| A26-II-05 | 1/2 |
+| A26-II-06 | 1/2 |
+| A26-II-07 | 0/2 |
+| A26-II-08 | 0/2 |
+| A26-II-09 | 0/2 |
+| A26-II-10 | 0/2 |
+| A26-II-11 | 0/2 |
+| A26-II-12 | 0/2 |
+| A26-II-13 | 0/2 |
+| A26-II-14 | 0/2 |
+| A26-II-15 | 0/2 |
+| H1 | 2/2 |
+| H2 | 1/2 |
+| H3 | 0/2 |
+| H4 | 0/2 |
+| H5 | 0/2 |
+| H6 | 1/2 |
+| H7 | 2/2 |
+| H8 | 2/2 |
+
+wrote /home/maho/e4/e4_svr_20261104/iq3xxs_b1024/results_summary.md
+2026-11-04T21:08:04+08:00 ALL_DONE
+2026-11-04T21:08:05+08:00 END
+2026-11-04T21:08:05+08:00 完成 iq3xxs_b1024
+2026-11-04T21:08:05+08:00 開始 q2kxl_b4096
+2026-11-04T21:08:05+08:00 啟動伺服器：-m /models/Qwen3.8-27B-UD-Q2_K_XL.gguf -ngl 99 -c 32768 -fa on -np 1 -ctk q8_0 -ctv q8_0 --cache-ram 0 --jinja --no-reasoning-preserve --reasoning-budget 4096 -lv 4 --port 8080 -fit off
+2026-11-04T21:08:21+08:00 伺服器就緒：10255 MiB
+[1/76] q2kxl_b4096 A26-I-01 r1: ✓ ext=277 TTA=38.1s total=56.1s think=814 finish=stop 
+[2/76] q2kxl_b4096 A26-I-02 r1: ✗ ext=52 TTA=90.2s total=90.4s think=1954 finish=stop 
+[3/76] q2kxl_b4096 A26-I-03 r1: ✓ ext=79 TTA=112.5s total=124.9s think=2427 finish=stop 
+[4/76] q2kxl_b4096 A26-I-04 r1: ✓ ext=70 TTA=190.1s total=190.2s think=4094 finish=stop 
+[5/76] q2kxl_b4096 A26-I-05 r1: ✓ ext=65 TTA=89.7s total=89.9s think=1937 finish=stop 
+[6/76] q2kxl_b4096 A26-I-06 r1: ✓ ext=441 TTA=72.3s total=72.5s think=1568 finish=stop 
+[7/76] q2kxl_b4096 A26-I-07 r1: ✗ ext=351 TTA=115.7s total=116.0s think=2505 finish=stop 
+[8/76] q2kxl_b4096 A26-I-08 r1: ✓ ext=244 TTA=162.5s total=162.7s think=3488 finish=stop 
+[9/76] q2kxl_b4096 A26-I-09 r1: ✗ ext=106 TTA=190.3s total=190.6s think=4087 finish=stop 
+[10/76] q2kxl_b4096 A26-I-10 r1: ✗ ext=178 TTA=190.1s total=190.3s think=4096 finish=stop 
+[11/76] q2kxl_b4096 A26-I-11 r1: ✗ ext=None TTA=190.3s total=385.7s think=4069 finish=length 
+[12/76] q2kxl_b4096 A26-I-12 r1: ✓ ext=161 TTA=190.2s total=190.4s think=4091 finish=stop 
+[13/76] q2kxl_b4096 A26-I-13 r1: ✓ ext=39 TTA=190.2s total=190.4s think=4054 finish=stop 
+[14/76] q2kxl_b4096 A26-I-14 r1: ✗ ext=116 TTA=189.9s total=190.1s think=4095 finish=stop 
+[15/76] q2kxl_b4096 A26-I-15 r1: ✗ ext=None TTA=190.4s total=385.8s think=4096 finish=length 
+[16/76] q2kxl_b4096 A26-II-01 r1: ✓ ext=178 TTA=123.5s total=123.8s think=2680 finish=stop 
+[17/76] q2kxl_b4096 A26-II-02 r1: ✓ ext=243 TTA=190.8s total=215.4s think=4096 finish=stop 
+[18/76] q2kxl_b4096 A26-II-03 r1: ✗ ext=0 TTA=190.0s total=224.7s think=4096 finish=stop 
+[19/76] q2kxl_b4096 A26-II-04 r1: ✓ ext=279 TTA=128.8s total=129.0s think=2781 finish=stop 
+[20/76] q2kxl_b4096 A26-II-05 r1: ✓ ext=190 TTA=93.7s total=93.9s think=2020 finish=stop 
+[21/76] q2kxl_b4096 A26-II-06 r1: ✓ ext=50 TTA=189.7s total=189.9s think=4096 finish=stop 
+[22/76] q2kxl_b4096 A26-II-07 r1: ✓ ext=754 TTA=183.2s total=183.4s think=3937 finish=stop 
+[23/76] q2kxl_b4096 A26-II-08 r1: ✓ ext=245 TTA=189.8s total=190.0s think=4086 finish=stop 
+[24/76] q2kxl_b4096 A26-II-09 r1: ✓ ext=669 TTA=189.8s total=190.0s think=4044 finish=stop 
+[25/76] q2kxl_b4096 A26-II-10 r1: ✓ ext=850 TTA=190.0s total=230.0s think=4081 finish=stop 
+[26/76] q2kxl_b4096 A26-II-11 r1: ✗ ext=1 TTA=189.9s total=190.0s think=4095 finish=stop 
+[27/76] q2kxl_b4096 A26-II-12 r1: ✗ ext=13 TTA=189.9s total=190.1s think=4065 finish=stop 
+[28/76] q2kxl_b4096 A26-II-13 r1: ✗ ext=100 TTA=189.9s total=190.2s think=4093 finish=stop 
+[29/76] q2kxl_b4096 A26-II-14 r1: ✗ ext=None TTA=190.0s total=385.2s think=4087 finish=length 
+[30/76] q2kxl_b4096 A26-II-15 r1: ✗ ext=244 TTA=190.0s total=190.2s think=4087 finish=stop 
+[31/76] q2kxl_b4096 H1 r1: ✓ ext=18 TTA=102.1s total=102.3s think=2217 finish=stop 
+[32/76] q2kxl_b4096 H2 r1: ✓ ext={'possible': False, 'n': 8125} TTA=90.0s total=90.5s think=1956 finish=stop 
+[33/76] q2kxl_b4096 H3 r1: ✓ ext=288 TTA=77.4s total=77.6s think=1684 finish=stop 
+[34/76] q2kxl_b4096 H4 r1: ✗ ext={'length': 6, 'count': 8} TTA=189.6s total=190.1s think=4092 finish=stop 
+[35/76] q2kxl_b4096 H5 r1: ✗ ext={'person': None, 'drink': None TTA=190.2s total=190.5s think=4096 finish=stop 
+[36/76] q2kxl_b4096 H6 r1: ✓ ext={'distance': 16, 'count': 2} TTA=104.8s total=105.3s think=2271 finish=stop 
+[37/76] q2kxl_b4096 H7 r1: ✓ ext=533 TTA=21.6s total=21.8s think=463 finish=stop 
+[38/76] q2kxl_b4096 H8 r1: ✓ ext=def evaluate(s):
+    text = s
+ TTA=111.4s total=136.0s think=2417 finish=stop 
+[39/76] q2kxl_b4096 A26-I-01 r2: ✓ ext=277 TTA=38.9s total=39.1s think=839 finish=stop 
+[40/76] q2kxl_b4096 A26-I-02 r2: ✓ ext=62 TTA=162.9s total=163.1s think=3535 finish=stop 
+[41/76] q2kxl_b4096 A26-I-03 r2: ✓ ext=79 TTA=189.3s total=189.5s think=4096 finish=stop 
+[42/76] q2kxl_b4096 A26-I-04 r2: ✓ ext=70 TTA=189.0s total=189.1s think=4094 finish=stop 
+[43/76] q2kxl_b4096 A26-I-05 r2: ✓ ext=65 TTA=71.4s total=71.6s think=1552 finish=stop 
+[44/76] q2kxl_b4096 A26-I-06 r2: ✓ ext=441 TTA=189.0s total=189.3s think=4096 finish=stop 
+[45/76] q2kxl_b4096 A26-I-07 r2: ✗ ext=561 TTA=189.1s total=189.3s think=4088 finish=stop 
+[46/76] q2kxl_b4096 A26-I-08 r2: ✓ ext=244 TTA=88.2s total=88.4s think=1894 finish=stop 
+[47/76] q2kxl_b4096 A26-I-09 r2: ✗ ext=17 TTA=183.1s total=206.9s think=3943 finish=stop 
+[48/76] q2kxl_b4096 A26-I-10 r2: ✗ ext=125 TTA=189.3s total=189.6s think=4095 finish=stop 
+[49/76] q2kxl_b4096 A26-I-11 r2: ✗ ext=4176 TTA=189.6s total=189.8s think=4085 finish=stop 
+[50/76] q2kxl_b4096 A26-I-12 r2: ✗ ext=159 TTA=189.7s total=189.9s think=4095 finish=stop 
+[51/76] q2kxl_b4096 A26-I-13 r2: ✓ ext=39 TTA=189.7s total=189.9s think=4064 finish=stop 
+[52/76] q2kxl_b4096 A26-I-14 r2: ✗ ext=178 TTA=189.3s total=189.5s think=4074 finish=stop 
+[53/76] q2kxl_b4096 A26-I-15 r2: ✗ ext=140 TTA=189.9s total=190.1s think=4096 finish=stop 
+[54/76] q2kxl_b4096 A26-II-01 r2: ✓ ext=178 TTA=189.1s total=189.3s think=4095 finish=stop 
+[55/76] q2kxl_b4096 A26-II-02 r2: ✗ ext=143 TTA=190.2s total=190.5s think=4096 finish=stop 
+[56/76] q2kxl_b4096 A26-II-03 r2: ✗ ext=None TTA=189.3s total=384.0s think=4079 finish=length 
+[57/76] q2kxl_b4096 A26-II-04 r2: ✓ ext=279 TTA=145.2s total=145.5s think=3137 finish=stop 
+[58/76] q2kxl_b4096 A26-II-05 r2: ✓ ext=190 TTA=115.0s total=115.3s think=2494 finish=stop 
+[59/76] q2kxl_b4096 A26-II-06 r2: ✓ ext=50 TTA=189.0s total=189.2s think=4093 finish=stop 
+[60/76] q2kxl_b4096 A26-II-07 r2: ✗ ext=155 TTA=189.3s total=189.5s think=4089 finish=stop 
+[61/76] q2kxl_b4096 A26-II-08 r2: ✓ ext=245 TTA=189.2s total=314.7s think=4090 finish=stop 
+[62/76] q2kxl_b4096 A26-II-09 r2: ✓ ext=669 TTA=189.2s total=189.5s think=4031 finish=stop 
+[63/76] q2kxl_b4096 A26-II-10 r2: ✓ ext=850 TTA=189.4s total=189.7s think=4081 finish=stop 
+[64/76] q2kxl_b4096 A26-II-11 r2: ✗ ext=100 TTA=189.2s total=189.5s think=4063 finish=stop 
+[65/76] q2kxl_b4096 A26-II-12 r2: ✗ ext=0 TTA=189.4s total=384.0s think=4089 finish=length 
+[66/76] q2kxl_b4096 A26-II-13 r2: ✗ ext=None TTA=189.3s total=383.9s think=4076 finish=length 
+[67/76] q2kxl_b4096 A26-II-14 r2: ✗ ext=96 TTA=189.5s total=200.2s think=4084 finish=stop 
+[68/76] q2kxl_b4096 A26-II-15 r2: ✗ ext=183 TTA=189.4s total=189.6s think=4019 finish=stop 
+[69/76] q2kxl_b4096 H1 r2: ✓ ext=18 TTA=156.0s total=156.1s think=3386 finish=stop 
+[70/76] q2kxl_b4096 H2 r2: ✓ ext={'possible': False, 'n': 8125} TTA=155.4s total=155.9s think=3377 finish=stop 
+[71/76] q2kxl_b4096 H3 r2: ✓ ext=288 TTA=91.4s total=91.6s think=1979 finish=stop 
+[72/76] q2kxl_b4096 H4 r2: ✓ ext={'length': 6, 'count': 12} TTA=189.1s total=189.6s think=4093 finish=stop 
+[73/76] q2kxl_b4096 H5 r2: ✓ ext={'person': '乙', 'drink': '茶'} TTA=183.6s total=184.0s think=3969 finish=stop 
+[74/76] q2kxl_b4096 H6 r2: ✓ ext={'distance': 16, 'count': 2} TTA=189.3s total=189.8s think=4096 finish=stop 
+[75/76] q2kxl_b4096 H7 r2: ✓ ext=533 TTA=44.5s total=44.7s think=968 finish=stop 
+[76/76] q2kxl_b4096 H8 r2: ✓ ext=def evaluate(s):
+    i = 0
+    TTA=189.2s total=212.2s think=4083 finish=stop 
+資料來源：`/home/maho/e4/e4_svr_20261104/q2kxl_b4096/results.jsonl`（76 筆）。答對率附 Wilson 95% 信賴區間。
+
+| 條件 | 題數×次數 | 答對率 | 95% CI | 擷取失敗 | 截斷 | 平均思考 chunk | 平均 TTA (s) | 平均總耗時 (s) |
+|---|---:|---:|---|---:|---:|---:|---:|---:|
+| q2kxl_b4096 | 76 | 60.5% | [49.3%, 70.8%] | 5 | 6 | 3423 | 158.8 | 178.8 |
+
+各題答對次數（條件 × 題號）：
+
+| 題號 | q2kxl_b4096 |
+|---|---:|
+| A26-I-01 | 2/2 |
+| A26-I-02 | 1/2 |
+| A26-I-03 | 2/2 |
+| A26-I-04 | 2/2 |
+| A26-I-05 | 2/2 |
+| A26-I-06 | 2/2 |
+| A26-I-07 | 0/2 |
+| A26-I-08 | 2/2 |
+| A26-I-09 | 0/2 |
+| A26-I-10 | 0/2 |
+| A26-I-11 | 0/2 |
+| A26-I-12 | 1/2 |
+| A26-I-13 | 2/2 |
+| A26-I-14 | 0/2 |
+| A26-I-15 | 0/2 |
+| A26-II-01 | 2/2 |
+| A26-II-02 | 1/2 |
+| A26-II-03 | 0/2 |
+| A26-II-04 | 2/2 |
+| A26-II-05 | 2/2 |
+| A26-II-06 | 2/2 |
+| A26-II-07 | 1/2 |
+| A26-II-08 | 2/2 |
+| A26-II-09 | 2/2 |
+| A26-II-10 | 2/2 |
+| A26-II-11 | 0/2 |
+| A26-II-12 | 0/2 |
+| A26-II-13 | 0/2 |
+| A26-II-14 | 0/2 |
+| A26-II-15 | 0/2 |
+| H1 | 2/2 |
+| H2 | 2/2 |
+| H3 | 2/2 |
+| H4 | 1/2 |
+| H5 | 1/2 |
+| H6 | 2/2 |
+| H7 | 2/2 |
+| H8 | 2/2 |
+
+wrote /home/maho/e4/e4_svr_20261104/q2kxl_b4096/results_summary.md
+2026-11-05T00:54:51+08:00 ALL_DONE
+2026-11-05T00:54:52+08:00 END
+2026-11-05T00:54:52+08:00 完成 q2kxl_b4096
+2026-11-05T00:54:52+08:00 開始 iq3xxs_b4096
+2026-11-05T00:54:52+08:00 啟動伺服器：-m /models/Qwen3.8-27B-UD-IQ3_XXS.gguf -ngl 99 -c 32768 -fa on -np 1 -ctk q8_0 -ctv q8_0 --cache-ram 0 --jinja --no-reasoning-preserve --reasoning-budget 4096 -lv 4 --port 8080 -fit off
+2026-11-05T00:55:16+08:00 伺服器就緒：11309 MiB
+[1/76] iq3xxs_b4096 A26-I-01 r1: ✓ ext=277 TTA=82.7s total=83.0s think=1713 finish=stop 
+[2/76] iq3xxs_b4096 A26-I-02 r1: ✓ ext=62 TTA=167.8s total=168.0s think=3475 finish=stop 
+[3/76] iq3xxs_b4096 A26-I-03 r1: ✓ ext=79 TTA=198.3s total=198.5s think=4094 finish=stop 
+[4/76] iq3xxs_b4096 A26-I-04 r1: ✓ ext=70 TTA=197.8s total=198.0s think=4096 finish=stop 
+[5/76] iq3xxs_b4096 A26-I-05 r1: ✓ ext=65 TTA=80.3s total=80.5s think=1665 finish=stop 
+[6/76] iq3xxs_b4096 A26-I-06 r1: ✓ ext=441 TTA=146.5s total=146.8s think=3042 finish=stop 
+[7/76] iq3xxs_b4096 A26-I-07 r1: ✓ ext=396 TTA=118.2s total=118.5s think=2458 finish=stop 
+[8/76] iq3xxs_b4096 A26-I-08 r1: ✓ ext=244 TTA=93.6s total=93.8s think=1928 finish=stop 
+[9/76] iq3xxs_b4096 A26-I-09 r1: ✗ ext=108 TTA=198.2s total=198.5s think=4088 finish=stop 
+[10/76] iq3xxs_b4096 A26-I-10 r1: ✗ ext=178 TTA=197.9s total=198.1s think=4096 finish=stop 
+[11/76] iq3xxs_b4096 A26-I-11 r1: ✗ ext=None TTA=198.0s total=401.1s think=4092 finish=length 
+[12/76] iq3xxs_b4096 A26-I-12 r1: ✗ ext=139 TTA=198.1s total=198.3s think=4074 finish=stop 
+[13/76] iq3xxs_b4096 A26-I-13 r1: ✗ ext=46 TTA=198.1s total=198.3s think=3998 finish=stop 
+[14/76] iq3xxs_b4096 A26-I-14 r1: ✗ ext=3385 TTA=197.9s total=198.2s think=4094 finish=stop 
+[15/76] iq3xxs_b4096 A26-I-15 r1: ✗ ext=145 TTA=198.4s total=198.7s think=4094 finish=stop 
+[16/76] iq3xxs_b4096 A26-II-01 r1: ✓ ext=178 TTA=162.7s total=163.0s think=3383 finish=stop 
+[17/76] iq3xxs_b4096 A26-II-02 r1: ✓ ext=243 TTA=198.7s total=198.9s think=4095 finish=stop 
+[18/76] iq3xxs_b4096 A26-II-03 r1: ✗ ext=124 TTA=197.9s total=198.1s think=4074 finish=stop 
+[19/76] iq3xxs_b4096 A26-II-04 r1: ✓ ext=279 TTA=155.1s total=155.3s think=3210 finish=stop 
+[20/76] iq3xxs_b4096 A26-II-05 r1: ✓ ext=190 TTA=117.1s total=117.3s think=2426 finish=stop 
+[21/76] iq3xxs_b4096 A26-II-06 r1: ✓ ext=50 TTA=197.7s total=197.9s think=4085 finish=stop 
+[22/76] iq3xxs_b4096 A26-II-07 r1: ✓ ext=754 TTA=158.2s total=158.4s think=3274 finish=stop 
+[23/76] iq3xxs_b4096 A26-II-08 r1: ✓ ext=245 TTA=197.8s total=198.1s think=4092 finish=stop 
+[24/76] iq3xxs_b4096 A26-II-09 r1: ✓ ext=669 TTA=197.9s total=198.1s think=4071 finish=stop 
+[25/76] iq3xxs_b4096 A26-II-10 r1: ✓ ext=850 TTA=198.0s total=198.3s think=4087 finish=stop 
+[26/76] iq3xxs_b4096 A26-II-11 r1: ✗ ext=994 TTA=197.8s total=198.1s think=4092 finish=stop 
+[27/76] iq3xxs_b4096 A26-II-12 r1: ✗ ext=148 TTA=198.0s total=198.2s think=4092 finish=stop 
+[28/76] iq3xxs_b4096 A26-II-13 r1: ✗ ext=13 TTA=198.0s total=198.2s think=4083 finish=stop 
+[29/76] iq3xxs_b4096 A26-II-14 r1: ✗ ext=109 TTA=198.1s total=198.3s think=4092 finish=stop 
+[30/76] iq3xxs_b4096 A26-II-15 r1: ✗ ext=1 TTA=198.2s total=198.3s think=4028 finish=stop 
+[31/76] iq3xxs_b4096 H1 r1: ✓ ext=18 TTA=66.3s total=66.5s think=1380 finish=stop 
+[32/76] iq3xxs_b4096 H2 r1: ✓ ext={'possible': False, 'n': 8125} TTA=167.8s total=168.3s think=3480 finish=stop 
+[33/76] iq3xxs_b4096 H3 r1: ✓ ext=288 TTA=100.3s total=100.5s think=2078 finish=stop 
+[34/76] iq3xxs_b4096 H4 r1: ✓ ext={'length': 6, 'count': 12} TTA=197.8s total=198.3s think=4090 finish=stop 
+[35/76] iq3xxs_b4096 H5 r1: ✓ ext={'person': '乙', 'drink': '茶'} TTA=198.3s total=198.7s think=4096 finish=stop 
+[36/76] iq3xxs_b4096 H6 r1: ✓ ext={'distance': 16, 'count': 2} TTA=149.8s total=150.4s think=3111 finish=stop 
+[37/76] iq3xxs_b4096 H7 r1: ✓ ext=533 TTA=28.6s total=28.8s think=591 finish=stop 
+[38/76] iq3xxs_b4096 H8 r1: ✓ ext=def evaluate(s):
+    n = len(s TTA=197.6s total=225.0s think=4092 finish=stop 
+[39/76] iq3xxs_b4096 A26-I-01 r2: ✓ ext=277 TTA=40.2s total=40.4s think=830 finish=stop 
+[40/76] iq3xxs_b4096 A26-I-02 r2: ✓ ext=62 TTA=77.0s total=77.1s think=1604 finish=stop 
+[41/76] iq3xxs_b4096 A26-I-03 r2: ✓ ext=79 TTA=198.0s total=198.2s think=4096 finish=stop 
+[42/76] iq3xxs_b4096 A26-I-04 r2: ✓ ext=70 TTA=197.6s total=197.8s think=4096 finish=stop 
+[43/76] iq3xxs_b4096 A26-I-05 r2: ✓ ext=65 TTA=75.2s total=75.4s think=1563 finish=stop 
+[44/76] iq3xxs_b4096 A26-I-06 r2: ✓ ext=441 TTA=149.3s total=149.5s think=3099 finish=stop 
+[45/76] iq3xxs_b4096 A26-I-07 r2: ✓ ext=396 TTA=140.6s total=140.8s think=2919 finish=stop 
+[46/76] iq3xxs_b4096 A26-I-08 r2: ✓ ext=244 TTA=115.0s total=115.2s think=2363 finish=stop 
+[47/76] iq3xxs_b4096 A26-I-09 r2: ✗ ext=128 TTA=198.1s total=198.3s think=4081 finish=stop 
+[48/76] iq3xxs_b4096 A26-I-10 r2: ✗ ext=159 TTA=197.9s total=198.1s think=4093 finish=stop 
+[49/76] iq3xxs_b4096 A26-I-11 r2: ✗ ext=864 TTA=198.0s total=198.2s think=4096 finish=stop 
+[50/76] iq3xxs_b4096 A26-I-12 r2: ✓ ext=161 TTA=198.0s total=198.3s think=4089 finish=stop 
+[51/76] iq3xxs_b4096 A26-I-13 r2: ✓ ext=39 TTA=198.0s total=198.2s think=4054 finish=stop 
+[52/76] iq3xxs_b4096 A26-I-14 r2: ✗ ext=1377 TTA=197.8s total=198.1s think=4095 finish=stop 
+[53/76] iq3xxs_b4096 A26-I-15 r2: ✗ ext=144 TTA=198.5s total=198.7s think=4096 finish=stop 
+[54/76] iq3xxs_b4096 A26-II-01 r2: ✓ ext=178 TTA=132.2s total=132.4s think=2748 finish=stop 
+[55/76] iq3xxs_b4096 A26-II-02 r2: ✓ ext=243 TTA=198.8s total=199.1s think=4096 finish=stop 
+[56/76] iq3xxs_b4096 A26-II-03 r2: ✗ ext=127 TTA=197.9s total=198.2s think=4089 finish=stop 
+[57/76] iq3xxs_b4096 A26-II-04 r2: ✓ ext=279 TTA=170.3s total=170.6s think=3524 finish=stop 
+[58/76] iq3xxs_b4096 A26-II-05 r2: ✓ ext=190 TTA=165.1s total=165.4s think=3419 finish=stop 
+[59/76] iq3xxs_b4096 A26-II-06 r2: ✓ ext=50 TTA=197.7s total=197.9s think=4095 finish=stop 
+[60/76] iq3xxs_b4096 A26-II-07 r2: ✓ ext=754 TTA=197.9s total=221.2s think=4095 finish=stop 
+[61/76] iq3xxs_b4096 A26-II-08 r2: ✗ ext=1065 TTA=197.7s total=198.0s think=4096 finish=stop 
+[62/76] iq3xxs_b4096 A26-II-09 r2: ✓ ext=669 TTA=197.9s total=198.1s think=4062 finish=stop 
+[63/76] iq3xxs_b4096 A26-II-10 r2: ✗ ext=465 TTA=198.2s total=198.4s think=4067 finish=stop 
+[64/76] iq3xxs_b4096 A26-II-11 r2: ✓ ext=132 TTA=198.1s total=198.3s think=4095 finish=stop 
+[65/76] iq3xxs_b4096 A26-II-12 r2: ✓ ext=223 TTA=198.0s total=198.3s think=4093 finish=stop 
+[66/76] iq3xxs_b4096 A26-II-13 r2: ✗ ext=13 TTA=197.9s total=198.1s think=4089 finish=stop 
+[67/76] iq3xxs_b4096 A26-II-14 r2: ✗ ext=14 TTA=198.0s total=198.2s think=4086 finish=stop 
+[68/76] iq3xxs_b4096 A26-II-15 r2: ✗ ext=188 TTA=197.9s total=198.2s think=4033 finish=stop 
+[69/76] iq3xxs_b4096 H1 r2: ✓ ext=18 TTA=70.6s total=70.8s think=1475 finish=stop 
+[70/76] iq3xxs_b4096 H2 r2: ✓ ext={'possible': False, 'n': 8125} TTA=113.4s total=113.9s think=2363 finish=stop 
+[71/76] iq3xxs_b4096 H3 r2: ✓ ext=288 TTA=109.9s total=110.2s think=2290 finish=stop 
+[72/76] iq3xxs_b4096 H4 r2: ✓ ext={'length': 6, 'count': 12} TTA=197.7s total=198.2s think=4087 finish=stop 
+[73/76] iq3xxs_b4096 H5 r2: ✗ ext={'person': None, 'drink': '咖啡' TTA=198.2s total=198.6s think=4095 finish=stop 
+[74/76] iq3xxs_b4096 H6 r2: ✓ ext={'distance': 16, 'count': 2} TTA=197.8s total=198.3s think=4095 finish=stop 
+[75/76] iq3xxs_b4096 H7 r2: ✓ ext=533 TTA=17.6s total=17.8s think=360 finish=stop 
+[76/76] iq3xxs_b4096 H8 r2: ✓ ext=def evaluate(s: str) -> int:
+  TTA=197.5s total=224.0s think=4088 finish=stop 
+資料來源：`/home/maho/e4/e4_svr_20261104/iq3xxs_b4096/results.jsonl`（76 筆）。答對率附 Wilson 95% 信賴區間。
+
+| 條件 | 題數×次數 | 答對率 | 95% CI | 擷取失敗 | 截斷 | 平均思考 chunk | 平均 TTA (s) | 平均總耗時 (s) |
+|---|---:|---:|---|---:|---:|---:|---:|---:|
+| iq3xxs_b4096 | 76 | 67.1% | [55.9%, 76.6%] | 1 | 1 | 3445 | 166.8 | 170.7 |
+
+各題答對次數（條件 × 題號）：
+
+| 題號 | iq3xxs_b4096 |
+|---|---:|
+| A26-I-01 | 2/2 |
+| A26-I-02 | 2/2 |
+| A26-I-03 | 2/2 |
+| A26-I-04 | 2/2 |
+| A26-I-05 | 2/2 |
+| A26-I-06 | 2/2 |
+| A26-I-07 | 2/2 |
+| A26-I-08 | 2/2 |
+| A26-I-09 | 0/2 |
+| A26-I-10 | 0/2 |
+| A26-I-11 | 0/2 |
+| A26-I-12 | 1/2 |
+| A26-I-13 | 1/2 |
+| A26-I-14 | 0/2 |
+| A26-I-15 | 0/2 |
+| A26-II-01 | 2/2 |
+| A26-II-02 | 2/2 |
+| A26-II-03 | 0/2 |
+| A26-II-04 | 2/2 |
+| A26-II-05 | 2/2 |
+| A26-II-06 | 2/2 |
+| A26-II-07 | 2/2 |
+| A26-II-08 | 1/2 |
+| A26-II-09 | 2/2 |
+| A26-II-10 | 1/2 |
+| A26-II-11 | 1/2 |
+| A26-II-12 | 1/2 |
+| A26-II-13 | 0/2 |
+| A26-II-14 | 0/2 |
+| A26-II-15 | 0/2 |
+| H1 | 2/2 |
+| H2 | 2/2 |
+| H3 | 2/2 |
+| H4 | 2/2 |
+| H5 | 1/2 |
+| H6 | 2/2 |
+| H7 | 2/2 |
+| H8 | 2/2 |
+
+wrote /home/maho/e4/e4_svr_20261104/iq3xxs_b4096/results_summary.md
+2026-11-05T04:31:31+08:00 ALL_DONE
+2026-11-05T04:31:32+08:00 END
+2026-11-05T04:31:32+08:00 完成 iq3xxs_b4096
+2026-11-05T04:31:32+08:00 開始 q2kxl_b16384
+2026-11-05T04:31:32+08:00 啟動伺服器：-m /models/Qwen3.8-27B-UD-Q2_K_XL.gguf -ngl 99 -c 32768 -fa on -np 1 -ctk q8_0 -ctv q8_0 --cache-ram 0 --jinja --no-reasoning-preserve --reasoning-budget 16384 -lv 4 --port 8080 -fit off
+2026-11-05T04:31:46+08:00 伺服器就緒：10255 MiB
+[1/76] q2kxl_b16384 A26-I-01 r1: ✓ ext=277 TTA=37.9s total=55.8s think=814 finish=stop 
+[2/76] q2kxl_b16384 A26-I-02 r1: ✗ ext=52 TTA=89.7s total=89.9s think=1954 finish=stop 
+[3/76] q2kxl_b16384 A26-I-03 r1: ✓ ext=79 TTA=111.9s total=124.2s think=2427 finish=stop 
+[4/76] q2kxl_b16384 A26-I-04 r1: ✓ ext=70 TTA=206.0s total=206.1s think=4454 finish=stop 
+[5/76] q2kxl_b16384 A26-I-05 r1: ✓ ext=65 TTA=89.3s total=89.5s think=1937 finish=stop 
+[6/76] q2kxl_b16384 A26-I-06 r1: ✓ ext=441 TTA=72.0s total=72.2s think=1568 finish=stop 
+[7/76] q2kxl_b16384 A26-I-07 r1: ✗ ext=351 TTA=115.4s total=115.6s think=2505 finish=stop 
+[8/76] q2kxl_b16384 A26-I-08 r1: ✓ ext=244 TTA=161.8s total=162.1s think=3488 finish=stop 
+[9/76] q2kxl_b16384 A26-I-09 r1: ✓ ext=29 TTA=792.9s total=793.1s think=16339 finish=stop 
+[10/76] q2kxl_b16384 A26-I-10 r1: ✓ ext=156 TTA=791.8s total=792.0s think=16382 finish=stop 
+[11/76] q2kxl_b16384 A26-I-11 r1: ✗ ext=None TTA=792.6s total=1005.4s think=16318 finish=length 
+[12/76] q2kxl_b16384 A26-I-12 r1: ✓ ext=161 TTA=321.3s total=338.1s think=6870 finish=stop 
+[13/76] q2kxl_b16384 A26-I-13 r1: ✓ ext=39 TTA=761.6s total=761.8s think=15633 finish=stop 
+[14/76] q2kxl_b16384 A26-I-14 r1: ✓ ext=681 TTA=791.8s total=792.1s think=16380 finish=stop 
+[15/76] q2kxl_b16384 A26-I-15 r1: ✗ ext=None TTA=792.8s total=1005.8s think=16384 finish=length 
+[16/76] q2kxl_b16384 A26-II-01 r1: ✓ ext=178 TTA=123.2s total=123.4s think=2680 finish=stop 
+[17/76] q2kxl_b16384 A26-II-02 r1: ✓ ext=243 TTA=231.4s total=247.3s think=4967 finish=stop 
+[18/76] q2kxl_b16384 A26-II-03 r1: ✓ ext=503 TTA=752.5s total=793.9s think=15622 finish=stop 
+[19/76] q2kxl_b16384 A26-II-04 r1: ✓ ext=279 TTA=128.4s total=128.6s think=2781 finish=stop 
+[20/76] q2kxl_b16384 A26-II-05 r1: ✓ ext=190 TTA=93.4s total=93.6s think=2020 finish=stop 
+[21/76] q2kxl_b16384 A26-II-06 r1: ✓ ext=50 TTA=274.6s total=274.8s think=5909 finish=stop 
+[22/76] q2kxl_b16384 A26-II-07 r1: ✓ ext=754 TTA=182.6s total=182.9s think=3937 finish=stop 
+[23/76] q2kxl_b16384 A26-II-08 r1: ✓ ext=245 TTA=700.2s total=700.5s think=14558 finish=stop 
+[24/76] q2kxl_b16384 A26-II-09 r1: ✓ ext=669 TTA=626.6s total=626.9s think=12994 finish=stop 
+[25/76] q2kxl_b16384 A26-II-10 r1: ✓ ext=850 TTA=230.2s total=265.9s think=4949 finish=stop 
+[26/76] q2kxl_b16384 A26-II-11 r1: ✓ ext=132 TTA=791.4s total=832.1s think=16378 finish=stop 
+[27/76] q2kxl_b16384 A26-II-12 r1: ✓ ext=223 TTA=792.3s total=792.6s think=16327 finish=stop 
+[28/76] q2kxl_b16384 A26-II-13 r1: ✗ ext=108 TTA=793.4s total=793.6s think=16374 finish=stop 
+[29/76] q2kxl_b16384 A26-II-14 r1: ✗ ext=137 TTA=793.8s total=822.8s think=16363 finish=stop 
+[30/76] q2kxl_b16384 A26-II-15 r1: ✗ ext=None TTA=794.2s total=1007.6s think=16356 finish=length 
+[31/76] q2kxl_b16384 H1 r1: ✓ ext=18 TTA=102.2s total=102.4s think=2217 finish=stop 
+[32/76] q2kxl_b16384 H2 r1: ✓ ext={'possible': False, 'n': 8125} TTA=90.1s total=90.6s think=1956 finish=stop 
+[33/76] q2kxl_b16384 H3 r1: ✓ ext=288 TTA=77.4s total=77.6s think=1684 finish=stop 
+[34/76] q2kxl_b16384 H4 r1: ✓ ext={'length': 6, 'count': 12} TTA=421.4s total=422.0s think=8932 finish=stop 
+[35/76] q2kxl_b16384 H5 r1: ✓ ext={'person': '乙', 'drink': '茶'} TTA=303.1s total=303.5s think=6465 finish=stop 
+[36/76] q2kxl_b16384 H6 r1: ✓ ext={'distance': 16, 'count': 2} TTA=105.0s total=105.5s think=2271 finish=stop 
+[37/76] q2kxl_b16384 H7 r1: ✓ ext=533 TTA=21.7s total=21.9s think=463 finish=stop 
+[38/76] q2kxl_b16384 H8 r1: ✓ ext=def evaluate(s):
+    text = s
+ TTA=111.7s total=136.4s think=2417 finish=stop 
+[39/76] q2kxl_b16384 A26-I-01 r2: ✓ ext=277 TTA=39.0s total=39.3s think=839 finish=stop 
+[40/76] q2kxl_b16384 A26-I-02 r2: ✓ ext=62 TTA=163.6s total=163.8s think=3535 finish=stop 
+[41/76] q2kxl_b16384 A26-I-03 r2: ✓ ext=79 TTA=369.4s total=369.6s think=7853 finish=stop 
+[42/76] q2kxl_b16384 A26-I-04 r2: ✓ ext=70 TTA=794.1s total=794.3s think=16378 finish=stop 
+[43/76] q2kxl_b16384 A26-I-05 r2: ✓ ext=65 TTA=71.7s total=71.8s think=1552 finish=stop 
+[44/76] q2kxl_b16384 A26-I-06 r2: ✓ ext=441 TTA=236.8s total=237.1s think=5094 finish=stop 
+[45/76] q2kxl_b16384 A26-I-07 r2: ✓ ext=396 TTA=355.1s total=355.4s think=7557 finish=stop 
+[46/76] q2kxl_b16384 A26-I-08 r2: ✓ ext=244 TTA=88.5s total=88.7s think=1894 finish=stop 
+[47/76] q2kxl_b16384 A26-I-09 r2: ✗ ext=17 TTA=183.9s total=207.9s think=3943 finish=stop 
+[48/76] q2kxl_b16384 A26-I-10 r2: ✓ ext=156 TTA=795.1s total=795.4s think=16383 finish=stop 
+[49/76] q2kxl_b16384 A26-I-11 r2: ✗ ext=976 TTA=796.0s total=796.3s think=16326 finish=stop 
+[50/76] q2kxl_b16384 A26-I-12 r2: ✓ ext=161 TTA=796.2s total=796.5s think=16380 finish=stop 
+[51/76] q2kxl_b16384 A26-I-13 r2: ✓ ext=39 TTA=417.2s total=417.4s think=8761 finish=stop 
+[52/76] q2kxl_b16384 A26-I-14 r2: ✓ ext=681 TTA=795.7s total=796.0s think=16268 finish=stop 
+[53/76] q2kxl_b16384 A26-I-15 r2: ✗ ext=8 TTA=797.2s total=797.3s think=16381 finish=stop 
+[54/76] q2kxl_b16384 A26-II-01 r2: ✓ ext=178 TTA=198.0s total=198.3s think=4264 finish=stop 
+[55/76] q2kxl_b16384 A26-II-02 r2: ✓ ext=243 TTA=798.4s total=798.7s think=16384 finish=stop 
+[56/76] q2kxl_b16384 A26-II-03 r2: ✓ ext=503 TTA=796.3s total=796.5s think=16309 finish=stop 
+[57/76] q2kxl_b16384 A26-II-04 r2: ✓ ext=279 TTA=146.0s total=146.3s think=3137 finish=stop 
+[58/76] q2kxl_b16384 A26-II-05 r2: ✓ ext=190 TTA=115.7s total=115.9s think=2494 finish=stop 
+[59/76] q2kxl_b16384 A26-II-06 r2: ✓ ext=50 TTA=357.0s total=357.2s think=7584 finish=stop 
+[60/76] q2kxl_b16384 A26-II-07 r2: ✓ ext=754 TTA=499.3s total=499.6s think=10490 finish=stop 
+[61/76] q2kxl_b16384 A26-II-08 r2: ✓ ext=245 TTA=795.6s total=795.8s think=16354 finish=stop 
+[62/76] q2kxl_b16384 A26-II-09 r2: ✓ ext=669 TTA=656.3s total=656.5s think=13486 finish=stop 
+[63/76] q2kxl_b16384 A26-II-10 r2: ✓ ext=850 TTA=677.2s total=677.4s think=13988 finish=stop 
+[64/76] q2kxl_b16384 A26-II-11 r2: ✓ ext=132 TTA=795.9s total=796.1s think=16331 finish=stop 
+[65/76] q2kxl_b16384 A26-II-12 r2: ✓ ext=223 TTA=796.4s total=796.7s think=16370 finish=stop 
+[66/76] q2kxl_b16384 A26-II-13 r2: ✗ ext=9 TTA=796.1s total=796.3s think=16358 finish=stop 
+[67/76] q2kxl_b16384 A26-II-14 r2: ✗ ext=0 TTA=796.5s total=1010.5s think=16361 finish=length 
+[68/76] q2kxl_b16384 A26-II-15 r2: ✗ ext=None TTA=796.3s total=1010.4s think=16104 finish=length 
+[69/76] q2kxl_b16384 H1 r2: ✓ ext=18 TTA=157.0s total=157.2s think=3386 finish=stop 
+[70/76] q2kxl_b16384 H2 r2: ✓ ext={'possible': False, 'n': 8125} TTA=156.4s total=156.8s think=3377 finish=stop 
+[71/76] q2kxl_b16384 H3 r2: ✓ ext=288 TTA=91.9s total=92.1s think=1979 finish=stop 
+[72/76] q2kxl_b16384 H4 r2: ✓ ext={'length': 6, 'count': 12} TTA=394.6s total=395.1s think=8365 finish=stop 
+[73/76] q2kxl_b16384 H5 r2: ✓ ext={'person': '乙', 'drink': '茶'} TTA=184.7s total=185.1s think=3969 finish=stop 
+[74/76] q2kxl_b16384 H6 r2: ✓ ext={'distance': 16, 'count': 2} TTA=205.4s total=205.9s think=4415 finish=stop 
+[75/76] q2kxl_b16384 H7 r2: ✓ ext=533 TTA=44.7s total=45.0s think=968 finish=stop 
+[76/76] q2kxl_b16384 H8 r2: ✓ ext=def evaluate(s):
+    n = len(s TTA=795.9s total=824.2s think=16367 finish=stop 
+資料來源：`/home/maho/e4/e4_svr_20261104/q2kxl_b16384/results.jsonl`（76 筆）。答對率附 Wilson 95% 信賴區間。
+
+| 條件 | 題數×次數 | 答對率 | 95% CI | 擷取失敗 | 截斷 | 平均思考 chunk | 平均 TTA (s) | 平均總耗時 (s) |
+|---|---:|---:|---|---:|---:|---:|---:|---:|
+| q2kxl_b16384 | 76 | 82.9% | [72.9%, 89.7%] | 4 | 5 | 8817 | 424.0 | 442.0 |
+
+各題答對次數（條件 × 題號）：
+
+| 題號 | q2kxl_b16384 |
+|---|---:|
+| A26-I-01 | 2/2 |
+| A26-I-02 | 1/2 |
+| A26-I-03 | 2/2 |
+| A26-I-04 | 2/2 |
+| A26-I-05 | 2/2 |
+| A26-I-06 | 2/2 |
+| A26-I-07 | 1/2 |
+| A26-I-08 | 2/2 |
+| A26-I-09 | 1/2 |
+| A26-I-10 | 2/2 |
+| A26-I-11 | 0/2 |
+| A26-I-12 | 2/2 |
+| A26-I-13 | 2/2 |
+| A26-I-14 | 2/2 |
+| A26-I-15 | 0/2 |
+| A26-II-01 | 2/2 |
+| A26-II-02 | 2/2 |
+| A26-II-03 | 2/2 |
+| A26-II-04 | 2/2 |
+| A26-II-05 | 2/2 |
+| A26-II-06 | 2/2 |
+| A26-II-07 | 2/2 |
+| A26-II-08 | 2/2 |
+| A26-II-09 | 2/2 |
+| A26-II-10 | 2/2 |
+| A26-II-11 | 2/2 |
+| A26-II-12 | 2/2 |
+| A26-II-13 | 0/2 |
+| A26-II-14 | 0/2 |
+| A26-II-15 | 0/2 |
+| H1 | 2/2 |
+| H2 | 2/2 |
+| H3 | 2/2 |
+| H4 | 2/2 |
+| H5 | 2/2 |
+| H6 | 2/2 |
+| H7 | 2/2 |
+| H8 | 2/2 |
+
+wrote /home/maho/e4/e4_svr_20261104/q2kxl_b16384/results_summary.md
+2026-11-05T13:51:37+08:00 ALL_DONE
+2026-11-05T13:51:37+08:00 END
+2026-11-05T13:51:37+08:00 完成 q2kxl_b16384
+2026-11-05T13:51:37+08:00 開始 iq3xxs_b16384
+2026-11-05T13:51:37+08:00 啟動伺服器：-m /models/Qwen3.8-27B-UD-IQ3_XXS.gguf -ngl 99 -c 32768 -fa on -np 1 -ctk q8_0 -ctv q8_0 --cache-ram 0 --jinja --no-reasoning-preserve --reasoning-budget 16384 -lv 4 --port 8080 -fit off
+2026-11-05T13:51:53+08:00 伺服器就緒：11309 MiB
+[1/76] iq3xxs_b16384 A26-I-01 r1: ✓ ext=277 TTA=82.9s total=83.2s think=1713 finish=stop 
+[2/76] iq3xxs_b16384 A26-I-02 r1: ✓ ext=62 TTA=168.6s total=168.8s think=3475 finish=stop 
+[3/76] iq3xxs_b16384 A26-I-03 r1: ✓ ext=79 TTA=379.5s total=379.7s think=7712 finish=stop 
+[4/76] iq3xxs_b16384 A26-I-04 r1: ✓ ext=70 TTA=316.1s total=316.3s think=6466 finish=stop 
+[5/76] iq3xxs_b16384 A26-I-05 r1: ✓ ext=65 TTA=80.7s total=80.9s think=1665 finish=stop 
+[6/76] iq3xxs_b16384 A26-I-06 r1: ✓ ext=441 TTA=147.2s total=147.4s think=3042 finish=stop 
+[7/76] iq3xxs_b16384 A26-I-07 r1: ✓ ext=396 TTA=118.8s total=119.0s think=2458 finish=stop 
+[8/76] iq3xxs_b16384 A26-I-08 r1: ✓ ext=244 TTA=94.0s total=94.2s think=1928 finish=stop 
+[9/76] iq3xxs_b16384 A26-I-09 r1: ✓ ext=29 TTA=765.0s total=765.2s think=15151 finish=stop 
+[10/76] iq3xxs_b16384 A26-I-10 r1: ✓ ext=156 TTA=829.5s total=829.7s think=16384 finish=stop 
+[11/76] iq3xxs_b16384 A26-I-11 r1: ✓ ext=896 TTA=830.0s total=835.2s think=16366 finish=stop 
+[12/76] iq3xxs_b16384 A26-I-12 r1: ✓ ext=161 TTA=830.2s total=830.5s think=16290 finish=stop 
+[13/76] iq3xxs_b16384 A26-I-13 r1: ✓ ext=39 TTA=830.1s total=830.3s think=16166 finish=stop 
+[14/76] iq3xxs_b16384 A26-I-14 r1: ✓ ext=681 TTA=829.3s total=829.6s think=16369 finish=stop 
+[15/76] iq3xxs_b16384 A26-I-15 r1: ✗ ext=None TTA=830.9s total=1053.3s think=16380 finish=length 
+[16/76] iq3xxs_b16384 A26-II-01 r1: ✓ ext=178 TTA=163.5s total=163.8s think=3383 finish=stop 
+[17/76] iq3xxs_b16384 A26-II-02 r1: ✓ ext=243 TTA=468.1s total=468.3s think=9448 finish=stop 
+[18/76] iq3xxs_b16384 A26-II-03 r1: ✓ ext=503 TTA=829.2s total=829.5s think=16304 finish=stop 
+[19/76] iq3xxs_b16384 A26-II-04 r1: ✓ ext=279 TTA=155.8s total=156.0s think=3210 finish=stop 
+[20/76] iq3xxs_b16384 A26-II-05 r1: ✓ ext=190 TTA=117.6s total=117.8s think=2426 finish=stop 
+[21/76] iq3xxs_b16384 A26-II-06 r1: ✓ ext=50 TTA=348.1s total=348.3s think=7095 finish=stop 
+[22/76] iq3xxs_b16384 A26-II-07 r1: ✓ ext=754 TTA=158.8s total=159.0s think=3274 finish=stop 
+[23/76] iq3xxs_b16384 A26-II-08 r1: ✓ ext=245 TTA=558.0s total=558.3s think=11218 finish=stop 
+[24/76] iq3xxs_b16384 A26-II-09 r1: ✓ ext=669 TTA=494.2s total=494.5s think=9902 finish=stop 
+[25/76] iq3xxs_b16384 A26-II-10 r1: ✓ ext=850 TTA=628.4s total=628.7s think=12553 finish=stop 
+[26/76] iq3xxs_b16384 A26-II-11 r1: ✓ ext=132 TTA=829.2s total=829.4s think=16367 finish=stop 
+[27/76] iq3xxs_b16384 A26-II-12 r1: ✓ ext=223 TTA=829.3s total=829.6s think=16374 finish=stop 
+[28/76] iq3xxs_b16384 A26-II-13 r1: ✓ ext=107 TTA=829.3s total=839.2s think=16359 finish=stop 
+[29/76] iq3xxs_b16384 A26-II-14 r1: ✗ ext=26 TTA=829.5s total=829.7s think=16376 finish=stop 
+[30/76] iq3xxs_b16384 A26-II-15 r1: ✗ ext=239 TTA=829.7s total=829.9s think=16019 finish=stop 
+[31/76] iq3xxs_b16384 H1 r1: ✓ ext=18 TTA=66.6s total=66.7s think=1380 finish=stop 
+[32/76] iq3xxs_b16384 H2 r1: ✓ ext={'possible': False, 'n': 8125} TTA=168.5s total=169.0s think=3480 finish=stop 
+[33/76] iq3xxs_b16384 H3 r1: ✓ ext=288 TTA=100.7s total=100.9s think=2078 finish=stop 
+[34/76] iq3xxs_b16384 H4 r1: ✓ ext={'length': 6, 'count': 12} TTA=641.0s total=641.6s think=12791 finish=stop 
+[35/76] iq3xxs_b16384 H5 r1: ✓ ext={'person': '乙', 'drink': '茶'} TTA=269.9s total=270.3s think=5527 finish=stop 
+[36/76] iq3xxs_b16384 H6 r1: ✓ ext={'distance': 16, 'count': 2} TTA=150.6s total=151.1s think=3111 finish=stop 
+[37/76] iq3xxs_b16384 H7 r1: ✓ ext=533 TTA=28.8s total=29.0s think=591 finish=stop 
+[38/76] iq3xxs_b16384 H8 r1: ✓ ext=def evaluate(s):
+    n = len(s TTA=829.2s total=861.7s think=16378 finish=stop 
+[39/76] iq3xxs_b16384 A26-I-01 r2: ✓ ext=277 TTA=40.4s total=40.6s think=830 finish=stop 
+[40/76] iq3xxs_b16384 A26-I-02 r2: ✓ ext=62 TTA=77.3s total=77.5s think=1604 finish=stop 
+[41/76] iq3xxs_b16384 A26-I-03 r2: ✓ ext=79 TTA=398.3s total=398.5s think=8097 finish=stop 
+[42/76] iq3xxs_b16384 A26-I-04 r2: ✓ ext=70 TTA=828.7s total=828.9s think=16380 finish=stop 
+[43/76] iq3xxs_b16384 A26-I-05 r2: ✓ ext=65 TTA=75.5s total=75.7s think=1563 finish=stop 
+[44/76] iq3xxs_b16384 A26-I-06 r2: ✓ ext=441 TTA=149.8s total=150.1s think=3099 finish=stop 
+[45/76] iq3xxs_b16384 A26-I-07 r2: ✓ ext=396 TTA=141.1s total=141.3s think=2919 finish=stop 
+[46/76] iq3xxs_b16384 A26-I-08 r2: ✓ ext=244 TTA=115.3s total=115.6s think=2363 finish=stop 
+[47/76] iq3xxs_b16384 A26-I-09 r2: ✓ ext=29 TTA=829.6s total=829.8s think=16312 finish=stop 
+[48/76] iq3xxs_b16384 A26-I-10 r2: ✓ ext=156 TTA=829.1s total=829.4s think=16380 finish=stop 
+[49/76] iq3xxs_b16384 A26-I-11 r2: ✓ ext=896 TTA=829.3s total=829.6s think=16373 finish=stop 
+[50/76] iq3xxs_b16384 A26-I-12 r2: ✓ ext=161 TTA=829.6s total=829.8s think=16361 finish=stop 
+[51/76] iq3xxs_b16384 A26-I-13 r2: ✓ ext=39 TTA=598.6s total=598.9s think=11949 finish=stop 
+[52/76] iq3xxs_b16384 A26-I-14 r2: ✓ ext=681 TTA=696.1s total=696.4s think=13873 finish=stop 
+[53/76] iq3xxs_b16384 A26-I-15 r2: ✗ ext=86 TTA=830.1s total=830.3s think=16383 finish=stop 
+[54/76] iq3xxs_b16384 A26-II-01 r2: ✓ ext=178 TTA=132.6s total=132.8s think=2748 finish=stop 
+[55/76] iq3xxs_b16384 A26-II-02 r2: ✓ ext=243 TTA=779.0s total=779.3s think=15415 finish=stop 
+[56/76] iq3xxs_b16384 A26-II-03 r2: ✓ ext=503 TTA=829.1s total=829.4s think=16332 finish=stop 
+[57/76] iq3xxs_b16384 A26-II-04 r2: ✓ ext=279 TTA=171.0s total=171.2s think=3524 finish=stop 
+[58/76] iq3xxs_b16384 A26-II-05 r2: ✓ ext=190 TTA=165.7s total=166.0s think=3419 finish=stop 
+[59/76] iq3xxs_b16384 A26-II-06 r2: ✓ ext=50 TTA=371.1s total=371.3s think=7565 finish=stop 
+[60/76] iq3xxs_b16384 A26-II-07 r2: ✓ ext=754 TTA=344.0s total=344.3s think=7025 finish=stop 
+[61/76] iq3xxs_b16384 A26-II-08 r2: ✗ ext=56 TTA=828.7s total=828.9s think=16384 finish=stop 
+[62/76] iq3xxs_b16384 A26-II-09 r2: ✓ ext=669 TTA=715.1s total=715.4s think=14136 finish=stop 
+[63/76] iq3xxs_b16384 A26-II-10 r2: ✓ ext=850 TTA=829.7s total=829.9s think=16317 finish=stop 
+[64/76] iq3xxs_b16384 A26-II-11 r2: ✓ ext=132 TTA=829.2s total=829.5s think=16374 finish=stop 
+[65/76] iq3xxs_b16384 A26-II-12 r2: ✓ ext=223 TTA=827.0s total=827.2s think=16373 finish=stop 
+[66/76] iq3xxs_b16384 A26-II-13 r2: ✓ ext=107 TTA=825.6s total=825.9s think=16364 finish=stop 
+[67/76] iq3xxs_b16384 A26-II-14 r2: ✓ ext=157 TTA=794.0s total=794.3s think=15756 finish=stop 
+[68/76] iq3xxs_b16384 A26-II-15 r2: ✗ ext=243 TTA=825.6s total=825.9s think=16144 finish=stop 
+[69/76] iq3xxs_b16384 H1 r2: ✓ ext=18 TTA=70.6s total=70.8s think=1475 finish=stop 
+[70/76] iq3xxs_b16384 H2 r2: ✓ ext={'possible': False, 'n': 8125} TTA=113.4s total=113.9s think=2363 finish=stop 
+[71/76] iq3xxs_b16384 H3 r2: ✓ ext=288 TTA=109.9s total=110.1s think=2290 finish=stop 
+[72/76] iq3xxs_b16384 H4 r2: ✓ ext={'length': 6, 'count': 12} TTA=332.2s total=332.8s think=6811 finish=stop 
+[73/76] iq3xxs_b16384 H5 r2: ✓ ext={'person': '乙', 'drink': '茶'} TTA=349.2s total=349.7s think=7151 finish=stop 
+[74/76] iq3xxs_b16384 H6 r2: ✓ ext={'distance': 16, 'count': 2} TTA=219.2s total=219.7s think=4535 finish=stop 
+[75/76] iq3xxs_b16384 H7 r2: ✓ ext=533 TTA=17.6s total=17.8s think=360 finish=stop 
+[76/76] iq3xxs_b16384 H8 r2: ✗ ext=def evaluate(s: str) -> int:
+  TTA=824.5s total=865.0s think=16374 finish=stop 
+資料來源：`/home/maho/e4/e4_svr_20261104/iq3xxs_b16384/results.jsonl`（76 筆）。答對率附 Wilson 95% 信賴區間。
+
+| 條件 | 題數×次數 | 答對率 | 95% CI | 擷取失敗 | 截斷 | 平均思考 chunk | 平均 TTA (s) | 平均總耗時 (s) |
+|---|---:|---:|---|---:|---:|---:|---:|---:|
+| iq3xxs_b16384 | 76 | 90.8% | [82.2%, 95.5%] | 1 | 1 | 9433 | 474.1 | 478.4 |
+
+各題答對次數（條件 × 題號）：
+
+| 題號 | iq3xxs_b16384 |
+|---|---:|
+| A26-I-01 | 2/2 |
+| A26-I-02 | 2/2 |
+| A26-I-03 | 2/2 |
+| A26-I-04 | 2/2 |
+| A26-I-05 | 2/2 |
+| A26-I-06 | 2/2 |
+| A26-I-07 | 2/2 |
+| A26-I-08 | 2/2 |
+| A26-I-09 | 2/2 |
+| A26-I-10 | 2/2 |
+| A26-I-11 | 2/2 |
+| A26-I-12 | 2/2 |
+| A26-I-13 | 2/2 |
+| A26-I-14 | 2/2 |
+| A26-I-15 | 0/2 |
+| A26-II-01 | 2/2 |
+| A26-II-02 | 2/2 |
+| A26-II-03 | 2/2 |
+| A26-II-04 | 2/2 |
+| A26-II-05 | 2/2 |
+| A26-II-06 | 2/2 |
+| A26-II-07 | 2/2 |
+| A26-II-08 | 1/2 |
+| A26-II-09 | 2/2 |
+| A26-II-10 | 2/2 |
+| A26-II-11 | 2/2 |
+| A26-II-12 | 2/2 |
+| A26-II-13 | 2/2 |
+| A26-II-14 | 1/2 |
+| A26-II-15 | 0/2 |
+| H1 | 2/2 |
+| H2 | 2/2 |
+| H3 | 2/2 |
+| H4 | 2/2 |
+| H5 | 2/2 |
+| H6 | 2/2 |
+| H7 | 2/2 |
+| H8 | 1/2 |
+
+wrote /home/maho/e4/e4_svr_20261104/iq3xxs_b16384/results_summary.md
+2026-11-05T23:59:03+08:00 ALL_DONE
+2026-11-05T23:59:03+08:00 END
+2026-11-05T23:59:03+08:00 完成 iq3xxs_b16384
+2026-11-05T23:59:03+08:00 失敗條件：無
+2026-11-05T23:59:04+08:00 已重新啟動 llama
+2026-11-05T23:59:04+08:00 BATCH_END

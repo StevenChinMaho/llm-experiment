@@ -1,0 +1,130 @@
+[1/76] q2kxl_b4096 A26-I-01 r1: ✓ ext=277 TTA=38.1s total=56.1s think=814 finish=stop 
+[2/76] q2kxl_b4096 A26-I-02 r1: ✗ ext=52 TTA=90.2s total=90.4s think=1954 finish=stop 
+[3/76] q2kxl_b4096 A26-I-03 r1: ✓ ext=79 TTA=112.5s total=124.9s think=2427 finish=stop 
+[4/76] q2kxl_b4096 A26-I-04 r1: ✓ ext=70 TTA=190.1s total=190.2s think=4094 finish=stop 
+[5/76] q2kxl_b4096 A26-I-05 r1: ✓ ext=65 TTA=89.7s total=89.9s think=1937 finish=stop 
+[6/76] q2kxl_b4096 A26-I-06 r1: ✓ ext=441 TTA=72.3s total=72.5s think=1568 finish=stop 
+[7/76] q2kxl_b4096 A26-I-07 r1: ✗ ext=351 TTA=115.7s total=116.0s think=2505 finish=stop 
+[8/76] q2kxl_b4096 A26-I-08 r1: ✓ ext=244 TTA=162.5s total=162.7s think=3488 finish=stop 
+[9/76] q2kxl_b4096 A26-I-09 r1: ✗ ext=106 TTA=190.3s total=190.6s think=4087 finish=stop 
+[10/76] q2kxl_b4096 A26-I-10 r1: ✗ ext=178 TTA=190.1s total=190.3s think=4096 finish=stop 
+[11/76] q2kxl_b4096 A26-I-11 r1: ✗ ext=None TTA=190.3s total=385.7s think=4069 finish=length 
+[12/76] q2kxl_b4096 A26-I-12 r1: ✓ ext=161 TTA=190.2s total=190.4s think=4091 finish=stop 
+[13/76] q2kxl_b4096 A26-I-13 r1: ✓ ext=39 TTA=190.2s total=190.4s think=4054 finish=stop 
+[14/76] q2kxl_b4096 A26-I-14 r1: ✗ ext=116 TTA=189.9s total=190.1s think=4095 finish=stop 
+[15/76] q2kxl_b4096 A26-I-15 r1: ✗ ext=None TTA=190.4s total=385.8s think=4096 finish=length 
+[16/76] q2kxl_b4096 A26-II-01 r1: ✓ ext=178 TTA=123.5s total=123.8s think=2680 finish=stop 
+[17/76] q2kxl_b4096 A26-II-02 r1: ✓ ext=243 TTA=190.8s total=215.4s think=4096 finish=stop 
+[18/76] q2kxl_b4096 A26-II-03 r1: ✗ ext=0 TTA=190.0s total=224.7s think=4096 finish=stop 
+[19/76] q2kxl_b4096 A26-II-04 r1: ✓ ext=279 TTA=128.8s total=129.0s think=2781 finish=stop 
+[20/76] q2kxl_b4096 A26-II-05 r1: ✓ ext=190 TTA=93.7s total=93.9s think=2020 finish=stop 
+[21/76] q2kxl_b4096 A26-II-06 r1: ✓ ext=50 TTA=189.7s total=189.9s think=4096 finish=stop 
+[22/76] q2kxl_b4096 A26-II-07 r1: ✓ ext=754 TTA=183.2s total=183.4s think=3937 finish=stop 
+[23/76] q2kxl_b4096 A26-II-08 r1: ✓ ext=245 TTA=189.8s total=190.0s think=4086 finish=stop 
+[24/76] q2kxl_b4096 A26-II-09 r1: ✓ ext=669 TTA=189.8s total=190.0s think=4044 finish=stop 
+[25/76] q2kxl_b4096 A26-II-10 r1: ✓ ext=850 TTA=190.0s total=230.0s think=4081 finish=stop 
+[26/76] q2kxl_b4096 A26-II-11 r1: ✗ ext=1 TTA=189.9s total=190.0s think=4095 finish=stop 
+[27/76] q2kxl_b4096 A26-II-12 r1: ✗ ext=13 TTA=189.9s total=190.1s think=4065 finish=stop 
+[28/76] q2kxl_b4096 A26-II-13 r1: ✗ ext=100 TTA=189.9s total=190.2s think=4093 finish=stop 
+[29/76] q2kxl_b4096 A26-II-14 r1: ✗ ext=None TTA=190.0s total=385.2s think=4087 finish=length 
+[30/76] q2kxl_b4096 A26-II-15 r1: ✗ ext=244 TTA=190.0s total=190.2s think=4087 finish=stop 
+[31/76] q2kxl_b4096 H1 r1: ✓ ext=18 TTA=102.1s total=102.3s think=2217 finish=stop 
+[32/76] q2kxl_b4096 H2 r1: ✓ ext={'possible': False, 'n': 8125} TTA=90.0s total=90.5s think=1956 finish=stop 
+[33/76] q2kxl_b4096 H3 r1: ✓ ext=288 TTA=77.4s total=77.6s think=1684 finish=stop 
+[34/76] q2kxl_b4096 H4 r1: ✗ ext={'length': 6, 'count': 8} TTA=189.6s total=190.1s think=4092 finish=stop 
+[35/76] q2kxl_b4096 H5 r1: ✗ ext={'person': None, 'drink': None TTA=190.2s total=190.5s think=4096 finish=stop 
+[36/76] q2kxl_b4096 H6 r1: ✓ ext={'distance': 16, 'count': 2} TTA=104.8s total=105.3s think=2271 finish=stop 
+[37/76] q2kxl_b4096 H7 r1: ✓ ext=533 TTA=21.6s total=21.8s think=463 finish=stop 
+[38/76] q2kxl_b4096 H8 r1: ✓ ext=def evaluate(s):
+    text = s
+ TTA=111.4s total=136.0s think=2417 finish=stop 
+[39/76] q2kxl_b4096 A26-I-01 r2: ✓ ext=277 TTA=38.9s total=39.1s think=839 finish=stop 
+[40/76] q2kxl_b4096 A26-I-02 r2: ✓ ext=62 TTA=162.9s total=163.1s think=3535 finish=stop 
+[41/76] q2kxl_b4096 A26-I-03 r2: ✓ ext=79 TTA=189.3s total=189.5s think=4096 finish=stop 
+[42/76] q2kxl_b4096 A26-I-04 r2: ✓ ext=70 TTA=189.0s total=189.1s think=4094 finish=stop 
+[43/76] q2kxl_b4096 A26-I-05 r2: ✓ ext=65 TTA=71.4s total=71.6s think=1552 finish=stop 
+[44/76] q2kxl_b4096 A26-I-06 r2: ✓ ext=441 TTA=189.0s total=189.3s think=4096 finish=stop 
+[45/76] q2kxl_b4096 A26-I-07 r2: ✗ ext=561 TTA=189.1s total=189.3s think=4088 finish=stop 
+[46/76] q2kxl_b4096 A26-I-08 r2: ✓ ext=244 TTA=88.2s total=88.4s think=1894 finish=stop 
+[47/76] q2kxl_b4096 A26-I-09 r2: ✗ ext=17 TTA=183.1s total=206.9s think=3943 finish=stop 
+[48/76] q2kxl_b4096 A26-I-10 r2: ✗ ext=125 TTA=189.3s total=189.6s think=4095 finish=stop 
+[49/76] q2kxl_b4096 A26-I-11 r2: ✗ ext=4176 TTA=189.6s total=189.8s think=4085 finish=stop 
+[50/76] q2kxl_b4096 A26-I-12 r2: ✗ ext=159 TTA=189.7s total=189.9s think=4095 finish=stop 
+[51/76] q2kxl_b4096 A26-I-13 r2: ✓ ext=39 TTA=189.7s total=189.9s think=4064 finish=stop 
+[52/76] q2kxl_b4096 A26-I-14 r2: ✗ ext=178 TTA=189.3s total=189.5s think=4074 finish=stop 
+[53/76] q2kxl_b4096 A26-I-15 r2: ✗ ext=140 TTA=189.9s total=190.1s think=4096 finish=stop 
+[54/76] q2kxl_b4096 A26-II-01 r2: ✓ ext=178 TTA=189.1s total=189.3s think=4095 finish=stop 
+[55/76] q2kxl_b4096 A26-II-02 r2: ✗ ext=143 TTA=190.2s total=190.5s think=4096 finish=stop 
+[56/76] q2kxl_b4096 A26-II-03 r2: ✗ ext=None TTA=189.3s total=384.0s think=4079 finish=length 
+[57/76] q2kxl_b4096 A26-II-04 r2: ✓ ext=279 TTA=145.2s total=145.5s think=3137 finish=stop 
+[58/76] q2kxl_b4096 A26-II-05 r2: ✓ ext=190 TTA=115.0s total=115.3s think=2494 finish=stop 
+[59/76] q2kxl_b4096 A26-II-06 r2: ✓ ext=50 TTA=189.0s total=189.2s think=4093 finish=stop 
+[60/76] q2kxl_b4096 A26-II-07 r2: ✗ ext=155 TTA=189.3s total=189.5s think=4089 finish=stop 
+[61/76] q2kxl_b4096 A26-II-08 r2: ✓ ext=245 TTA=189.2s total=314.7s think=4090 finish=stop 
+[62/76] q2kxl_b4096 A26-II-09 r2: ✓ ext=669 TTA=189.2s total=189.5s think=4031 finish=stop 
+[63/76] q2kxl_b4096 A26-II-10 r2: ✓ ext=850 TTA=189.4s total=189.7s think=4081 finish=stop 
+[64/76] q2kxl_b4096 A26-II-11 r2: ✗ ext=100 TTA=189.2s total=189.5s think=4063 finish=stop 
+[65/76] q2kxl_b4096 A26-II-12 r2: ✗ ext=0 TTA=189.4s total=384.0s think=4089 finish=length 
+[66/76] q2kxl_b4096 A26-II-13 r2: ✗ ext=None TTA=189.3s total=383.9s think=4076 finish=length 
+[67/76] q2kxl_b4096 A26-II-14 r2: ✗ ext=96 TTA=189.5s total=200.2s think=4084 finish=stop 
+[68/76] q2kxl_b4096 A26-II-15 r2: ✗ ext=183 TTA=189.4s total=189.6s think=4019 finish=stop 
+[69/76] q2kxl_b4096 H1 r2: ✓ ext=18 TTA=156.0s total=156.1s think=3386 finish=stop 
+[70/76] q2kxl_b4096 H2 r2: ✓ ext={'possible': False, 'n': 8125} TTA=155.4s total=155.9s think=3377 finish=stop 
+[71/76] q2kxl_b4096 H3 r2: ✓ ext=288 TTA=91.4s total=91.6s think=1979 finish=stop 
+[72/76] q2kxl_b4096 H4 r2: ✓ ext={'length': 6, 'count': 12} TTA=189.1s total=189.6s think=4093 finish=stop 
+[73/76] q2kxl_b4096 H5 r2: ✓ ext={'person': '乙', 'drink': '茶'} TTA=183.6s total=184.0s think=3969 finish=stop 
+[74/76] q2kxl_b4096 H6 r2: ✓ ext={'distance': 16, 'count': 2} TTA=189.3s total=189.8s think=4096 finish=stop 
+[75/76] q2kxl_b4096 H7 r2: ✓ ext=533 TTA=44.5s total=44.7s think=968 finish=stop 
+[76/76] q2kxl_b4096 H8 r2: ✓ ext=def evaluate(s):
+    i = 0
+    TTA=189.2s total=212.2s think=4083 finish=stop 
+資料來源：`/home/maho/e4/e4_svr_20261104/q2kxl_b4096/results.jsonl`（76 筆）。答對率附 Wilson 95% 信賴區間。
+
+| 條件 | 題數×次數 | 答對率 | 95% CI | 擷取失敗 | 截斷 | 平均思考 chunk | 平均 TTA (s) | 平均總耗時 (s) |
+|---|---:|---:|---|---:|---:|---:|---:|---:|
+| q2kxl_b4096 | 76 | 60.5% | [49.3%, 70.8%] | 5 | 6 | 3423 | 158.8 | 178.8 |
+
+各題答對次數（條件 × 題號）：
+
+| 題號 | q2kxl_b4096 |
+|---|---:|
+| A26-I-01 | 2/2 |
+| A26-I-02 | 1/2 |
+| A26-I-03 | 2/2 |
+| A26-I-04 | 2/2 |
+| A26-I-05 | 2/2 |
+| A26-I-06 | 2/2 |
+| A26-I-07 | 0/2 |
+| A26-I-08 | 2/2 |
+| A26-I-09 | 0/2 |
+| A26-I-10 | 0/2 |
+| A26-I-11 | 0/2 |
+| A26-I-12 | 1/2 |
+| A26-I-13 | 2/2 |
+| A26-I-14 | 0/2 |
+| A26-I-15 | 0/2 |
+| A26-II-01 | 2/2 |
+| A26-II-02 | 1/2 |
+| A26-II-03 | 0/2 |
+| A26-II-04 | 2/2 |
+| A26-II-05 | 2/2 |
+| A26-II-06 | 2/2 |
+| A26-II-07 | 1/2 |
+| A26-II-08 | 2/2 |
+| A26-II-09 | 2/2 |
+| A26-II-10 | 2/2 |
+| A26-II-11 | 0/2 |
+| A26-II-12 | 0/2 |
+| A26-II-13 | 0/2 |
+| A26-II-14 | 0/2 |
+| A26-II-15 | 0/2 |
+| H1 | 2/2 |
+| H2 | 2/2 |
+| H3 | 2/2 |
+| H4 | 1/2 |
+| H5 | 1/2 |
+| H6 | 2/2 |
+| H7 | 2/2 |
+| H8 | 2/2 |
+
+wrote /home/maho/e4/e4_svr_20261104/q2kxl_b4096/results_summary.md
