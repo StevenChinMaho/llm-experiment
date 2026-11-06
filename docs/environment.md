@@ -71,7 +71,7 @@
 - Docker＋NVIDIA Container Toolkit 已安裝，`docker run --rm --gpus all ubuntu nvidia-smi` 可看到 GPU
 - llama.cpp 映像：`ghcr.io/ggml-org/llama.cpp:server-cuda13`，`--version` 顯示 `0.5.0-dev` **build 11347 (5fc4f3c8c)**，GNU 14.2.0 編譯
 - 映像 digest（2026-10-12 查，映像建立於 2026-10-02）：`ghcr.io/ggml-org/llama.cpp@sha256:936e9d2afab78662a05fd300c4a829ba931777bcd8372334da629b468511f90e`
-- 模型存放：`/llama/models/`，只留 UD-Q2_K_XL、UD-IQ3_XXS（E4 用）。2026-11-04 依使用者要求刪除 UD-IQ2_XXS、UD-IQ4_XS、MTP 檔以釋放磁碟（91% → 71%）；E1／E2／MTP 量測已完成，之後這些檔案的實驗都在主力機做。要再用時從 HF revision `4ca72078…` 下載，雜湊見下表。同日也刪除 full 映像（`full-cuda13-b11347`）與已同步回 repo 的 `~/e1`、`~/e2`、`~/mtp`；要在 svr 跑 llama-bench 或困惑度時，以 digest 重新下載 full 映像
+- 模型存放：`/llama/models/`，只留 UD-IQ3_XXS（常駐 llama、E5）。2026-11-06 E4 結果同步後刪除 UD-Q2_K_XL 與 `~/e4`。2026-11-04 依使用者要求刪除 UD-IQ2_XXS、UD-IQ4_XS、MTP 檔以釋放磁碟（91% → 71%）；E1／E2／MTP 量測已完成，之後這些檔案的實驗都在主力機做。要再用時從 HF revision `4ca72078…` 下載，雜湊見下表。同日也刪除 full 映像（`full-cuda13-b11347`）與已同步回 repo 的 `~/e1`、`~/e2`、`~/mtp`；要在 svr 跑 llama-bench 或困惑度時，以 digest 重新下載 full 映像
 - **同一台機器上跑著大型模組 Minecraft 伺服器**（原生 Java/Forge，`java -Xmx8G -Xms6G -jar server.jar nogui`；通知服務是 template unit **`mc-notify@maho.service`**，不是 `mc-notify.service`），會佔用 CPU 與 RAM。不得擅自停止（見 CLAUDE.md 絕對規則 3）
 - 同機還有網站相關的 Docker 服務（nginx、MariaDB 等），RAM 只有 16GB，llama-server 的 `--cache-ram` 與 `--ctx-checkpoints` 必須壓低
 

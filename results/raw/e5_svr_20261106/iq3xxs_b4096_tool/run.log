@@ -1,0 +1,4 @@
+2026-11-06T21:10:05+08:00 啟動伺服器：-m /models/Qwen3.8-27B-UD-IQ3_XXS.gguf -ngl 99 -c 32768 -fa on -np 1 -ctk q8_0 -ctv q8_0 --cache-ram 0 --jinja --no-reasoning-preserve --reasoning-budget 4096 -lv 4 --port 8080 -fit off
+2026-11-06T21:10:20+08:00 伺服器就緒：11309 MiB
+2026-11-06T21:34:37+08:00 ALL_DONE
+2026-11-06T21:34:37+08:00 END

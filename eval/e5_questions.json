@@ -1,0 +1,94 @@
+{
+  "version": "2026-11-06",
+  "notes": [
+    "E5（RQ4）大數運算題。每題的概念都不難，難在長數字的精確計算；另加 questions.json 的 E8、H7。",
+    "標準答案由 eval/verify_e5.py 以精確計算產生與驗證。修改題目後必須同步更新並重跑。"
+  ],
+  "answer_instruction": "請在最後一行只輸出答案，格式為「答案：___」",
+  "questions": [
+    {
+      "id": "T1",
+      "category": "傳輸時間",
+      "grading": "exact_int",
+      "answer": 848,
+      "prompt": "某連線的實際吞吐量為 240 Mbps，傳輸一個 23.7 GiB 的檔案需要幾秒？（1 GiB = 2^30 bytes，1 Mbps = 10^6 bits/s，答案四捨五入到整數）"
+    },
+    {
+      "id": "T2",
+      "category": "通道容量",
+      "grading": "exact_int",
+      "answer": 1436,
+      "prompt": "某 Wi-Fi 頻道頻寬為 160 MHz，訊雜比為 27 dB。依 Shannon 公式，理論通道容量為多少 Mbps？（四捨五入到整數）"
+    },
+    {
+      "id": "T3",
+      "category": "儲存空間",
+      "grading": "exact_int",
+      "answer": 10116,
+      "prompt": "一段未壓縮影片的解析度為 3840×2160，每個像素 30 bits，每秒 60 張畫面，長度 97 分鐘。這段影片佔多少 GiB？（1 GiB = 2^30 bytes，答案四捨五入到整數）"
+    },
+    {
+      "id": "T4",
+      "category": "複利",
+      "grading": "exact_int",
+      "answer": 2308407,
+      "prompt": "本金 1,234,567 元，年利率 3.75%，每年複利一次，存 17 年後本利和是多少元？（答案四捨五入到整數）"
+    },
+    {
+      "id": "T5",
+      "category": "大數乘法",
+      "grading": "exact_int",
+      "answer": 121932631112635269,
+      "prompt": "計算 987,654,321 × 123,456,789 的精確值。"
+    },
+    {
+      "id": "T6",
+      "category": "級數",
+      "grading": "exact_int",
+      "answer": 321140105228115,
+      "prompt": "計算 1² + 2² + 3² + … + 98765² 的精確值。"
+    },
+    {
+      "id": "T7",
+      "category": "模運算",
+      "grading": "exact_int",
+      "answer": 766228,
+      "prompt": "計算 7^12345 除以 1,000,003 的餘數。"
+    },
+    {
+      "id": "T8",
+      "category": "組合數",
+      "grading": "exact_int",
+      "answer": 51915437974328292,
+      "prompt": "從 60 個不同的物品中選出 25 個，共有多少種選法？請給出精確值。"
+    },
+    {
+      "id": "T9",
+      "category": "大數次方",
+      "grading": "exact_int",
+      "answer": 19967568900859523802559065713,
+      "prompt": "計算 17^23 的精確值。"
+    },
+    {
+      "id": "T10",
+      "category": "進位轉換",
+      "grading": "exact_int",
+      "answer": 12723420444339690338,
+      "prompt": "把十六進位數 0xDEADBEEF 與 0xCAFEBABE 相乘，結果以十進位表示是多少？請給出精確值。"
+    },
+    {
+      "id": "T11",
+      "category": "網路計算",
+      "grading": "exact_int",
+      "answer": 15711,
+      "prompt": "某鏈路頻寬為 2.5 Gbps（1 Gbps = 10^9 bits/s），來回時間 RTT 為 73.4 ms。把頻寬延遲積（bandwidth-delay product）換算成位元組後，若每個封包的酬載為 1,460 bytes，至少需要多少個封包才能填滿？（答案無條件進位到整數）"
+    },
+    {
+      "id": "T12",
+      "category": "貸款",
+      "grading": "exact_int",
+      "answer": 32020,
+      "prompt": "貸款 8,450,000 元，年利率 2.185%，每月複利，分 360 期本息平均攤還，每月應繳多少元？（答案四捨五入到整數）"
+    }
+  ]
+}

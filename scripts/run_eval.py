@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""E4 評估腳本：對 llama-server 送題、重複、程式批改、統計（docs/experiment-plan.md E4）。
+"""E4、E5 評估腳本：對 llama-server 送題、重複、程式批改、統計（docs/experiment-plan.md）。
 
 只用標準函式庫。思考預算是伺服器端設定（--reasoning-budget），腳本只負責記錄。
 
@@ -10,12 +10,16 @@
       --out results/raw/e4_.../results.jsonl
   # 只重算統計
   python3 run_eval.py --summarize results/raw/e4_.../results.jsonl
+  # E5：讓模型可以呼叫計算工具（--tool calculator）
+  python3 run_eval.py --url http://127.0.0.1:8000 --label iq3xxs_b4096_tool --tool calculator \\
+      --questions eval/e5_questions.json --reps 2 --max-tokens 8192 --out results/raw/e5_.../results.jsonl
   # 批改器自我測試（用標準答案組成假回應，確認全部判對）
   python3 run_eval.py --self-test --questions eval/aime_2026.json eval/questions.json:easy eval/questions.json:hard
 
 時間指標：TTFT＝送出到第一個 token（思考或答案）；TTA＝送出到第一個答案 token（思考結束後）；total＝到回應結束。
 """
 import argparse
+import ast
 import datetime
 import json
 import math
@@ -27,7 +31,114 @@ import tempfile
 import time
 import unicodedata
 import urllib.request
+from decimal import Decimal, localcontext
 from fractions import Fraction
+
+# ---------------------------------------------------------------- 計算工具（E5）
+
+CALC_TOOL = {"type": "function", "function": {
+    "name": "calculator",
+    "description": "精確計算數學算式並回傳結果。整數與分數為精確計算，不會有浮點誤差。"
+                   "支援 + - * / // % ** 與括號，以及函式 pow(a,b) pow(a,b,m) comb(n,k) factorial(n) sqrt(x) "
+                   "log(x) log(x,b) log2(x) log10(x) exp(x) floor(x) ceil(x) round(x) abs(x) min(...) max(...)，常數 pi、e。"
+                   "次方請用 **，不要用 ^。",
+    "parameters": {"type": "object", "required": ["expression"],
+                   "properties": {"expression": {"type": "string", "description": "要計算的算式，例如 987654321*123456789"}}}}}
+MAX_EXPONENT = 100000
+MAX_RESULT_BITS = 2000000
+
+
+def _to_float(x):
+    return float(x)
+
+
+def _pow(a, b):
+    if isinstance(b, Fraction) and b.denominator == 1:
+        b = int(b)
+    if isinstance(a, float) or isinstance(b, (float, Fraction)):
+        return _to_float(a) ** _to_float(b)
+    if abs(b) > MAX_EXPONENT:
+        raise ValueError(f"指數太大（上限 {MAX_EXPONENT}）")
+    base_bits = max(Fraction(a).numerator.bit_length(), Fraction(a).denominator.bit_length())
+    if base_bits * abs(b) > MAX_RESULT_BITS:
+        raise ValueError("結果太大")
+    return Fraction(a) ** b
+
+
+def _pow_mod(a, b, m=None):
+    if m is None:
+        return _pow(a, b)
+    return pow(int(a), int(b), int(m))
+
+
+def _factorial(n):
+    if int(n) > 20000:
+        raise ValueError("太大")
+    return math.factorial(int(n))
+
+
+def _floatfn(fn):
+    return lambda *args: fn(*[_to_float(x) for x in args])
+
+
+CALC_FUNCS = {"pow": _pow_mod, "comb": lambda n, k: math.comb(int(n), int(k)) if int(n) <= 100000 else 1 / 0, "factorial": _factorial,
+              "sqrt": _floatfn(math.sqrt), "log": _floatfn(math.log), "log2": _floatfn(math.log2),
+              "log10": _floatfn(math.log10), "exp": _floatfn(math.exp),
+              "floor": lambda x: math.floor(x), "ceil": lambda x: math.ceil(x),
+              "round": lambda x: math.floor(Fraction(x) + Fraction(1, 2)) if not isinstance(x, float) else round(x),
+              "abs": abs, "min": min, "max": max}
+CALC_NAMES = {"pi": math.pi, "e": math.e}
+
+
+def _calc(node):
+    if isinstance(node, ast.Expression):
+        return _calc(node.body)
+    if isinstance(node, ast.Constant) and type(node.value) in (int, float):
+        v = node.value
+        return v if isinstance(v, int) else Fraction(Decimal(repr(v)))   # 0.0375 視為精確小數
+    if isinstance(node, ast.Name) and node.id in CALC_NAMES:
+        return CALC_NAMES[node.id]
+    if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
+        v = _calc(node.operand)
+        return v if isinstance(node.op, ast.UAdd) else -v
+    if isinstance(node, ast.BinOp):
+        if isinstance(node.op, ast.BitXor):
+            raise ValueError("次方請用 **，不要用 ^")
+        a, b = _calc(node.left), _calc(node.right)
+        if isinstance(node.op, ast.Pow):
+            return _pow(a, b)
+        if isinstance(node.op, ast.Div):
+            return a / b if isinstance(a, float) or isinstance(b, float) else Fraction(a) / Fraction(b)
+        ops = {ast.Add: lambda: a + b, ast.Sub: lambda: a - b, ast.Mult: lambda: a * b,
+               ast.FloorDiv: lambda: a // b, ast.Mod: lambda: a % b}
+        if type(node.op) in ops:
+            return ops[type(node.op)]()
+    if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in CALC_FUNCS and not node.keywords:
+        return CALC_FUNCS[node.func.id](*[_calc(x) for x in node.args])
+    raise ValueError(f"不支援的語法：{type(node).__name__}")
+
+
+def _calc_format(v):
+    if isinstance(v, Fraction):
+        if v.denominator == 1:
+            return str(v.numerator)
+        with localcontext() as ctx:
+            ctx.prec = 40
+            return str((Decimal(v.numerator) / Decimal(v.denominator)).normalize())
+    return str(v)
+
+
+def calculator(expression):
+    """安全地計算算式（只走語法樹，不用 eval）。錯誤以字串回傳，讓模型可以修正後重試。"""
+    if not isinstance(expression, str) or len(expression) > 500:
+        return "錯誤：算式必須是 500 字以內的字串"
+    try:
+        expr = expression.translate(str.maketrans("×÷，", "*/,")).replace(",", "") if "(" not in expression else \
+            expression.translate(str.maketrans("×÷", "*/"))
+        return _calc_format(_calc(ast.parse(expr.strip(), mode="eval")))
+    except Exception as e:
+        return f"錯誤：{type(e).__name__}: {e}"
+
 
 # ---------------------------------------------------------------- 題目載入
 
@@ -226,17 +337,26 @@ def grade(q, content):
 # ---------------------------------------------------------------- 送題（串流）
 
 
-def ask(url, prompt, max_tokens, thinking, seed, timeout):
-    payload = {"messages": [{"role": "user", "content": prompt}], "stream": True, "max_tokens": max_tokens,
+def api_headers():
+    h = {"Content-Type": "application/json"}
+    if os.environ.get("LLAMA_API_KEY"):   # 只有對常駐服務試跑時需要；實驗容器沒有設 key
+        h["Authorization"] = "Bearer " + os.environ["LLAMA_API_KEY"]
+    return h
+
+
+def ask(url, prompt, max_tokens, thinking, seed, timeout, messages=None, tools=None, t0=None):
+    payload = {"messages": messages or [{"role": "user", "content": prompt}], "stream": True, "max_tokens": max_tokens,
                "cache_prompt": False, "seed": seed, "stream_options": {"include_usage": True},
                "chat_template_kwargs": {"enable_thinking": thinking}}
-    req = urllib.request.Request(f"{url}/v1/chat/completions", data=json.dumps(payload).encode(),
-                                 headers={"Content-Type": "application/json"})
-    t0 = time.monotonic()
+    if tools:
+        payload["tools"] = tools
+    req = urllib.request.Request(f"{url}/v1/chat/completions", data=json.dumps(payload).encode(), headers=api_headers())
+    t0 = time.monotonic() if t0 is None else t0
     ttft = tta = None
     reasoning, content = [], []
     n_reason_chunks = n_content_chunks = 0
     finish = usage = timings = None
+    tool_parts = {}
     with urllib.request.urlopen(req, timeout=timeout) as r:
         for raw in r:
             line = raw.decode("utf-8", "replace").strip()
@@ -259,17 +379,69 @@ def ask(url, prompt, max_tokens, thinking, seed, timeout):
                     content.append(c); n_content_chunks += 1
                     ttft = ttft if ttft is not None else now
                     tta = tta if tta is not None else now
+                for tc in delta.get("tool_calls") or []:
+                    part = tool_parts.setdefault(tc.get("index", 0), {"id": "", "name": "", "arguments": ""})
+                    part["id"] = tc.get("id") or part["id"]
+                    fn = tc.get("function") or {}
+                    part["name"] = fn.get("name") or part["name"]
+                    part["arguments"] += fn.get("arguments") or ""
                 finish = ch.get("finish_reason") or finish
     return {"reasoning": "".join(reasoning), "content": "".join(content), "ttft_s": ttft, "tta_s": tta,
             "total_s": time.monotonic() - t0, "finish_reason": finish, "usage": usage, "timings": timings,
-            "n_reasoning_chunks": n_reason_chunks, "n_content_chunks": n_content_chunks}
+            "n_reasoning_chunks": n_reason_chunks, "n_content_chunks": n_content_chunks,
+            "tool_parts": [tool_parts[k] for k in sorted(tool_parts)]}
+
+
+MAX_TOOL_ROUNDS = 12
+
+
+def ask_with_tools(url, prompt, max_tokens, thinking, seed, timeout):
+    """模型呼叫工具 → 程式計算 → 把結果回傳給模型，重複到模型作答。
+
+    max_tokens 是所有回合合計的上限；--reasoning-budget 是伺服器對每個回合各自套用，所以合計思考量以 max_tokens 為準。
+    回傳的 content 只留最後一回合（批改對象），tta_s 是最後一回合第一個答案 token 的時間（使用者實際等到答案）。
+    """
+    t0 = time.monotonic()
+    messages = [{"role": "user", "content": prompt}]
+    reasoning, calls = [], []
+    n_reason = n_content = used = rounds = 0
+    ttft = None
+    while True:
+        rounds += 1
+        r = ask(url, prompt, max_tokens - used, thinking, seed, timeout, messages=messages, tools=[CALC_TOOL], t0=t0)
+        ttft = ttft if ttft is not None else r["ttft_s"]
+        reasoning.append(r["reasoning"])
+        n_reason += r["n_reasoning_chunks"]; n_content += r["n_content_chunks"]
+        used += (r["usage"] or {}).get("completion_tokens", r["n_reasoning_chunks"] + r["n_content_chunks"])
+        parts = r["tool_parts"]
+        if not parts or r["finish_reason"] == "length" or rounds >= MAX_TOOL_ROUNDS or used >= max_tokens:
+            finish = r["finish_reason"] if not parts else "tool_limit"
+            return {"reasoning": "\n".join(reasoning), "content": r["content"], "ttft_s": ttft, "tta_s": r["tta_s"],
+                    "total_s": time.monotonic() - t0, "finish_reason": finish, "usage": {"completion_tokens": used},
+                    "timings": r["timings"], "n_reasoning_chunks": n_reason, "n_content_chunks": n_content,
+                    "n_rounds": rounds, "tool_calls": calls}
+        tool_msgs = []
+        for i, p in enumerate(parts):
+            p["id"] = p["id"] or f"call_{rounds}_{i}"
+            try:
+                expr = json.loads(p["arguments"]).get("expression")
+            except (json.JSONDecodeError, AttributeError):
+                expr = None
+            result = calculator(expr) if p["name"] == "calculator" else f"錯誤：沒有工具 {p['name']}"
+            calls.append({"round": rounds, "name": p["name"], "arguments": p["arguments"], "result": result,
+                          "time_s": round(time.monotonic() - t0, 1)})
+            tool_msgs.append({"role": "tool", "tool_call_id": p["id"], "content": result})
+        messages.append({"role": "assistant", "content": r["content"] or "",
+                         "tool_calls": [{"id": p["id"], "type": "function",
+                                         "function": {"name": p["name"], "arguments": p["arguments"]}} for p in parts]})
+        messages.extend(tool_msgs)
 
 
 def server_info(url):
     info = {}
     for path in ("/props", "/v1/models"):
         try:
-            with urllib.request.urlopen(url + path, timeout=10) as r:
+            with urllib.request.urlopen(urllib.request.Request(url + path, headers=api_headers()), timeout=10) as r:
                 info[path] = json.load(r)
         except Exception as e:
             info[path] = f"ERROR {e}"
@@ -382,6 +554,14 @@ def self_test(questions):
         ok, _, _ = grade(q, resp)
         print(f"{'OK ' if not ok else 'BAD'} {q['id']} 應判錯 → {'判錯' if not ok else '判對'}")
         bad += ok
+    calc_cases = [("987654321*123456789", "121932631112635269"), ("17**23", str(17**23)), ("pow(7,12345,1000003)", str(pow(7, 12345, 1000003))),
+                  ("comb(60,25)", str(math.comb(60, 25))), ("1234567*1.0375**17", None), ("10/4", "2.5"), ("2^3", "錯誤"),
+                  ("__import__('os')", "錯誤"), ("(1).real", "錯誤"), ("10**10**10", "錯誤"), ("80*log2(1+100)", None)]
+    for expr, want in calc_cases:
+        got = calculator(expr)
+        ok = got.startswith("錯誤") if want == "錯誤" else (want is None and not got.startswith("錯誤")) or got == want
+        bad += not ok
+        print(f"{'OK ' if ok else 'BAD'} calculator({expr}) = {got[:50]}")
     print("自我測試", "全部通過" if bad == 0 else f"有 {bad} 項失敗")
     return bad == 0
 
@@ -403,9 +583,11 @@ def main():
     p.add_argument("--note", default="", help="記錄伺服器啟動參數、思考預算等")
     p.add_argument("--summarize", metavar="JSONL")
     p.add_argument("--self-test", action="store_true")
+    p.add_argument("--tool", choices=["calculator"], help="讓模型可以呼叫這個工具（E5）")
     p.add_argument("--sandbox-image", help="在此 Docker 映像的隔離容器內執行 python_tests（無網路、唯讀、非 root）")
     a = p.parse_args()
 
+    sys.set_int_max_str_digits(0)   # 計算工具要輸出很長的整數
     if a.summarize:
         return summarize(a.summarize)
     global SANDBOX_IMAGE
@@ -438,7 +620,11 @@ def main():
                 continue
             t_start = datetime.datetime.now().astimezone().isoformat(timespec="seconds")
             try:
-                resp = ask(a.url, prompt, a.max_tokens, a.thinking == "on", rep, a.timeout)
+                if a.tool:
+                    resp = ask_with_tools(a.url, prompt, a.max_tokens, a.thinking == "on", rep, a.timeout)
+                else:
+                    resp = ask(a.url, prompt, a.max_tokens, a.thinking == "on", rep, a.timeout)
+                    resp.pop("tool_parts", None)
                 ok, ext, detail = grade(q, resp["content"])
                 err = None
             except Exception as e:
@@ -451,7 +637,8 @@ def main():
             tta = resp.get("tta_s")
             print(f"[{i}/{total}] {a.label} {q['id']} r{rep}: {'✓' if ok else '✗'} "
                   f"ext={str(ext)[:30]} TTA={'-' if tta is None else f'{tta:.1f}s'} total={resp.get('total_s', 0):.1f}s "
-                  f"think={resp.get('n_reasoning_chunks')} finish={resp.get('finish_reason')} {err or ''}", flush=True)
+                  f"think={resp.get('n_reasoning_chunks')} finish={resp.get('finish_reason')} "
+                  f"tools={len(resp.get('tool_calls', []))} {err or ''}", flush=True)
             consecutive_errors = consecutive_errors + 1 if err else 0
             if consecutive_errors >= 3:
                 summarize(a.out)

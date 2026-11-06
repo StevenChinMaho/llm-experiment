@@ -11,7 +11,7 @@ IMAGE=ghcr.io/ggml-org/llama.cpp@sha256:936e9d2afab78662a05fd300c4a829ba931777bc
 MODELS=${MODELS:-/nvme477/llama/models}
 SANDBOX_IMAGE=${SANDBOX_IMAGE:-python:3.12-alpine}   # 批改 python_tests 的隔離容器
 EVAL=$HOME/qwen-eval
-MODEL="" BUDGET="" LABEL="" REPS=1 OUT="" CTX=32768 MAXTOK="" EXTRA="" PORT=8000 QUESTIONS="eval/aime_2026.json eval/questions.json:hard"
+MODEL="" BUDGET="" LABEL="" REPS=1 OUT="" CTX=32768 MAXTOK="" EXTRA="" EVAL_EXTRA="" PORT=8000 QUESTIONS="eval/aime_2026.json eval/questions.json:hard"
 while [ $# -gt 0 ]; do
   case "$1" in
     --model) MODEL=$2; shift 2 ;;
@@ -23,6 +23,7 @@ while [ $# -gt 0 ]; do
     --max-tokens) MAXTOK=$2; shift 2 ;;
     --questions) QUESTIONS=$2; shift 2 ;;
     --extra) EXTRA=$2; shift 2 ;;
+    --eval-extra) EVAL_EXTRA=$2; shift 2 ;;
     *) echo "未知參數 $1" >&2; exit 2 ;;
   esac
 done
@@ -41,7 +42,7 @@ SERVER_ARGS=(-m "/models/$MODEL" -ngl 99 -c "$CTX" -fa on -np 1 -ctk q8_0 -ctv q
   echo "hostname=$(hostname)"; echo "start=$(date -Is)"; echo "kernel=$(uname -r)"
   echo "gpu=$(nvidia-smi --query-gpu=name,driver_version,memory.total,display_active --format=csv,noheader)"
   echo "image=$IMAGE"; echo "model=$MODEL"; echo "budget=$BUDGET"; echo "ctx=$CTX"; echo "max_tokens=$MAXTOK"
-  echo "label=$LABEL"; echo "reps=$REPS"; echo "questions=$QUESTIONS"
+  echo "label=$LABEL"; echo "reps=$REPS"; echo "questions=$QUESTIONS"; echo "eval_extra=$EVAL_EXTRA"
   echo "server_args=${SERVER_ARGS[*]}"
   echo "eval_script_sha256=$(sha256sum "$EVAL/scripts/run_eval.py" | cut -d' ' -f1)"
   echo "java_procs=$(pgrep -c java || true)"
@@ -79,6 +80,6 @@ log "伺服器就緒：$(nvidia-smi --query-gpu=memory.used --format=csv,noheade
 cd "$EVAL"
 # shellcheck disable=SC2086
 python3 scripts/run_eval.py --url "http://127.0.0.1:$PORT" --label "$LABEL" --questions $QUESTIONS --reps "$REPS" \
-  --max-tokens "$MAXTOK" --thinking on --out "$OUT/results.jsonl" --sandbox-image "$SANDBOX_IMAGE" \
+  --max-tokens "$MAXTOK" --thinking on --out "$OUT/results.jsonl" --sandbox-image "$SANDBOX_IMAGE" $EVAL_EXTRA \
   --note "model=$MODEL budget=$BUDGET ctx=$CTX image=$IMAGE" 2>&1 | tee -a "$OUT/eval.log"
 log "ALL_DONE"
