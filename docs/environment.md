@@ -71,33 +71,26 @@
 - Docker＋NVIDIA Container Toolkit 已安裝，`docker run --rm --gpus all ubuntu nvidia-smi` 可看到 GPU
 - llama.cpp 映像：`ghcr.io/ggml-org/llama.cpp:server-cuda13`，`--version` 顯示 `0.5.0-dev` **build 11347 (5fc4f3c8c)**，GNU 14.2.0 編譯
 - 映像 digest（2026-10-12 查，映像建立於 2026-10-02）：`ghcr.io/ggml-org/llama.cpp@sha256:936e9d2afab78662a05fd300c4a829ba931777bcd8372334da629b468511f90e`
-- 模型存放：`/llama/models/`，只留 UD-IQ3_XXS（常駐 llama、E5）。2026-11-06 E4 結果同步後刪除 UD-Q2_K_XL 與 `~/e4`。2026-11-04 依使用者要求刪除 UD-IQ2_XXS、UD-IQ4_XS、MTP 檔以釋放磁碟（91% → 71%）；E1／E2／MTP 量測已完成，之後這些檔案的實驗都在主力機做。要再用時從 HF revision `4ca72078…` 下載，雜湊見下表。同日也刪除 full 映像（`full-cuda13-b11347`）與已同步回 repo 的 `~/e1`、`~/e2`、`~/mtp`；要在 svr 跑 llama-bench 或困惑度時，以 digest 重新下載 full 映像
+- 模型存放：`/llama/models/`，只留 UD-IQ3_XXS（常駐 llama 啟用時用、E5）。2026-11-06 E4 結果同步後刪除 UD-Q2_K_XL 與 `~/e4`。2026-11-04 依使用者要求刪除 UD-IQ2_XXS、UD-IQ4_XS、MTP 檔以釋放磁碟（91% → 71%）；E1／E2／MTP 量測已完成，之後這些檔案的實驗都在主力機做。要再用時從 HF revision `4ca72078…` 下載，雜湊見下表。同日也刪除 full 映像（`full-cuda13-b11347`）與已同步回 repo 的 `~/e1`、`~/e2`、`~/mtp`；要在 svr 跑 llama-bench 或困惑度時，以 digest 重新下載 full 映像
 - **同一台機器上跑著大型模組 Minecraft 伺服器**（原生 Java/Forge，`java -Xmx8G -Xms6G -jar server.jar nogui`；通知服務是 template unit **`mc-notify@maho.service`**，不是 `mc-notify.service`），會佔用 CPU 與 RAM。不得擅自停止（見 CLAUDE.md 絕對規則 3）
 - 同機還有網站相關的 Docker 服務（nginx、MariaDB 等），RAM 只有 16GB，llama-server 的 `--cache-ram` 與 `--ctx-checkpoints` 必須壓低
 
-### 目前的常駐指令（server）
+### 常駐 llama-server（區網 API）：2026-11-08 起改用 compose 管理，**目前停用**
+
+設定檔在 svr 的 `~/llama/compose.yaml`，repo 副本為 [deploy/svr-llama/compose.yaml](../deploy/svr-llama/compose.yaml)（改設定時兩邊一起改）。
 
 ```bash
-docker run -d --name llama --gpus all --restart unless-stopped \
-  -v /llama/models:/models -p 192.168.0.66:8000:8080 --env-file /home/maho/llama.env \
-  ghcr.io/ggml-org/llama.cpp@sha256:936e9d2afab78662a05fd300c4a829ba931777bcd8372334da629b468511f90e \
-  -m /models/Qwen3.8-27B-UD-IQ3_XXS.gguf \
-  -ngl 99 -c 40000 -fa on -np 1 \
-  --cache-type-k q8_0 --cache-type-v q8_0 \
-  --cache-ram 2048 --ctx-checkpoints 8 \
-  --no-reasoning-preserve --jinja --port 8080
+cd ~/llama && docker compose up -d     # 啟用
+cd ~/llama && docker compose down      # 停用（移除容器，設定留在 compose.yaml）
 ```
 
-（2026-10-12 以 `docker inspect llama` 確認：已背景常駐、`restart=unless-stopped`，含 `--no-reasoning-preserve`。常駐時佔 VRAM 約 11,600～11,800 MiB。）
-
-**2026-10-24 改為區網可呼叫的 API**（使用者指定只改 svr，主力機不動）：
-
-- port 改綁區網 IP `192.168.0.66:8000`（原為 `127.0.0.1:8000`），**本機的 `127.0.0.1:8000` 已不再服務**，在 svr 上要用 `http://192.168.0.66:8000`。不用 ufw 擋，因為 Docker 對外開的 port 會繞過 ufw；路由器沒有轉發 8000（使用者確認）
-- API key 放在 svr 的 `~/llama.env`（權限 600，變數名 **`LLAMA_API_KEY`**；`LLAMA_ARG_API_KEY` 無效），**不得寫進 repo**。查看：`ssh svr cat ~/llama.env`。呼叫時帶 `Authorization: Bearer <key>`；Web UI 會要求輸入 key。`/health` 不需要 key
-- 映像改用 digest 指定（與原 tag 指向同一個映像 `936e9d2a…`）
-- **依賴這個 API 的服務：** `discord-musicbot` 的聊天功能（`LLAMA_API_URL`）。實驗停掉 `llama` 時聊天會失敗；astrbot 走 DeepSeek，不受影響
-- 實驗不受影響：實驗容器都綁 `127.0.0.1`，區網連不到；E1／MTP 腳本以 `--stop llama` 停止常駐容器、結束後 `docker start llama`，名稱未變。**`run_e4.sh` 不會自動停常駐容器**，在 svr 跑 E4 前要先 `docker stop llama`
-- 驗證（2026-10-24，從操作端筆電）：無 key／錯 key 回 401、正確 key 回 200、對話正常；`127.0.0.1:8000` 連線被拒
+- 2026-11-08 依使用者要求停用：先以 `docker compose config` 確認展開後的啟動參數與原本 `docker run` 的容器逐項相同，再移除舊容器，用 `up --no-start` 建立一次確認設定（GPU、只綁區網、env_file、`restart: unless-stopped`）後 `down`。目前 svr 上沒有 `llama` 容器，GPU 閒置
+- 內容：IQ3_XXS、`-ngl 99 -c 40000 -fa on -np 1`、KV q8_0、`--cache-ram 2048 --ctx-checkpoints 8 --no-reasoning-preserve --jinja`；映像以 digest 鎖定 b11347。啟用時佔 VRAM 約 11,600～11,800 MiB
+- 只綁區網 `192.168.0.66:8000`（2026-10-24 起；不用 ufw 擋，因為 Docker 對外開的 port 會繞過 ufw；路由器沒有轉發 8000，使用者確認），本機 `127.0.0.1:8000` 不服務
+- API key 在 svr 的 `~/llama.env`（權限 600，變數名 **`LLAMA_API_KEY`**；`LLAMA_ARG_API_KEY` 無效），**不得寫進 repo**。呼叫時帶 `Authorization: Bearer <key>`，Web UI 會要求輸入 key，`/health` 不需要
+- 沒有服務依賴它：`discord-musicbot` 的 `.env` 已改用 DeepSeek（2026-11-08 查），astrbot 也走 DeepSeek
+- **與實驗的關係：** 實驗容器都綁 `127.0.0.1`，區網連不到。`run_e1.sh`、`run_mtp.sh`、`run_e4_batch.sh`、`run_e5.sh` 的 `--stop llama` 會先停常駐容器、結束時 `docker start llama`；**容器停用期間不要加 `--stop`**（沒有容器可停）。容器啟用時才需要，`run_e4.sh` 單獨使用時不會自動停它
+- 歷史：2026-10-12 起以 `docker run -d --restart unless-stopped` 手動建立（2026-10-24 前綁 `127.0.0.1:8000`、沒有 key）；2026-10-24 驗證過無 key／錯 key 回 401、正確 key 回 200
 
 ## 模型
 

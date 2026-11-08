@@ -48,7 +48,7 @@
    - full 映像（含 llama-bench、llama-perplexity）：`ghcr.io/ggml-org/llama.cpp@sha256:3f7b5ae419f81c940b6171e004ee780091787a9cdb1c413b192fcb338a2d8590`（`full-cuda13-b11347`）。兩台都已拉取（svr 於 E1 時使用）
 2. 相同的模型檔（比對 sha256）
 3. 固定參數：`-fa on`、KV cache `q8_0`、`-np 1`，執行緒數記錄下來；不載入 mmproj
-4. 量測時 GPU 上沒有其他負載：主力機 Ubuntu 預設 `multi-user.target`、沒有桌面（實驗前仍記錄 `nvidia-smi`）；server 上停掉常駐 llama 容器
+4. 量測時 GPU 上沒有其他負載：主力機 Ubuntu 預設 `multi-user.target`、沒有桌面（實驗前仍記錄 `nvidia-smi`）；server 上若常駐 llama 有啟用就先停掉（2026-11-08 起預設停用）
 5. **Minecraft 伺服器**：使用者決定實驗期間 MC 一律關閉（由使用者處理），每次實驗紀錄 MC 狀態；長實驗排平日白天，晚上不跑
 6. 正式量測前先跑一次暖機
 7. 每個條件重複 5 次（llama-bench `-r 5`；部分卸載掃描為 3 次），報告平均 ± 標準差
@@ -134,7 +134,7 @@ llama-perplexity -m /models/<量化>.gguf -f wiki.test.raw -c 2048 -ngl 99 -fa 1
 - 每個條件都答同一批題目 → 用 McNemar 檢定或配對 bootstrap 比較
 - **答對率與 token 數和硬體無關**，因此兩台機器分工執行不同條件；IQ4_XS 只放得進 16GB，在主力機執行。各硬體的耗時以 E1 量到的 pp／tg（隨深度變化）推算，標示為**推導值**，並以 3060 上實際執行的條件驗證推算準確度
 - **MTP 條件**（依期中報告 2.1.9）：Q2_K_XL 開啟 MTP，檢驗 MTP 對答對率的影響，並與「IQ3_XXS 不開 MTP」比較；n_max 與預算依 5060 Ti 的 MTP 掃描決定，不計入 684 次。注意 3060 上 Q2_K_XL＋MTP 是在 context 16,384 量到的，context 32,768 時是否放得下要先確認
-- svr 上跑 E4 前要先 `docker stop llama`（`run_e4.sh` 不會自動停常駐容器）
+- svr 上跑 E4 時，若常駐 `llama` 有啟用，要用 `run_e4_batch.sh --stop llama` 或先 `docker stop llama`（`run_e4.sh` 本身不會停它）；2026-11-08 起它預設停用
 - 主要比較：在同樣的 TTA 之下，哪個（量化 × 預算）組合答對率最高
 
 ### 時間指標

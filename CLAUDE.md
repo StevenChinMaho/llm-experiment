@@ -53,7 +53,7 @@
 - 開始時先確認你在哪台機器上（`hostname`、`nvidia-smi`），不要假設。兩台機器的 IP 與路徑見 `docs/environment.md`。
 - 長時間任務（llama-bench、perplexity、整輪評估）一律背景執行並把輸出寫到 `results/raw/`：用 `tmux`、`nohup` 或 Docker `-d`，避免 SSH 斷線導致中斷。
 - 跑實驗前先跟使用者確認三件事：GPU 上有沒有其他負載、Minecraft 伺服器狀態、這次要跑哪些條件。
-- 同一時間一張 GPU 只跑一個實驗。跑 llama-bench 或 perplexity 前，要先停掉常駐的 llama-server 容器（`docker stop llama`），跑完再啟動回來，並告知使用者。
+- 同一時間一張 GPU 只跑一個實驗。svr 的常駐 llama-server 改由 compose 管理（`~/llama/compose.yaml`），**2026-11-08 起停用**；若使用者重新啟用了，跑實驗前要先停掉（`docker stop llama` 或腳本的 `--stop llama`），跑完再啟動回來，並告知使用者。先用 `docker ps` 確認它在不在，見 `docs/environment.md`。
 - 實驗腳本放 `scripts/`，原始輸出放 `results/raw/`，整理後的表格放 `results/processed/`（CSV＋Markdown），圖放 `results/figures/`（PNG，300 dpi，圖中文字用繁體中文）。
 - 報告先以 Markdown 寫在 `report/midterm/` 或 `report/final/`，使用者審閱後再轉成 Word（方式見 `docs/report-spec.md`）。
 - 不確定的事（實驗條件、題目、報告寫法、要不要加某個實驗）直接問使用者，不要自己腦補。

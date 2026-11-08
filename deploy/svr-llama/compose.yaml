@@ -1,0 +1,25 @@
+# kururinpa-svr 常駐 llama-server（區網 API）。2026-11-08 起改用 compose 管理，預設停用。
+# 放在 svr 的 ~/llama/compose.yaml；API key 在 svr 的 ~/llama.env（LLAMA_API_KEY=…，權限 600，不進 git）。
+#   啟用：cd ~/llama && docker compose up -d
+#   停用：cd ~/llama && docker compose down
+services:
+  llama:
+    container_name: llama          # 名字固定，實驗腳本的 docker stop/start llama 照常可用
+    image: ghcr.io/ggml-org/llama.cpp@sha256:936e9d2afab78662a05fd300c4a829ba931777bcd8372334da629b468511f90e  # server-cuda13-b11347
+    restart: unless-stopped
+    ports:
+      - "192.168.0.66:8000:8080"   # 只綁區網介面；Docker 會繞過 ufw，所以不靠防火牆擋
+    env_file: /home/maho/llama.env
+    volumes:
+      - /llama/models:/models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: >-
+      -m /models/Qwen3.8-27B-UD-IQ3_XXS.gguf -ngl 99 -c 40000 -fa on -np 1
+      --cache-type-k q8_0 --cache-type-v q8_0 --cache-ram 2048 --ctx-checkpoints 8
+      --no-reasoning-preserve --jinja --port 8080
